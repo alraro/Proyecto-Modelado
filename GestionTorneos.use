@@ -124,3 +124,6 @@ associationclass ParticipacionPartido between
     puntuacion: Integer
 end  
 --- End Association Classes ---
+
+--- Invariants ---
+--- End Invariants ---
