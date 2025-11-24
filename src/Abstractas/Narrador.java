@@ -2,7 +2,7 @@ package Abstractas;
 
 import java.util.ArrayList;
 import java.util.List;
-import Enumeraciones.TipoDeporte;
+import Enumerados.TipoDeporte;
 
 public abstract class Narrador extends Persona {
     protected TipoDeporte tipoDeporte;
@@ -16,17 +16,17 @@ public abstract class Narrador extends Persona {
     }
 
     public void asignarTorneo(Torneo nuevoTorneo) {
-        // 1. PRECONDICIÓN: El torneo no puede ser nulo
+        // RESTRICCIÓN: El torneo no puede ser nulo
         assert nuevoTorneo != null : "El torneo no puede ser nulo";
 
-        // 2. PRECONDICIÓN: El deporte debe coincidir
+        // RESTRICCIÓN: El deporte debe coincidir
         assert nuevoTorneo.getTipoDeporte() == this.tipoDeporte
-        : "Precondición violada: El narrador de " + this.tipoDeporte + " no puede narrar " + nuevoTorneo.getTipoDeporte();
+        : "El narrador de " + this.tipoDeporte + " no puede narrar " + nuevoTorneo.getTipoDeporte();
 
-        // 3. PRECONDICIÓN: Temporadas no solapadas    
+        // RESTRICCIÓN: Temporadas no solapadas    
         for (Torneo t : torneosAsignados) {
             assert !t.getTemporada().equals(nuevoTorneo.getTemporada())
-            : "Precondición violada: El narrador ya trabaja en la temporada " + nuevoTorneo.getTemporada();
+            : "El narrador ya trabaja en la temporada " + t.getTemporada();
         }
 
         // Tras asegurarnos que se cumplen las restricciones, añadimos el torneo

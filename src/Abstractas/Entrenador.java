@@ -2,10 +2,10 @@ package Abstractas;
 
 import java.util.ArrayList;
 import java.util.List;
-import Enumeraciones.TipoDeporte;
+import Enumerados.TipoDeporte;
 
 public abstract class Entrenador extends Persona {
-    protected TipoDeporte tipoDeporte; 
+    protected TipoDeporte tipoDeporte;
     protected List<Equipo> equiposAsignados; 
 
     public Entrenador(String nombre, String apellido1, String apellido2, Integer edad, TipoDeporte tipoDeporte) {
@@ -16,17 +16,17 @@ public abstract class Entrenador extends Persona {
     }
     
     public void asignarEquipo(Equipo nuevoEquipo) {
-        // 1. PRECONDICIÓN: El equipo no puede ser nulo
+        // RESTRICCIÓN: El equipo no puede ser nulo
         assert nuevoEquipo != null : "El equipo a asignar no puede ser nulo";
 
-        // 2. PRECONDICIÓN: El deporte debe coincidir
+        // RESTRICCIÓN: El deporte debe coincidir
         assert nuevoEquipo.getTipoDeporte() == this.tipoDeporte
-        : "Precondición violada: El entrenador de " + this.tipoDeporte + " no puede entrenar " + nuevoEquipo.getTipoDeporte();
+        : "El entrenador de " + this.tipoDeporte + " no puede entrenar " + nuevoEquipo.getTipoDeporte();
 
-        // 3. PRECONDICIÓN: No puede entrenar a varios equipos en el mismo torneo
+        // RESTRICCIÓN: No puede entrenar a varios equipos en el mismo torneo
         for (Equipo e : equiposAsignados) {
             assert !e.getTorneo().equals(nuevoEquipo.getTorneo())
-            : "Precondición violada: El entrenador ya tiene un equipo en el torneo " + nuevoEquipo.getTorneo().getNombre();
+            : "El entrenador ya tiene un equipo en el torneo " + nuevoEquipo.getTorneo().getNombre();
         }
         
         // Tras asegurarnos que se cumplen las restricciones, añadimos el equipo

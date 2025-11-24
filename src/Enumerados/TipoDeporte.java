@@ -1,4 +1,4 @@
-package Enumeraciones;
+package Enumerados;
 
 public enum TipoDeporte {
     BALONCESTO,

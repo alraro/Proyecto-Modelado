@@ -1,7 +1,7 @@
 package Deportes.Padel;
 
 import Abstractas.Narrador;
-import Enumeraciones.TipoDeporte;
+import Enumerados.TipoDeporte;
 
 public class NarradorPadel extends Narrador {
     public NarradorPadel(String nombre, String apellido1, String apellido2, Integer edad) {

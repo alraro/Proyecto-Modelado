@@ -1,7 +1,7 @@
 package Deportes.Volleyball;
 
 import Abstractas.Entrenador;
-import Enumeraciones.TipoDeporte;
+import Enumerados.TipoDeporte;
 
 public class EntrenadorVolleyball extends Entrenador {
     public EntrenadorVolleyball(String nombre, String apellido1, String apellido2, Integer edad) {

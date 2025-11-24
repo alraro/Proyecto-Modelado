@@ -1,7 +1,7 @@
 package Deportes.Rugby;
 
 import Abstractas.Narrador;
-import Enumeraciones.TipoDeporte;
+import Enumerados.TipoDeporte;
 
 public class NarradorRugby extends Narrador {
     public NarradorRugby(String nombre, String apellido1, String apellido2, Integer edad) {
