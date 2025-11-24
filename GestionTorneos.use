@@ -43,6 +43,7 @@ class Torneo
   attributes
     nombre: String
     deporte: TipoDeporte
+    pais: String
     temporada: Integer
     categoria: TipoCategoria
     competicion: TipoCompeticion
@@ -126,4 +127,39 @@ end
 --- End Association Classes ---
 
 --- Invariants ---
+constraints
+
+context Torneo
+  -- No puede haber más integrantes por equipo que el número máximo
+  inv MaxIntegrantesEquipo: 
+    self.equipos->forAll(e | e.tiempoEquipo->select(te | te.fechaFin = '' or te.fechaFin.oclIsUndefined())->size() <= self.maxIntegrantesEquipo)
+
+  -- Los tipos del equipo tiene que coincidir con los tipos del torneo
+  inv CoherenciaInscripcion:
+    self.equipos->forAll(e | 
+        e.competicion = self.competicion and
+        e.deporte = self.deporte and
+        e.categoria = self.categoria
+    )
+
+  -- No pueden haber 2 equipos de la misma nacionalidad en un mismo torneo
+  inv UnEquipoPorNacionalidad:
+    self.competicion = #Nacional implies self.equipos->forAll(e1, e2 | e1 <> e2 implies e1.pais <> e2.pais)  
+
+  -- El ganador debe ser un equipo participante del torneo
+  inv GanadorEsParticipante:
+    (self.ganador.oclIsUndefined() = false and self.ganador <> '') implies self.equipos->exists(e | e.nombre = self.ganador)  
+
+context Partido
+
+context Equipo
+
+context Jugador
+
+context Árbitro
+
+context Entrenador
+
+context Narrador
+
 --- End Invariants ---
