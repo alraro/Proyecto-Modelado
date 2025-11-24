@@ -1,40 +1,43 @@
 package Deportes.Futbol;
 
 import Interfaces.FabricaDeporte;
+import Abstractas.*;
 
 public class FabricaFutbol implements FabricaDeporte {
+
     @Override
     public Equipo crearEquipo(String nombre) {
-        return new Equipo(nombre);
+        Equipo e = new Equipo(nombre);
+        return e;
     }
 
     @Override
     public Jugador crearJugador(String nombre, String posicion) {
-        return new Jugador(nombre, posicion);
+        return null;
     }
 
     @Override
     public Narrador crearNarrador(String nombre) {
-        return new Narrador(nombre);
+        return null;
     }
 
     @Override
     public Torneo crearTorneo(String nombre) {
-        return new Torneo(nombre);
+        return null;
     }
 
     @Override
     public Arbitro crearArbitro(String nombre) {
-        return new Arbitro(nombre);
-    }
-
-    @Override
-    public Partido crearPartido(Equipo equipo1, Equipo equipo2) {
-        return new Partido(equipo1, equipo2);
+        return null;
     }
 
     @Override
     public Entrenador crearEntrenador(String nombre) {
-        return new Entrenador(nombre);
+        return null;
+    }
+
+    @Override
+    public Partido crearPartido(Equipo equipo1, Equipo equipo2) {
+        return null;
     }
 }
