@@ -1,11 +1,11 @@
-package Deportes;
+package Interfaces;
 
 /**
  * Abstract Factory: Declara la interfaz para crear las familias de objetos
  * relacionados (Equipo y Árbitro) sin especificar sus clases concretas.
  */
 
-public interface FrabricaDeporte {
+public interface FabricaDeporte {
 
     // Método para crear un equipo
     Equipo crearEquipo(String nombre);
