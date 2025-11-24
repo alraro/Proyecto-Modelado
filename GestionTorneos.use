@@ -48,7 +48,7 @@ class Torneo
     categoria: TipoCategoria
     competicion: TipoCompeticion
     maxIntegrantesEquipo: Integer
-    ganador: String
+    ganador: Equipo
     partidoJugado: Boolean
 end
 
@@ -133,7 +133,12 @@ constraints
 context Torneo
   -- No puede haber más integrantes por equipo que el número máximo
   inv MaxIntegrantesEquipo: 
-    self.equipos->forAll(e | e.tiempoEquipo->select(te | te.fechaFin = '' or te.fechaFin.oclIsUndefined())->size() <= self.maxIntegrantesEquipo)
+    self.equipos -> forAll(e |
+      TiempoEquipo.allInstances()
+        -> select(te | te.equipos = e and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
+        -> size() <= self.maxIntegrantesEquipo
+    )
+
 
   -- Los tipos del equipo tiene que coincidir con los tipos del torneo
   inv CoherenciaInscripcion:
@@ -149,22 +154,71 @@ context Torneo
 
   -- El ganador debe ser un equipo participante del torneo
   inv GanadorEsParticipante:
-    (self.ganador.oclIsUndefined() = false and self.ganador <> '') implies self.equipos->exists(e | e.nombre = self.ganador)  
+    not self.ganador.oclIsUndefined() implies self.equipos->includes(self.ganador)  
 
     
 context Partido
+  -- Los equipos participantes deben pertenecer al torneo del partido --
+  inv EquiposPertenecenAlTorneo:
+    ParticipacionPartido.allInstances()
+      -> select(p | p.partidos = self)
+      -> forAll(pp | 
+          self.torneos->exists(t | t.equipos->includes(pp.equipos))
+        )
 
+  -- El deporte, categoría y competición del partido deben coincidir con los del torneo --
+  inv ConsistenciaConTorneo:
+    self.torneos -> forAll(t | 
+      self.tipoDeporte = t.deporte and
+      self.tipoCategoria = t.categoria and
+      self.tipoCompeticion = t.competicion
+    )
+
+  -- No puede haber dos partidos en el mismo lugar, fecha y hora --
+  inv UnicidadLugarFechaHora:
+    Partido.allInstances()
+      ->forAll(p | p = self or
+        p.lugar <> self.lugar or
+        p.fecha <> self.fecha or
+        p.hora <> self.hora
+    )
+
+
+  -- Un partido no puede tener equipos locales y nacionales a la vez --
+  inv NoLocalVSNacional:
+    not(
+      ParticipacionPartido.allInstances()
+        ->exists(pp | pp.partidos = self and pp.esLocal = true and pp.equipos.competicion = TipoCompeticion::Local)
+    and
+      ParticipacionPartido.allInstances()
+        ->exists(pp | pp.partidos = self and pp.equipos.competicion = TipoCompeticion::Nacional)
+  )
+
+  inv UnLocalYVisitante:
+    ParticipacionPartido.allInstances()
+      -> select(p | p.partidos = self and p.esLocal = true)
+      -> size() = 1
+      and
+    ParticipacionPartido.allInstances()
+      -> select(p | p.partidos = self and p.esLocal = false)
+      -> size() = 1
+end
 
 
 context Equipo
 
   -- El número de jugadores en el equipo no puede superar el máximo permitido por torneo --
   inv MaxJugadoresPorTorneo:
-    self.torneos->forAll(t | self.jugadores->size <= t.maxIntegrantesEquipo)
+    self.torneos->forAll(t |
+      TiempoEquipo.allInstances()
+        ->select(te | te.equipos = self and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
+        ->collect(te | te.jugadores)
+        ->size() <= t.maxIntegrantesEquipo
+    )
 
   -- Un equipo no puede participar en más de un torneo por temporada --
   inv TorneoUnicoPorTemporada:
-    self.torneos->forAll(t1, t2 | t1 <> t2 implies t1.temporada <> t2.temporada)
+    self.torneos->isUnique(t | t.temporada)
 
   -- La competición del equipo debe coincidir con la de los torneos en los que participa --
   inv ConsistenciaCompeticionConTorneo:
@@ -185,26 +239,36 @@ context Jugador
       self.edad > 40
     else
       true
-    endif endif endif endif
+    endif
 
   -- Deporte del jugador debe coincidir con el de los equipos en los que participa --
   inv  DeporteConsistenteConEquipos:
-    self.equipos -> forAll(e | e.deporte = self.deporte)
+    TiempoEquipo.allInstances()
+      ->select(te | te.jugadores = self and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
+      ->forAll(te | te.equipos.deporte = self.deporte)
 
   -- Solo puede haber un equipo nacional por jugador --
   inv EquipoNacionalUnico:
-    self.equipos -> select(e | e.competicion = TipoCompeticion::Nacional) -> size <=1
+    TiempoEquipo.allInstances()
+      ->select(te | te.jugadores = self and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
+      ->collect(te | te.equipos)
+      ->select(e | e.competicion = TipoCompeticion::Nacional)
+      ->size() <= 1
 
   -- Los equipos locales en los que participa un jugador no pueden coincidir en temporada --
   inv TemporadaUnicaEquiposLocales:
-  self.equipos->select(e | e.competicion = TipoCompeticion::Local)->forAll(e1, e2 |
-    e1 <> e2 implies
-      e1.torneos->forAll(t1 |  -- Para cada torneo (t1) del equipo local e1
-        e2.torneos->forAll(t2 | -- Y cada torneo (t2) del equipo local e2
-          t1.temporada <> t2.temporada -- Las temporadas DEBEN ser distintas
-        )
+    TiempoEquipo.allInstances()
+      ->select(te | te.jugadores = self and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
+      ->collect(te | te.equipos)
+      ->select(e | e.competicion = TipoCompeticion::Local)
+      ->forAll(e1, e2 |
+          e1 = e2 or
+          e1.torneos->forAll(t1 |
+            e2.torneos->forAll(t2 |
+              t1.temporada <> t2.temporada
+            )
+          )
       )
-  )
 
 end
 
@@ -214,15 +278,22 @@ context Árbitro
   
   -- Un árbitro no puede arbitrar dos partidos a la misma hora o fecha
   inv PartidoUnicoPorFechaHora:
-    self.partidos->forAll(p1, p2 | p1 <> p2 implies not(p1.hora <> p2.hora and p1.fecha <> p2.fecha))
+    self.partidos->forAll(p1, p2 |
+      p1 = p2 or
+      p1.hora <> p2.hora or
+      p1.fecha <> p2.fecha
+    )
+
 
   -- Un árbitro solo puede arbitrar partidos de su deporte
   inv DeporteConsistenteConPartidos:
-    self.partidos -> forAll(p | p.tipoDeporte = self.deporte)  
+    self.partidos -> forAll(p | 
+      p.tipoDeporte = self.deporte)  
 
   -- Un árbitro solo puede arbitrar partidos de su categoría
   inv ArbitraSoloSuCategoria:
-    self.partidos-> forAll(p | p.tipoCategoria = self.categoria)
+    self.partidos-> forAll(p | 
+      p.tipoCategoria = self.categoria)
 end
 
 
@@ -230,14 +301,15 @@ end
 context Entrenador
   -- Un entrenador no puede entrenar a varios equipos que pertenezcan al mismo torneo
   inv UnicoEquipoPorTorneo:
-    self.equipos->forAll(e1, e2 | e1 <> e2 implies 
+    self.equipos->forAll(e1, e2 | 
+      e1 <> e2 implies 
         e1.torneos->intersection(e2.torneos)->isEmpty()
     )
 
   -- Un entrenador solo puede entrenar equipos de su deporte
   inv DeporteConsistenteConEquipos:
     self.equipos -> forAll(e | e.deporte = self.deporte)  
-
+end
 
 
 context Narrador
@@ -247,7 +319,7 @@ context Narrador
 
   -- Un narrador solo puede narrar un torneo por temporada
   inv TorneoUnicoPorTemporada:
-    self.torneos->forAll(t1, t2 | t1 <> t2 implies t1.temporada <> t2.temporada)
+    self.torneos->isUnique(t | t.temporada)
 end
 
 
@@ -255,8 +327,9 @@ end
 context Persona
   -- El DNI de cada persona debe ser único --
   inv DNIUnico:
-    Persona.allInstances()->isUnique(DNI)
+    Persona.allInstances()->isUnique(p | p.DNI)
 
+  -- El DNI no puede estar vacío --
   inv DNINoVacio:
     not self.DNI.oclIsUndefined() and self.DNI.size() > 0
 end
