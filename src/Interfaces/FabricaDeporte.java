@@ -1,5 +1,12 @@
 package Interfaces;
 
+import GestorTorneos.Equipo;
+import GestorTorneos.Jugador;
+import GestorTorneos.Narrador;
+import GestorTorneos.Torneo;
+import GestorTorneos.Arbitro;
+import GestorTorneos.Partido;
+import GestorTorneos.Entrenador;
 /**
  * Abstract Factory: Declara la interfaz para crear las familias de objetos
  * relacionados (Equipo y Árbitro) sin especificar sus clases concretas.
