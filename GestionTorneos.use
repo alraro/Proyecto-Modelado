@@ -124,3 +124,21 @@ associationclass ParticipacionPartido between
     puntuacion: Integer
 end  
 --- End Association Classes ---
+
+--- Invariants ---
+constraints
+
+context Torneo
+
+context Partido
+
+context Equipo
+
+context Jugador
+
+context Árbitro
+
+context Entrenador
+
+context Narrador
+
