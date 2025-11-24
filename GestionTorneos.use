@@ -149,6 +149,7 @@ context Torneo
   -- El ganador debe ser un equipo participante del torneo
   inv GanadorEsParticipante:
     (self.ganador.oclIsUndefined() = false and self.ganador <> '') implies self.equipos->exists(e | e.nombre = self.ganador)  
+
 context Partido
 
 context Equipo
@@ -192,6 +193,15 @@ end
 context Árbitro
 
 context Entrenador
+  -- Un entrenador no puede entrenar a varios equipos que pertenezcan al mismo torneo
+  inv UnicoEquipoPorTorneo:
+    self.equipos->forAll(e1, e2 | e1 <> e2 implies 
+        e1.torneos->intersection(e2.torneos)->isEmpty()
+    )
+
+  -- Un entrenador solo puede entrenar equipos de su deporte
+  inv DeporteConsistenteConEquipos:
+    self.equipos -> forAll(e | e.deporte = self.deporte)  
 
 context Narrador
 
