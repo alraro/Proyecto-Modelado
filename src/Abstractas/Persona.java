@@ -1,10 +1,13 @@
 package Abstractas;
 
+import java.util.Objects;
+
 public abstract class Persona {
 	private String nombre;
 	private String Apellido1;
 	private String Apellido2;
 	private Integer Edad;
+	private String Dni;
 
 	public Persona(String nombre, String apellido1, String apellido2, Integer edad) {
 		this.nombre = nombre;
@@ -55,7 +58,19 @@ public abstract class Persona {
 			throw new IllegalArgumentException("Error poniendo nombre, formato: Nombre Apellido1 Apellido2");
 		}
 		setNombre(splitted[0]);
-		setNombre(splitted[1]);
-		setNombre(splitted[2]);
+		setApellido1(splitted[1]);
+		setApellido2(splitted[2]);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Persona persona)) return false;
+		return Objects.equals(Dni, persona.Dni);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(Dni);
 	}
 }
