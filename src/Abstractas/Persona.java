@@ -55,7 +55,7 @@ public abstract class Persona {
 			throw new IllegalArgumentException("Error poniendo nombre, formato: Nombre Apellido1 Apellido2");
 		}
 		setNombre(splitted[0]);
-		setNombre(splitted[1]);
-		setNombre(splitted[2]);
+		setApellido1(splitted[1]);
+		setApellido2(splitted[2]);
 	}
 }
