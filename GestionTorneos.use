@@ -68,6 +68,7 @@ class Equipo
     deporte: TipoDeporte
     categoria: TipoCategoria
     competicion: TipoCompeticion
+    pais: String
 end
 --- End Classes ---
 
@@ -144,7 +145,7 @@ context Torneo
 
   -- No pueden haber 2 equipos de la misma nacionalidad en un mismo torneo
   inv UnEquipoPorNacionalidad:
-    self.competicion = #Nacional implies self.equipos->forAll(e1, e2 | e1 <> e2 implies e1.pais <> e2.pais)  
+    self.competicion = TipoCompeticion::Nacional implies self.equipos-> forAll(e1, e2 | e1 <> e2 implies e1.pais <> e2.pais)
 
   -- El ganador debe ser un equipo participante del torneo
   inv GanadorEsParticipante:
@@ -213,7 +214,7 @@ context Árbitro
   
   -- Un árbitro no puede arbitrar dos partidos a la misma hora o fecha
   inv PartidoUnicoPorFechaHora:
-    self.partidos->forAll(p1, p2 | p1 <> p2 implies p1.hora <> p2.hora or p1.fecha <> p2.fecha)
+    self.partidos->forAll(p1, p2 | p1 <> p2 implies not(p1.hora <> p2.hora and p1.fecha <> p2.fecha))
 
   -- Un árbitro solo puede arbitrar partidos de su deporte
   inv DeporteConsistenteConPartidos:
@@ -254,8 +255,8 @@ end
 context Persona
   -- El DNI de cada persona debe ser único --
   inv DNIUnico:
-    Persona.allInstances()->isUnique(p | p.DNI)
+    Persona.allInstances()->isUnique(DNI)
 
   inv DNINoVacio:
-    self.dni.oclIsUndefined() and self.dni->size > 0
+    not self.DNI.oclIsUndefined() and self.DNI.size() > 0
 end
