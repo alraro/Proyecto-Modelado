@@ -150,13 +150,23 @@ context Torneo
   inv GanadorEsParticipante:
     (self.ganador.oclIsUndefined() = false and self.ganador <> '') implies self.equipos->exists(e | e.nombre = self.ganador)  
 
-<<<<<<< HEAD
     
-=======
->>>>>>> 5e6e1097b264156ab3b14d3520f56e20f39a6e0d
 context Partido
 
 context Equipo
+
+  -- El número de jugadores en el equipo no puede superar el máximo permitido por torneo --
+  inv MaxJugadoresPorTorneo:
+    self.torneos->forAll(t | self.jugadores->size <= t.maxIntegrantesEquipo)
+
+  -- Un equipo no puede participar en más de un torneo por temporada --
+  inv TorneoUnicoPorTemporada:
+    self.torneos->forAll(t1, t2 | t1 <> t2 implies t1.temporada <> t2.temporada)
+
+  -- La competición del equipo debe coincidir con la de los torneos en los que participa --
+  inv ConsistenciaCompeticionConTorneo:
+    self.torneos->forAll(t | t.competicion = self.competicion)
+
 
 context Jugador
   -- Edad deberá ser coherente con la categoría del jugador --
