@@ -4,13 +4,13 @@ enum TipoCategoria {Infantil, Juvenil, Adulto, Senior}
 enum TipoCompeticion {Local, Nacional}
 
 --- Classes ---
-abstract class Persona
+abstract class Deportes.Persona
   attributes
     nombre: String
     edad: Integer
 end
 
-class Jugador < Persona
+class Deportes.Jugador < Deportes.Persona
   attributes
     deporte: TipoDeporte
     tipoJugador: TipoJugador
@@ -18,7 +18,7 @@ class Jugador < Persona
     competicion: TipoCompeticion
 end
 
-class Árbitro < Persona
+class Árbitro < Deportes.Persona
   attributes
     deporte: TipoDeporte
     categoria: TipoCategoria
@@ -26,20 +26,20 @@ class Árbitro < Persona
     competicion: TipoCompeticion
 end
 
-class Entrenador < Persona
+class Deportes.Entrenador < Deportes.Persona
   attributes
     deporte: TipoDeporte
     competicion: TipoCompeticion
 end
 
-class Narrador < Persona
+class Deportes.Narrador < Deportes.Persona
   attributes
     deporte: TipoDeporte
     categoria: TipoCategoria
     competicion: TipoCompeticion  
 end 
 
-class Torneo
+class Deportes.Torneo
   attributes
     nombre: String
     deporte: TipoDeporte
@@ -51,7 +51,7 @@ class Torneo
     partidoJugado: Boolean
 end
 
-class Partido 
+class Deportes.Partido
   attributes
     tipoCategoria: TipoCategoria
     tipoCompeticion: TipoCompeticion
@@ -61,7 +61,7 @@ class Partido
     hora: String
 end
 
-class Equipo 
+class Deportes.Equipo
   attributes
     nombre: String
     deporte: TipoDeporte
@@ -72,53 +72,53 @@ end
 
 --- Associations ---
 association entrenadorEquipo between
-  Entrenador[1..*] role entrenadores
-  Equipo[1..*] role equipos
+  Deportes.Entrenador[1..*] role entrenadores
+  Deportes.Equipo[1..*] role equipos
 end
 
 association partidoTorneo between
-  Partido[1..*] role partidos
-  Torneo[1..*] role torneos
+  Deportes.Partido[1..*] role partidos
+  Deportes.Torneo[1..*] role torneos
 end
 
 association arbitroTorneo between
   Árbitro[1..*] role arbitros
-  Torneo[0..*] role torneos
+  Deportes.Torneo[0..*] role torneos
 end
 
 association narradorTorneo between
-  Narrador[1..*] role narradores
-  Torneo[0..*] role torneos
+  Deportes.Narrador[1..*] role narradores
+  Deportes.Torneo[0..*] role torneos
 end
 
 association arbitroPartido between
   Árbitro[1..*] role arbitros
-  Partido[0..*] role partidos
+  Deportes.Partido[0..*] role partidos
 end
 
 association narradorPartido between
-  Narrador[1..*] role narradores
-  Partido[0..*] role partidos
+  Deportes.Narrador[1..*] role narradores
+  Deportes.Partido[0..*] role partidos
 end
 
 association equipoTorneo between
-  Equipo[1..*] role equipos
-  Torneo[0..*] role torneos
+  Deportes.Equipo[1..*] role equipos
+  Deportes.Torneo[0..*] role torneos
 end
 --- End Associations ---
 
 --- Association Classes ---
 associationclass TiempoEquipo between
-  Jugador[*] role jugadores
-  Equipo[*] role equipos
+  Deportes.Jugador[*] role jugadores
+  Deportes.Equipo[*] role equipos
   attributes
     fechaInicio: String
     fechaFin: String
 end  
 
 associationclass ParticipacionPartido between
-  Partido[0..*] role partidos
-  Equipo[1..*] role equipos
+  Deportes.Partido[0..*] role partidos
+  Deportes.Equipo[1..*] role equipos
   attributes
     esLocal: Boolean
     puntuacion: Integer

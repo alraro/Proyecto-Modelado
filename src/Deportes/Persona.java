@@ -1,3 +1,5 @@
+package Deportes;
+
 public abstract class Persona {
 	private String nombre;
 	private String Apellido1;
