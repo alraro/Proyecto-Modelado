@@ -1,4 +1,42 @@
 package Deportes.Golf;
 
-public class FabricaGolf {
+import Abstractas.*;
+import Interfaces.FabricaDeporte;
+
+public class FabricaGolf implements FabricaDeporte {
+
+    @Override
+    public Equipo crearEquipo(String nombre) {
+        return null;
+    }
+
+    @Override
+    public Jugador crearJugador(String nombre, String posicion) {
+        return null;
+    }
+
+    @Override
+    public Narrador crearNarrador(String nombre) {
+        return null;
+    }
+
+    @Override
+    public Torneo crearTorneo(String nombre) {
+        return null;
+    }
+
+    @Override
+    public Arbitro crearArbitro(String nombre) {
+        return null;
+    }
+
+    @Override
+    public Entrenador crearEntrenador(String nombre) {
+        return null;
+    }
+
+    @Override
+    public Partido crearPartido(Equipo equipo1, Equipo equipo2) {
+        return null;
+    }
 }
