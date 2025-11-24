@@ -149,6 +149,8 @@ context Torneo
   -- El ganador debe ser un equipo participante del torneo
   inv GanadorEsParticipante:
     (self.ganador.oclIsUndefined() = false and self.ganador <> '') implies self.equipos->exists(e | e.nombre = self.ganador)  
+
+    
 context Partido
 
 context Equipo
