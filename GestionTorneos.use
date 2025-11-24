@@ -1,0 +1,126 @@
+enum TipoDeporte {Fútbol, Baloncesto, Volleyball, Golf, Tenis, Pádel}
+enum TipoJugador {Suplente, Titular}
+enum TipoCategoria {Infantil, Juvenil, Adulto, Senior}
+enum TipoCompeticion {Local, Nacional}
+
+--- Classes ---
+abstract class Persona
+  attributes
+    nombre: String
+    edad: Integer
+end
+
+class Jugador < Persona
+  attributes
+    deporte: TipoDeporte
+    tipoJugador: TipoJugador
+    categoria: TipoCategoria
+    competicion: TipoCompeticion
+end
+
+class Árbitro < Persona
+  attributes
+    deporte: TipoDeporte
+    categoria: TipoCategoria
+    disponibilidad: Boolean
+    competicion: TipoCompeticion
+end
+
+class Entrenador < Persona
+  attributes
+    deporte: TipoDeporte
+    competicion: TipoCompeticion
+end
+
+class Narrador < Persona
+  attributes
+    deporte: TipoDeporte
+    categoria: TipoCategoria
+    competicion: TipoCompeticion  
+end 
+
+class Torneo
+  attributes
+    nombre: String
+    deporte: TipoDeporte
+    temporada: Integer
+    categoria: TipoCategoria
+    competicion: TipoCompeticion
+    maxIntegrantesEquipo: Integer
+    ganador: String
+    partidoJugado: Boolean
+end
+
+class Partido 
+  attributes
+    tipoCategoria: TipoCategoria
+    tipoCompeticion: TipoCompeticion
+    tipoDeporte: TipoDeporte
+    lugar: String
+    fecha: String
+    hora: String
+end
+
+class Equipo 
+  attributes
+    nombre: String
+    deporte: TipoDeporte
+    categoria: TipoCategoria
+    competicion: TipoCompeticion
+end
+--- End Classes ---
+
+--- Associations ---
+association entrenadorEquipo between
+  Entrenador[1..*] role entrenadores
+  Equipo[1..*] role equipos
+end
+
+association partidoTorneo between
+  Partido[1..*] role partidos
+  Torneo[1..*] role torneos
+end
+
+association arbitroTorneo between
+  Árbitro[1..*] role arbitros
+  Torneo[0..*] role torneos
+end
+
+association narradorTorneo between
+  Narrador[1..*] role narradores
+  Torneo[0..*] role torneos
+end
+
+association arbitroPartido between
+  Árbitro[1..*] role arbitros
+  Partido[0..*] role partidos
+end
+
+association narradorPartido between
+  Narrador[1..*] role narradores
+  Partido[0..*] role partidos
+end
+
+association equipoTorneo between
+  Equipo[1..*] role equipos
+  Torneo[0..*] role torneos
+end
+--- End Associations ---
+
+--- Association Classes ---
+associationclass TiempoEquipo between
+  Jugador[*] role jugadores
+  Equipo[*] role equipos
+  attributes
+    fechaInicio: String
+    fechaFin: String
+end  
+
+associationclass ParticipacionPartido between
+  Partido[0..*] role partidos
+  Equipo[1..*] role equipos
+  attributes
+    esLocal: Boolean
+    puntuacion: Integer
+end  
+--- End Association Classes ---
