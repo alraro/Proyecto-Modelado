@@ -1,6 +1,4 @@
-import Enums.Categorias;
-import Enums.Deportes;
-import Enums.TipoJugador;
+package Abstractas;
 
 public abstract class Jugador extends Persona{
 
