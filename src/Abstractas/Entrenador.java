@@ -25,12 +25,25 @@ public abstract class Entrenador extends Persona {
 
         // RESTRICCIÓN: No puede entrenar a varios equipos en el mismo torneo
         for (Equipo e : equiposAsignados) {
-            assert !e.getTorneo().equals(nuevoEquipo.getTorneo())
-            : "El entrenador ya tiene un equipo en el torneo " + nuevoEquipo.getTorneo().getNombre();
+            for (Torneo t1 : e.torneosParticipados) {
+                for (Torneo t2 : nuevoEquipo.torneosParticipados) {
+                    assert !t1.equals(t2)
+                    : "El entrenador ya entrena al equipo " + e.getNombre() + " en el torneo " + t1.getNombre();
+                }
+            }
         }
         
         // Tras asegurarnos que se cumplen las restricciones, añadimos el equipo
         this.equiposAsignados.add(nuevoEquipo);
+    }
+
+    public void liberarEquipo(Equipo equipo) {
+        assert equipo != null : "No se puede liberar un equipo nulo";
+        
+        // Comprobamos si realmente lo tiene asignado
+        if (this.equiposAsignados.contains(equipo)) {
+            this.equiposAsignados.remove(equipo);
+        }
     }
 
     public TipoDeporte getTipoDeporte() {
