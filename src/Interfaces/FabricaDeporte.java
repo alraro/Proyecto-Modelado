@@ -1,6 +1,12 @@
 package Interfaces;
-
-g9
+import Equipo;
+import Jugador;
+import Narrador;
+import Torneo;
+import Arbitro;
+import Partido;
+import Entrenador;
+/**
  * Abstract Factory: Declara la interfaz para crear las familias de objetos
  * relacionados (Abstractas.Equipo y Árbitro) sin especificar sus clases concretas.
  */
