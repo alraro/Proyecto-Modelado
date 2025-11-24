@@ -5,10 +5,10 @@ import Abstractas.*;
 
 public class FabricaFutbol implements FabricaDeporte {
 
+
     @Override
     public Equipo crearEquipo(String nombre) {
-        Equipo e = new Equipo(nombre);
-        return e;
+        return null;
     }
 
     @Override
