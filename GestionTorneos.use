@@ -153,6 +153,8 @@ context Torneo
     
 context Partido
 
+
+
 context Equipo
 
   -- El número de jugadores en el equipo no puede superar el máximo permitido por torneo --
@@ -166,6 +168,7 @@ context Equipo
   -- La competición del equipo debe coincidir con la de los torneos en los que participa --
   inv ConsistenciaCompeticionConTorneo:
     self.torneos->forAll(t | t.competicion = self.competicion)
+
 
 
 context Jugador
@@ -204,7 +207,24 @@ context Jugador
 
 end
 
+
+
 context Árbitro
+  
+  -- Un árbitro no puede arbitrar dos partidos a la misma hora o fecha
+  inv PartidoUnicoPorFechaHora:
+    self.partidos->forAll(p1, p2 | p1 <> p2 implies p1.hora <> p2.hora or p1.fecha <> p2.fecha)
+
+  -- Un árbitro solo puede arbitrar partidos de su deporte
+  inv DeporteConsistenteConPartidos:
+    self.partidos -> forAll(p | p.tipoDeporte = self.deporte)  
+
+  -- Un árbitro solo puede arbitrar partidos de su categoría
+  inv ArbitraSoloSuCategoria:
+    self.partidos-> forAll(p | p.tipoCategoria = self.categoria)
+end
+
+
 
 context Entrenador
   -- Un entrenador no puede entrenar a varios equipos que pertenezcan al mismo torneo
@@ -217,7 +237,19 @@ context Entrenador
   inv DeporteConsistenteConEquipos:
     self.equipos -> forAll(e | e.deporte = self.deporte)  
 
+
+
 context Narrador
+  -- Un narrador solo puede narrar partidos de su deporte
+  inv DeporteConsistenteConPartidos:
+    self.partidos -> forAll(p | p.tipoDeporte = self.deporte)  
+
+  -- Un narrador solo puede narrar un torneo por temporada
+  inv TorneoUnicoPorTemporada:
+    self.torneos->forAll(t1, t2 | t1 <> t2 implies t1.temporada <> t2.temporada)
+end
+
+
 
 context Persona
   -- El DNI de cada persona debe ser único --
