@@ -2,49 +2,42 @@ package Abstractas;
 
 import java.util.ArrayList;
 import java.util.List;
+import Enumeraciones.TipoDeporte;
 
 public abstract class Narrador extends Persona {
-    protected String tipoDeporte;
+    protected TipoDeporte tipoDeporte;
     protected List<Torneo> torneosAsignados;
 
-    public Narrador(String nombre, String apellido1, String apellido2, Integer edad, String tipoDeporte) {
+    public Narrador(String nombre, String apellido1, String apellido2, Integer edad, TipoDeporte tipoDeporte) {
         super(nombre, apellido1, apellido2, edad);
+        assert tipoDeporte != null : "El tipo de deporte no puede ser nulo";
         this.tipoDeporte = tipoDeporte;
         this.torneosAsignados = new ArrayList<>();
-        
-        assert this.tipoDeporte != null : "El narrador debe tener un deporte";
     }
 
     public void asignarTorneo(Torneo nuevoTorneo) {
-        // 1. Precondición básica
+        // 1. PRECONDICIÓN: El torneo no puede ser nulo
         assert nuevoTorneo != null : "El torneo no puede ser nulo";
 
-        // 2. Precondición: Deporte correcto (si aplica en tu modelo)
-        // assert nuevoTorneo.getTipoDeporte().equals(this.tipoDeporte) : "Deporte incorrecto";
+        // 2. PRECONDICIÓN: El deporte debe coincidir
+        assert nuevoTorneo.getTipoDeporte() == this.tipoDeporte
+        : "Precondición violada: El narrador de " + this.tipoDeporte + " no puede narrar " + nuevoTorneo.getTipoDeporte();
 
-        // 3. Precondición: Temporadas no solapadas
-        boolean temporadaOcupada = false;
-        String temporadaConflictiva = "";
-        
+        // 3. PRECONDICIÓN: Temporadas no solapadas    
         for (Torneo t : torneosAsignados) {
-            if (t.getTemporada().equals(nuevoTorneo.getTemporada())) {
-                temporadaOcupada = true;
-                temporadaConflictiva = t.getTemporada();
-                break;
-            }
+            assert !t.getTemporada().equals(nuevoTorneo.getTemporada())
+            : "Precondición violada: El narrador ya trabaja en la temporada " + nuevoTorneo.getTemporada();
         }
 
-        assert !temporadaOcupada 
-            : "Precondición violada: El narrador ya trabaja en la temporada " + temporadaConflictiva;
-
-        // Ejecución
+        // Tras asegurarnos que se cumplen las restricciones, añadimos el torneo
         this.torneosAsignados.add(nuevoTorneo);
-        
-        // Post-condición / Invariante
-        assert validarInvariante() : "Estado del narrador inconsistente tras asignar torneo";
     }
     
-    protected boolean validarInvariante() {
-        return this.torneosAsignados != null;
+    public TipoDeporte getTipoDeporte() {
+        return tipoDeporte;
+    }
+
+    public List<Torneo> getTorneosAsignados() {
+        return torneosAsignados;
     }
 }

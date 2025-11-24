@@ -2,7 +2,6 @@ package Abstractas;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import Enumeraciones.TipoDeporte;
 
 public abstract class Entrenador extends Persona {
