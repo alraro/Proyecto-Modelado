@@ -2,7 +2,7 @@ package Interfaces;
 
 /**
  * Abstract Factory: Declara la interfaz para crear las familias de objetos
- * relacionados (Equipo y Árbitro) sin especificar sus clases concretas.
+ * relacionados (Abstractas.Equipo y Árbitro) sin especificar sus clases concretas.
  */
 
 public interface FabricaDeporte {
