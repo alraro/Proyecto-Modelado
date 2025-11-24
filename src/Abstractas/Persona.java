@@ -1,3 +1,5 @@
+package Abstractas;
+
 public abstract class Persona {
 	private String nombre;
 	private String Apellido1;
@@ -45,5 +47,15 @@ public abstract class Persona {
 
 	public String getNombreCompleto() {
 		return this.nombre + " " + this.Apellido1 + " " + this.Apellido2;
+	}
+
+	public void setNombreCompleto(String name) {
+		String[] splitted = name.split(" ");
+		if (splitted.length != 3) {
+			throw new IllegalArgumentException("Error poniendo nombre, formato: Nombre Apellido1 Apellido2");
+		}
+		setNombre(splitted[0]);
+		setNombre(splitted[1]);
+		setNombre(splitted[2]);
 	}
 }

@@ -4,13 +4,13 @@ enum TipoCategoria {Infantil, Juvenil, Adulto, Senior}
 enum TipoCompeticion {Local, Nacional}
 
 --- Classes ---
-abstract class Persona
+abstract class Abstractas.Persona
   attributes
     nombre: String
     edad: Integer
 end
 
-class Jugador < Persona
+class Deportes.Abstractas.Jugador < Abstractas.Persona
   attributes
     deporte: TipoDeporte
     tipoJugador: TipoJugador
@@ -18,7 +18,7 @@ class Jugador < Persona
     competicion: TipoCompeticion
 end
 
-class Árbitro < Persona
+class Árbitro < Abstractas.Persona
   attributes
     deporte: TipoDeporte
     categoria: TipoCategoria
@@ -26,20 +26,20 @@ class Árbitro < Persona
     competicion: TipoCompeticion
 end
 
-class Entrenador < Persona
+class Abstractas.Entrenador < Abstractas.Persona
   attributes
     deporte: TipoDeporte
     competicion: TipoCompeticion
 end
 
-class Narrador < Persona
+class Abstractas.Narrador < Abstractas.Persona
   attributes
     deporte: TipoDeporte
     categoria: TipoCategoria
     competicion: TipoCompeticion  
 end 
 
-class Torneo
+class Abstractas.Torneo
   attributes
     nombre: String
     deporte: TipoDeporte
@@ -52,7 +52,7 @@ class Torneo
     partidoJugado: Boolean
 end
 
-class Partido 
+class Abstractas.Partido
   attributes
     tipoCategoria: TipoCategoria
     tipoCompeticion: TipoCompeticion
@@ -62,7 +62,7 @@ class Partido
     hora: String
 end
 
-class Equipo 
+class Abstractas.Equipo
   attributes
     nombre: String
     deporte: TipoDeporte
@@ -73,53 +73,53 @@ end
 
 --- Associations ---
 association entrenadorEquipo between
-  Entrenador[1..*] role entrenadores
-  Equipo[1..*] role equipos
+  Abstractas.Entrenador[1..*] role entrenadores
+  Abstractas.Equipo[1..*] role equipos
 end
 
 association partidoTorneo between
-  Partido[1..*] role partidos
-  Torneo[1..*] role torneos
+  Abstractas.Partido[1..*] role partidos
+  Abstractas.Torneo[1..*] role torneos
 end
 
 association arbitroTorneo between
   Árbitro[1..*] role arbitros
-  Torneo[0..*] role torneos
+  Abstractas.Torneo[0..*] role torneos
 end
 
 association narradorTorneo between
-  Narrador[1..*] role narradores
-  Torneo[0..*] role torneos
+  Abstractas.Narrador[1..*] role narradores
+  Abstractas.Torneo[0..*] role torneos
 end
 
 association arbitroPartido between
   Árbitro[1..*] role arbitros
-  Partido[0..*] role partidos
+  Abstractas.Partido[0..*] role partidos
 end
 
 association narradorPartido between
-  Narrador[1..*] role narradores
-  Partido[0..*] role partidos
+  Abstractas.Narrador[1..*] role narradores
+  Abstractas.Partido[0..*] role partidos
 end
 
 association equipoTorneo between
-  Equipo[1..*] role equipos
-  Torneo[0..*] role torneos
+  Abstractas.Equipo[1..*] role equipos
+  Abstractas.Torneo[0..*] role torneos
 end
 --- End Associations ---
 
 --- Association Classes ---
 associationclass TiempoEquipo between
-  Jugador[*] role jugadores
-  Equipo[*] role equipos
+  Deportes.Abstractas.Jugador[*] role jugadores
+  Abstractas.Equipo[*] role equipos
   attributes
     fechaInicio: String
     fechaFin: String
 end  
 
 associationclass ParticipacionPartido between
-  Partido[0..*] role partidos
-  Equipo[1..*] role equipos
+  Abstractas.Partido[0..*] role partidos
+  Abstractas.Equipo[1..*] role equipos
   attributes
     esLocal: Boolean
     puntuacion: Integer
@@ -130,25 +130,6 @@ end
 constraints
 
 context Torneo
-  -- No puede haber más integrantes por equipo que el número máximo
-  inv MaxIntegrantesEquipo: 
-    self.equipos->forAll(e | e.tiempoEquipo->select(te | te.fechaFin = '' or te.fechaFin.oclIsUndefined())->size() <= self.maxIntegrantesEquipo)
-
-  -- Los tipos del equipo tiene que coincidir con los tipos del torneo
-  inv CoherenciaInscripcion:
-    self.equipos->forAll(e | 
-        e.competicion = self.competicion and
-        e.deporte = self.deporte and
-        e.categoria = self.categoria
-    )
-
-  -- No pueden haber 2 equipos de la misma nacionalidad en un mismo torneo
-  inv UnEquipoPorNacionalidad:
-    self.competicion = #Nacional implies self.equipos->forAll(e1, e2 | e1 <> e2 implies e1.pais <> e2.pais)  
-
-  -- El ganador debe ser un equipo participante del torneo
-  inv GanadorEsParticipante:
-    (self.ganador.oclIsUndefined() = false and self.ganador <> '') implies self.equipos->exists(e | e.nombre = self.ganador)  
 
 context Partido
 
@@ -162,4 +143,3 @@ context Entrenador
 
 context Narrador
 
---- End Invariants ---
