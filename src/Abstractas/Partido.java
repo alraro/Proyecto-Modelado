@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Partido {
     private Torneo torneo;
@@ -19,13 +20,18 @@ public abstract class Partido {
     private TipoCompeticion competicion;
     private List<Arbitro> arbitros;
     private List<Narrador> narradores;
+    private Map<Jugador, TipoJugador> alineacionLocal;
+    private Map<Jugador, TipoJugador> alineacionVisitante;
 
-    public Partido(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora) {
+    public Partido(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora, Map<Jugador, TipoJugador> alineacionLocal, Map<Jugador, TipoJugador> alineacionVisitante) {
         assert torneo != null : "El partido debe pertenecer a un torneo";
         assert local != null : "El equipo local no puede ser nulo";
         assert visitante != null : "El equipo visitante no puede ser nulo";
         assert lugar != null && !lugar.isBlank() : "El lugar es obligatorio";
         assert fecha != null && hora != null : "Fecha y hora son obligatorias";
+        assert alineacionLocal != null : 
+
+
         // RESTRICCIÓN: Equipos distintos
         assert !local.equals(visitante) : "Un equipo no puede jugar contra sí mismo";
 

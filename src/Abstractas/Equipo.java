@@ -53,11 +53,11 @@ public abstract class Equipo {
 
         // RESTRICCIÓN: El deporte debe coincidir
         assert nuevoJugador.getTipoDeporte() == this.tipoDeporte
-                : "Un jugador de " + nuevoJugador.getTipoDeporte() + " no puede jugar en un equipo de " + this.tipoDeporte;
+        : "Un jugador de " + nuevoJugador.getTipoDeporte() + " no puede jugar en un equipo de " + this.tipoDeporte;
 
         // RESTRICCIÓN: Límite de plantilla (Requisito del proyecto)
         assert jugadores.size() < (maxSuplentes + maxTitulares)
-                : "El equipo ha alcanzado el máximo de " + (maxSuplentes + maxTitulares) + " jugadores. No caben más.";
+        : "El equipo ha alcanzado el máximo de " + (maxSuplentes + maxTitulares) + " jugadores. No caben más.";
 
         // Intentamos fichar al jugador
         nuevoJugador.registrarEquipo(this);
