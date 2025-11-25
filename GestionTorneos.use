@@ -1,10 +1,11 @@
 model GestionTorneos
 
--- Enums --
+--- Enumerations ---
 enum TipoDeporte {Futbol, Baloncesto, Volleyball, Golf, Tenis, PPadel}
 enum TipoJugador {Suplente, Titular}
 enum TipoCategoria {Infantil, Juvenil, Senior, Veterano}
 enum TipoCompeticion {Local, Nacional}
+--- End Enumerations ---
 
 --- Classes ---
 abstract class Persona
@@ -142,7 +143,6 @@ context Torneo
         -> size() <= self.maxIntegrantesEquipo
     )
 
-
   -- Los tipos del equipo tiene que coincidir con los tipos del torneo
   inv CoherenciaInscripcion:
     self.equipos->forAll(e | 
@@ -159,7 +159,7 @@ context Torneo
   inv GanadorEsParticipante:
     not self.ganador.oclIsUndefined() implies self.equipos->includes(self.ganador)  
 
-    
+
 context Partido
   -- Los equipos participantes deben pertenecer al torneo del partido --
   inv EquiposPertenecenAlTorneo:
@@ -186,7 +186,6 @@ context Partido
         p.hora <> self.hora
     )
 
-
   -- Un partido no puede tener equipos locales y nacionales a la vez --
   inv NoLocalVSNacional:
     not(
@@ -207,9 +206,7 @@ context Partido
       -> size() = 1
 
 
-
 context Equipo
-
   -- El número de jugadores en el equipo no puede superar el máximo permitido por torneo --
   inv MaxJugadoresPorTorneo:
     self.torneos->forAll(t |
@@ -226,7 +223,6 @@ context Equipo
   -- La competición del equipo debe coincidir con la de los torneos en los que participa --
   inv ConsistenciaCompeticionConTorneo:
     self.torneos->forAll(t | t.competicion = self.competicion)
-
 
 
 context Jugador
@@ -275,7 +271,6 @@ context Jugador
 
 
 context Arbitro
-  
   -- Un árbitro no puede arbitrar dos partidos a la misma hora o fecha
   inv PartidoUnicoPorFechaHora:
     self.partidos->forAll(p1, p2 |
@@ -283,7 +278,6 @@ context Arbitro
       p1.hora <> p2.hora or
       p1.fecha <> p2.fecha
     )
-
 
   -- Un árbitro solo puede arbitrar partidos de su deporte
   inv DeporteConsistenteConPartidos:
@@ -294,7 +288,6 @@ context Arbitro
   inv ArbitraSoloSuCategoria:
     self.partidos-> forAll(p | 
       p.tipoCategoria = self.categoria)
-
 
 
 context Entrenador
@@ -310,8 +303,6 @@ context Entrenador
     self.equipos -> forAll(e | e.deporte = self.deporte)  
 
 
-
-
 context Narrador
   -- Un narrador solo puede narrar partidos de su deporte
   inv DeporteConsistenteConPartidos:
@@ -322,9 +313,6 @@ context Narrador
     self.torneos->isUnique(t | t.temporada)
 
 
-
-
-
 context Persona
   -- El DNI de cada persona debe ser único --
   inv DNIUnico:
@@ -333,5 +321,4 @@ context Persona
   -- El DNI no puede estar vacío --
   inv DNINoVacio:
     not self.DNI.oclIsUndefined() and self.DNI.size() > 0
-
-
+--- End Invariants ---    
