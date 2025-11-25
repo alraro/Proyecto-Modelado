@@ -8,7 +8,6 @@ public abstract class Torneo {
     private String nombre;
     private Pais paisSede;
     private String temporada;
-    private int maxIntegrantesEquipo;
     private TipoDeporte tipoDeporte;
     private Categoria categoria;
     private TipoCompeticion competicion;
@@ -19,13 +18,12 @@ public abstract class Torneo {
     private Equipo ganador;
     private int duracionPartidos;// en minutos
 
-    public Torneo(String nombre, Pais paisSede, String temporada, int maxIntegrantes,
-                  TipoDeporte tipoDeporte, Categoria categoria, TipoCompeticion competicion, int duracionPartidos) {
+    public Torneo(String nombre, Pais paisSede, String temporada,
+        TipoDeporte tipoDeporte, Categoria categoria, TipoCompeticion competicion, int duracionPartidos) {
 
         assert nombre != null && !nombre.isBlank() : "El nombre es obligatorio";
         assert paisSede != null : "Debe definirse un país sede";
         assert temporada != null && !temporada.isBlank() : "La temporada es obligatoria";
-        assert maxIntegrantes > 0 : "El cupo de jugadores debe ser positivo";
         assert tipoDeporte != null : "El deporte es obligatorio";
         assert categoria != null : "La categoría es obligatoria";
         assert competicion != null : "El tipo de competición es obligatorio";
@@ -33,7 +31,6 @@ public abstract class Torneo {
         this.nombre = nombre;
         this.paisSede = paisSede;
         this.temporada = temporada;
-        this.maxIntegrantesEquipo = maxIntegrantes;
         this.tipoDeporte = tipoDeporte;
         this.categoria = categoria;
         this.competicion = competicion;
@@ -56,10 +53,6 @@ public abstract class Torneo {
         // RESTRICCIÓN: El equipo tiene que ser de la misma categoría que el torneo
         assert equipo.getCategoria() == this.categoria
         : "Categoría incorrecta: Se espera " + this.categoria;
-
-        // RESTRICCIÓN: El equipo no puede tener más jugadores que el máximo permitido por el torneo
-        assert equipo.getJugadores().size() <= this.maxIntegrantesEquipo 
-        : "El equipo excede el límite de participantes de este torneo (" + maxIntegrantesEquipo + ")";
 
         // RESTRICCIÓN: El equipo no puede estar ya inscrito
         assert !this.equiposInscritos.contains(equipo) 
@@ -160,10 +153,6 @@ public abstract class Torneo {
 
     public String getTemporada() {
         return temporada;
-    }
-
-    public int getMaxIntegrantesEquipo() {
-        return maxIntegrantesEquipo;
     }
 
     public TipoDeporte getTipoDeporte() {

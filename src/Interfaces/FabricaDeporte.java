@@ -12,7 +12,7 @@ import java.time.LocalTime;
  */
 public interface FabricaDeporte {
     // Métodos de fabricación de componentes
-    Torneo crearTorneo(String nombre, Pais pais, String temporada, int maxIntegrantesEquipo, Categoria categoria, TipoCompeticion competicion, int duracionPartidos);
+    Torneo crearTorneo(String nombre, Pais pais, String temporada, Categoria categoria, TipoCompeticion competicion, int duracionPartidos);
 
     Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais, int titulares, int suplentes);
 
