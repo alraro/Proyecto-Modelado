@@ -12,17 +12,17 @@ import java.time.LocalTime;
  */
 public interface FabricaDeporte {
     // Métodos de fabricación de componentes
-    Torneo crearTorneo(String nombre, Pais pais, String temporada, int maxIntegrantesEquipo ,Categoria categoria, TipoCompeticion competicion);
-    
-    Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais);
-    
-    Jugador crearJugador(String nombre, String ap1, String ap2, int edad, Pais nacionalidad, Categoria categoria);
-    
-    Entrenador crearEntrenador(String nombre, String ap1, String ap2, int edad);
-    
-    Arbitro crearArbitro(String nombre, String ap1, String ap2, int edad, List<Categoria> categorias, TipoCompeticion ambito);
-    
-    Narrador crearNarrador(String nombre, String ap1, String ap2, int edad);
-    
+    Torneo crearTorneo(String nombre, Pais pais, String temporada, int maxIntegrantesEquipo, Categoria categoria, TipoCompeticion competicion);
+
+    Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais, int titulares, int suplentes);
+
+    Jugador crearJugador(String nombre, String ap1, String ap2, int edad, Pais nacionalidad, Categoria categoria, String dni);
+
+    Entrenador crearEntrenador(String nombre, String ap1, String ap2, int edad, String dni);
+
+    Arbitro crearArbitro(String nombre, String ap1, String ap2, int edad, String dni, List<Categoria> categorias, TipoCompeticion ambito);
+
+    Narrador crearNarrador(String nombre, String ap1, String ap2, int edad, String dni);
+
     Partido crearPartido(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora);
 }

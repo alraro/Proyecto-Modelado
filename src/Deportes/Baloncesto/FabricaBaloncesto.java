@@ -15,28 +15,28 @@ public class FabricaBaloncesto implements FabricaDeporte {
     }
 
     @Override
-    public Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais) {
-        return new EquipoBaloncesto(nombre, categoria, competicion, pais);
+    public Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais, int titulares, int suplentes) {
+        return new EquipoBaloncesto(nombre, categoria, competicion, pais, titulares, suplentes);
     }
 
     @Override
-    public Jugador crearJugador(String nombre, String ap1, String ap2, int edad, Pais nacionalidad, Categoria categoria) {
-        return new JugadorBaloncesto(nombre, ap1, ap2, edad, nacionalidad, categoria);
+    public Jugador crearJugador(String nombre, String ap1, String ap2, int edad, Pais nacionalidad, Categoria categoria, String dni) {
+        return new JugadorBaloncesto(nombre, ap1, ap2, edad, nacionalidad, categoria, dni);
     }
 
     @Override
-    public Entrenador crearEntrenador(String nombre, String ap1, String ap2, int edad) {
-        return new EntrenadorBaloncesto(nombre, ap1, ap2, edad);
+    public Entrenador crearEntrenador(String nombre, String ap1, String ap2, int edad, String dni) {
+        return new EntrenadorBaloncesto(nombre, ap1, ap2, edad, dni);
     }
 
     @Override
-    public Arbitro crearArbitro(String nombre, String ap1, String ap2, int edad, List<Categoria> categorias, TipoCompeticion competicion) {
-        return new ArbitroBaloncesto(nombre, ap1, ap2, edad, categorias, competicion);
+    public Arbitro crearArbitro(String nombre, String ap1, String ap2, int edad, String dni, List<Categoria> categorias, TipoCompeticion competicion) {
+        return new ArbitroBaloncesto(nombre, ap1, ap2, edad, dni, categorias, competicion);
     }
 
     @Override
-    public Narrador crearNarrador(String nombre, String ap1, String ap2, int edad) {
-        return new NarradorBaloncesto(nombre, ap1, ap2, edad);
+    public Narrador crearNarrador(String nombre, String ap1, String ap2, int edad, String dni) {
+        return new NarradorBaloncesto(nombre, ap1, ap2, edad, dni);
     }
 
     @Override
