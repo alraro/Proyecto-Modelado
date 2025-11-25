@@ -9,11 +9,6 @@ public abstract class Entrenador extends Persona {
     private List<Equipo> equiposAsignados;
 
 
-    // REQUISITO INICIAL: "No puede tener un equipo con más miembros que el máximo"
-    // Te faltaba este atributo para cumplir esa restricción
-    private int maxJugadores;
-
-
     public Entrenador(String nombre, String apellido1, String apellido2, String dni, Integer edad, TipoDeporte tipoDeporte) {
         super(nombre, apellido1, apellido2, edad, dni);
         assert tipoDeporte != null : "El tipo de deporte no puede ser nulo";

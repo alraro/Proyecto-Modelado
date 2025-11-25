@@ -49,7 +49,7 @@ public abstract class Arbitro extends Persona {
             : "El árbitro no está habilitado para la categoría " + nuevoPartido.getCategoria();
 
         // RESTRICCIÓN: Disponibilidad (No partidos a la misma hora)
-        assert estaDisponible(nuevoPartido.getFecha(), nuevoPartido.getHora(), nuevoPartido.getDuracion())
+        assert estaDisponible(nuevoPartido.getFecha(), nuevoPartido.getHora(), nuevoPartido.getTorneo().getDuracionPartidos())
                 : "El árbitro no está disponible en ese horario";
 
         // Si todo es correcto, se añade a la agenda
@@ -69,7 +69,7 @@ public abstract class Arbitro extends Persona {
 
             // Comprobamos si hay solapamiento
             LocalTime horaInicioExistente = p.getHora();
-            LocalTime horaFinExistente = horaInicioExistente.plusMinutes(p.getDuracion());
+            LocalTime horaFinExistente = horaInicioExistente.plusMinutes(p.getTorneo().getDuracionPartidos());
             // Verificamos si los intervalos de tiempo se solapan
             boolean solapan = !(horaFinConDescanso.isBefore(horaInicioExistente) || hora.isAfter(horaFinExistente.plusMinutes(TIEMPO_DESCANSO_MINUTOS)));
             if (solapan) {
@@ -78,6 +78,8 @@ public abstract class Arbitro extends Persona {
         }
         return true; // No hay conflictos
     }
+
+
     public TipoDeporte getTipoDeporte() {
         return tipoDeporte;
     }
