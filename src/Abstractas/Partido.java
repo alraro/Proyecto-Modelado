@@ -44,6 +44,7 @@ public abstract class Partido {
         this.lugar = lugar;
         this.fecha = fecha;
         this.hora = hora;
+        this.duracion = duracion;
         this.resultado = null; // Aún no se ha jugado
         this.arbitros = new ArrayList<>();
         this.narradores = new ArrayList<>();
@@ -93,6 +94,14 @@ public abstract class Partido {
         assert resultado != null && !resultado.isBlank() : "El resultado no puede estar vacío";
 
         this.resultado = resultado;
+    }
+
+    public int getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(int duracion) {
+        this.duracion = duracion;
     }
 
     public Torneo getTorneo() {

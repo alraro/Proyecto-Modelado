@@ -1,5 +1,7 @@
 package Abstractas;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Objects;
 
 public abstract class Persona {
@@ -78,7 +80,7 @@ public abstract class Persona {
 		return Objects.equals(Dni, persona.Dni);
 	}
 
-	@Override
+    @Override
 	public int hashCode() {
 		return Objects.hashCode(Dni);
 	}

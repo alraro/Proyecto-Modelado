@@ -44,13 +44,13 @@ public abstract class Arbitro extends Persona {
         assert nuevoPartido.getTipoDeporte() == this.tipoDeporte
             : "Un árbitro de " + this.tipoDeporte + " no puede arbitrar " + nuevoPartido.getTipoDeporte();
 
-        // RESTRICCIÓN: El arbitro debe estar cualificado para la categoría del partido
+        // RESTRICCIÓN: El árbitro debe estar cualificado para la categoría del partido
         assert this.categoriasPermitidas.contains(nuevoPartido.getCategoria())
             : "El árbitro no está habilitado para la categoría " + nuevoPartido.getCategoria();
 
         // RESTRICCIÓN: Disponibilidad (No partidos a la misma hora)
         // El assert queda limpio y en una sola línea al principio
-        assert estaDisponible(nuevoPartido.getFecha(), nuevoPartido.getHora())
+        assert estaDisponible(nuevoPartido.getFecha(), nuevoPartido.getHora(), nuevoPartido.getDuracion())
                 : "El árbitro no está disponible en ese horario";
 
         // Si todo es correcto, se añade a la agenda
@@ -59,16 +59,26 @@ public abstract class Arbitro extends Persona {
 
 
     // Método auxiliar privado para comprobar disponibilidad
-    private boolean estaDisponible(LocalDate fecha, LocalTime hora) {
+    private boolean estaDisponible(LocalDate fecha, LocalTime hora, int duracion) {
+        final int TIEMPO_DESCANSO_MINUTOS = 30; // Tiempo de descanso entre partidos para los árbitros
+        LocalTime horaFinNuevoPartido = hora.plusMinutes(duracion);
+        LocalTime horaFinConDescanso = horaFinNuevoPartido.plusMinutes(TIEMPO_DESCANSO_MINUTOS);
         for (Partido p : partidosAsignados) {
-            // Comprobamos fecha y hora
-            if (p.getFecha().equals(fecha) && p.getHora().equals(hora) && !p.isFinalizado()) {
-                return false; // No está disponible, hay conflicto
+            if (!p.getFecha().equals(fecha)) {
+                continue; // Si es en otro día, no hay conflicto
+            }
+
+            // Comprobamos si hay solapamiento
+            LocalTime horaInicioExistente = p.getHora();
+            LocalTime horaFinExistente = horaInicioExistente.plusMinutes(p.getDuracion());
+            // Verificamos si los intervalos de tiempo se solapan
+            boolean solapan = !(horaFinConDescanso.isBefore(horaInicioExistente) || hora.isAfter(horaFinExistente.plusMinutes(TIEMPO_DESCANSO_MINUTOS)));
+            if (solapan) {
+                return false; // Hay conflicto
             }
         }
-        return true; // No se encontró conflicto
+        return true; // No hay conflictos
     }
-
     public TipoDeporte getTipoDeporte() {
         return tipoDeporte;
     }
