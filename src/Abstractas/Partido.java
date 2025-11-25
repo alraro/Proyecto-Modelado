@@ -20,7 +20,7 @@ public abstract class Partido {
     private List<Arbitro> arbitros;
     private List<Narrador> narradores;
 
-    public Partido(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora, int duracion) {
+    public Partido(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora) {
         assert torneo != null : "El partido debe pertenecer a un torneo";
         assert local != null : "El equipo local no puede ser nulo";
         assert visitante != null : "El equipo visitante no puede ser nulo";
