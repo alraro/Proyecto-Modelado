@@ -52,32 +52,6 @@ public abstract class Entrenador extends Persona {
         }
     }
 
-    // PROTECTED: Solo accesible por clases hijas y del mismo paquete (Torneo)
-    protected void inscribirEnTorneo(Torneo nuevoTorneo) {
-        assert nuevoTorneo != null : "No puedes inscribirte a un torneo nulo";
-
-        // RESTRICCIÓN 1: No estar en dos torneos la misma temporada
-        for (Torneo t : torneosParticipados) {
-            assert !t.getTemporada().equals(nuevoTorneo.getTemporada())
-                    : "El equipo ya juega otro torneo en la temporada " + t.getTemporada();
-        }
-
-        // RESTRICCIÓN 2 (NUEVA): Verificar conflicto del entrenador
-        // Si ya tenemos entrenador, verificamos que él no tenga otro equipo en ESTE torneo nuevo
-        if (this.entrenador != null) {
-            for (Equipo otroEquipo : this.entrenador.getEquiposAsignados()) {
-                // Saltamos la comprobación con nosotros mismos
-                if (otroEquipo == this) continue;
-
-                // Si el entrenador tiene otro equipo, chequeamos sus torneos
-                assert !otroEquipo.getTorneos().contains(nuevoTorneo)
-                        : "Conflicto: El entrenador " + entrenador.getNombre() + " ya dirige al equipo " + otroEquipo.getNombre() + " en este torneo.";
-            }
-        }
-
-        this.torneosParticipados.add(nuevoTorneo);
-    }
-
     public TipoDeporte getTipoDeporte() {
         return tipoDeporte;
     }
