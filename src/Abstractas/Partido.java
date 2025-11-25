@@ -29,8 +29,10 @@ public abstract class Partido {
         assert visitante != null : "El equipo visitante no puede ser nulo";
         assert lugar != null && !lugar.isBlank() : "El lugar es obligatorio";
         assert fecha != null && hora != null : "Fecha y hora son obligatorias";
-        assert alineacionLocal != null : 
-
+        assert alineacionLocal != null :  "La alineación local no puede ser nula";
+        assert alineacionVisitante != null :  "La alineación visitante no puede ser nula";
+        assert validarAlineacion(alineacionLocal, local) : "Alineación local inválida";
+        assert validarAlineacion(alineacionVisitante, visitante) : "Alineación visitante inválida";
 
         // RESTRICCIÓN: Equipos distintos
         assert !local.equals(visitante) : "Un equipo no puede jugar contra sí mismo";
@@ -58,6 +60,32 @@ public abstract class Partido {
         this.competicion = local.getTipoCompeticion();
     }
 
+    // Método para asignar alineaciones a ambos equipos
+    private boolean validarAlineacion(Map<Jugador, TipoJugador> alineacion, Equipo equipo) {
+        int titulares = 0;
+        int suplentes = 0;
+
+        for (Map.Entry<Jugador, TipoJugador> entry : alineacion.entrySet()) {
+            Jugador jugador = entry.getKey();
+            TipoJugador tipo = entry.getValue();
+
+            // RESTRICCIÓN: El jugador debe pertenecer al equipo
+            assert equipo.getJugadores().contains(jugador)
+            : "El jugador " + jugador.getNombre() + " no pertenece al equipo " + equipo.getNombre();
+
+            if (tipo == TipoJugador.TITULAR) {
+                titulares++;
+            } else if (tipo == TipoJugador.SUPLENTE) {
+                suplentes++;
+            }
+        }
+
+        // RESTRICCIÓN: Debe no superarse el número máximo de titulares y suplentes, el cual, es independiente del equipo
+        assert titulares <= getEquipoLocal().getMaxTitulares() : "Debe haber" + getEquipoLocal().getMaxTitulares() + " jugadores titulares como máximo";
+        assert suplentes <= getEquipoLocal().getMaxSuplentes() : "Debe haber" + getEquipoLocal().getMaxTitulares() + " jugadores suplente como máximo";
+
+        return true;
+    }
     public void asignarArbitro(Arbitro arbitro) {
         // RESTRICCIÓN: El árbitro no puede ser nulo
         assert arbitro != null : "Árbitro nulo";
