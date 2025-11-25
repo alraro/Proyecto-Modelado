@@ -53,17 +53,18 @@ public abstract class Partido {
         this.competicion = local.getTipoCompeticion();
     }
 
-    public void asignarArbitro(Arbitro arbitro) { // --- ARBITRO AUN NO ESTA IMPLEMENTADO ---
+    public void asignarArbitro(Arbitro arbitro) {
         // RESTRICCIÓN: El árbitro no puede ser nulo
         assert arbitro != null : "Árbitro nulo";
-
-        // RESTRICCIÓN: El árbitro debe ser del mismo deporte que el partido
-        assert arbitro.getTipoDeporte() == this.tipoDeporte : "Árbitro de deporte incorrecto";
 
         // RESTRICCIÓN: El árbitro debe estar contratado para el torneo
         assert this.torneo.getArbitros().contains(arbitro)
         : "El árbitro " + arbitro.getNombre() + " no ha sido contratado para el torneo " + torneo.getNombre();
 
+        // Intentamos añadir el partido a la agenda del árbitro, añadirPartido ya tiene el resto de asserts
+        arbitro.añadirPartido(this);
+
+        // Si todo es correcto, lo añadimos a la lista de árbitros del partido
         this.arbitros.add(arbitro);
     }
 
