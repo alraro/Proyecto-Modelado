@@ -4,34 +4,36 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import Enumerados.TipoDeporte;
+import Enumerados.*;
 
 public abstract class Narrador extends Persona {
     private TipoDeporte tipoDeporte;
-    private List<Torneo> torneosAsignados;
+    private List<Partido> partidosAsignados;
 
     public Narrador(String nombre, String apellido1, String apellido2, Integer edad, String dni, TipoDeporte tipoDeporte) {
         super(nombre, apellido1, apellido2, edad,dni);
         assert tipoDeporte != null : "El tipo de deporte no puede ser nulo";
         this.tipoDeporte = tipoDeporte;
-        this.torneosAsignados = new ArrayList<>();
+        this.partidosAsignados = new ArrayList<>();
     }
 
-    // PROTECTED: Solo accesible por clases hijas y del mismo paquete (Torneo)
-    protected void asignarTorneo(Torneo nuevoTorneo) {
-        // RESTRICCIÓN: El torneo no puede ser nulo
-        assert nuevoTorneo != null : "El torneo no puede ser nulo";
+    // PROTECTED: Solo accesible por clases hijas y del mismo paquete (Partido)
+    protected void anadirPartido(Partido nuevoPartido) {
+        // RESTRICCIÓN: El partido no puede ser nulo
+        assert nuevoPartido != null : "Partido nulo";
 
-        // RESTRICCIÓN: No puede narrar dos torneos en la misma temporada    
-        for (Torneo t : torneosAsignados) {
-            assert !t.getTemporada().equals(nuevoTorneo.getTemporada())
-            : "El narrador ya trabaja en la temporada " + t.getTemporada();
-        }
+        // RESTRICCIÓN: El narrador debe estar contratado para el torneo del partido
+        assert nuevoPartido.getTorneo().getNarradores().contains(this)
+        : "El narrador no está contratado para el torneo " + nuevoPartido.getTorneo().getNombre();
 
-        // Tras asegurarnos de que se cumplen las restricciones, añadimos el torneo
-        this.torneosAsignados.add(nuevoTorneo);
+        // RESTRICCIÓN: Disponibilidad (No partidos a la misma hora)
+        assert estaDisponible(nuevoPartido.getFecha(), nuevoPartido.getHora(), nuevoPartido.getTorneo().getDuracionPartidos())
+        : "El narrador no está disponible en ese horario";
+
+        // Si todo es correcto, se añade a la agenda
+        this.partidosAsignados.add(nuevoPartido);
     }
-    /*
+
     // Método auxiliar privado para comprobar disponibilidad
     private boolean estaDisponible(LocalDate fecha, LocalTime hora, int duracion) {
         final int TIEMPO_DESCANSO_MINUTOS = 30; // Tiempo de descanso entre partidos para los narradores
@@ -54,13 +56,11 @@ public abstract class Narrador extends Persona {
         return true; // No hay conflictos
     }
 
-     */
-
     public TipoDeporte getTipoDeporte() {
         return tipoDeporte;
     }
 
-    public List<Torneo> getTorneosAsignados() {
-        return torneosAsignados;
+    public List<Partido> getPartidosAsignados() {
+        return partidosAsignados;
     }
 }
