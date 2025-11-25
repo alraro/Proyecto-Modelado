@@ -5,8 +5,8 @@ import java.util.List;
 import Enumerados.TipoDeporte;
 
 public abstract class Entrenador extends Persona {
-    protected TipoDeporte tipoDeporte;
-    protected List<Equipo> equiposAsignados; 
+    private TipoDeporte tipoDeporte;
+    private List<Equipo> equiposAsignados; 
 
     public Entrenador(String nombre, String apellido1, String apellido2, Integer edad, TipoDeporte tipoDeporte) {
         super(nombre, apellido1, apellido2, edad);
@@ -25,8 +25,8 @@ public abstract class Entrenador extends Persona {
 
         // RESTRICCIÓN: No puede entrenar a varios equipos en el mismo torneo
         for (Equipo e : equiposAsignados) {
-            for (Torneo t1 : e.torneosParticipados) {
-                for (Torneo t2 : nuevoEquipo.torneosParticipados) {
+            for (Torneo t1 : e.getTorneos()) {
+                for (Torneo t2 : nuevoEquipo.getTorneos()) {
                     assert !t1.equals(t2)
                     : "El entrenador ya entrena al equipo " + e.getNombre() + " en el torneo " + t1.getNombre();
                 }

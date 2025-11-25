@@ -5,16 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Equipo {
-    protected String nombre;
-    protected TipoDeporte tipoDeporte;
-    protected Categoria categoria;
-    protected TipoCompeticion tipoCompeticion;
-    protected Pais pais;
-    
-    // Relaciones
-    protected Entrenador entrenador;
-    protected List<Jugador> jugadores;
-    protected List<Torneo> torneosParticipados; // Historial para controlar temporadas
+    private String nombre;
+    private TipoDeporte tipoDeporte;
+    private Categoria categoria;
+    private TipoCompeticion tipoCompeticion;
+    private Pais pais;
+    private Entrenador entrenador;
+    private List<Jugador> jugadores;
+    private List<Torneo> torneosParticipados;
 
     public Equipo(String nombre, TipoDeporte tipoDeporte, Categoria categoria, TipoCompeticion competicion, Pais pais) {
         assert nombre != null && !nombre.isBlank() : "El nombre es obligatorio";

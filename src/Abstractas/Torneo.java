@@ -5,18 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Torneo {
-    protected String nombre;
-    protected Pais paisSede;
-    protected String temporada;
-    protected int maxIntegrantesEquipo;
-    protected TipoDeporte tipoDeporte;
-    protected Categoria categoria;
-    protected TipoCompeticion competicion;
-    protected List<Equipo> equiposInscritos;
-    protected List<Partido> partidos;
-    protected List<Arbitro> arbitros;
-    protected List<Narrador> narradores;
-    protected Equipo ganador; 
+    private String nombre;
+    private Pais paisSede;
+    private String temporada;
+    private int maxIntegrantesEquipo;
+    private TipoDeporte tipoDeporte;
+    private Categoria categoria;
+    private TipoCompeticion competicion;
+    private List<Equipo> equiposInscritos;
+    private List<Partido> partidos;
+    private List<Arbitro> arbitros;
+    private List<Narrador> narradores;
+    private Equipo ganador; 
 
     public Torneo(String nombre, Pais paisSede, String temporada, int maxIntegrantes, 
                   TipoDeporte tipoDeporte, Categoria categoria, TipoCompeticion competicion) {
@@ -108,10 +108,21 @@ public abstract class Torneo {
         this.narradores.add(narrador);
     }
 
-    public void registrarPartido(Partido partido) { // --- PARTIDO AUN NO ESTA IMPLEMENTADO ---
-        assert partido != null : "Partido nulo";
-        // Aquí podrías validar que los equipos del partido estén inscritos en este torneo
-        this.partidos.add(partido);
+    public void registrarPartido(Partido nuevoPartido) {
+        // RESTRICCIÓN: El partido no puede ser nulo
+        assert nuevoPartido != null : "El partido no puede ser nulo";
+
+        // RESTRICCIÓN: No se pueden jugar varios partidos a la misma hora en el mismo lugar"
+        for (Partido p : partidos) {
+            if (p.getFecha().equals(nuevoPartido.getFecha())) { // Mismo día
+                if (p.getLugar().equalsIgnoreCase(nuevoPartido.getLugar())) { // Mismo lugar
+                    assert !p.getHora().equals(nuevoPartido.getHora()) // Misma hora
+                    : "Ya hay un partido en " + p.getLugar() +  " el " + p.getFecha() + " a las " + p.getHora();
+                }
+            }
+        }
+
+        this.partidos.add(nuevoPartido);
     }
 
     public void finalizarTorneo(Equipo ganador) {
@@ -126,7 +137,6 @@ public abstract class Torneo {
         this.ganador = ganador;
     }
 
-    // Getters
     public String getNombre() {
         return nombre;
     }

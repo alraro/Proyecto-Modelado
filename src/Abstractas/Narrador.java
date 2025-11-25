@@ -5,8 +5,8 @@ import java.util.List;
 import Enumerados.TipoDeporte;
 
 public abstract class Narrador extends Persona {
-    protected TipoDeporte tipoDeporte;
-    protected List<Torneo> torneosAsignados;
+    private TipoDeporte tipoDeporte;
+    private List<Torneo> torneosAsignados;
 
     public Narrador(String nombre, String apellido1, String apellido2, Integer edad, TipoDeporte tipoDeporte) {
         super(nombre, apellido1, apellido2, edad);
