@@ -139,7 +139,7 @@ context Torneo
   inv MaxIntegrantesEquipo: 
     self.equipos -> forAll(e |
       TiempoEquipo.allInstances()
-        -> select(te | te.equipos->includes(e) and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
+        -> select(te | te.equipos = e and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
         -> size() <= self.maxIntegrantesEquipo
     )
 
@@ -204,7 +204,7 @@ context Equipo
   inv MaxJugadoresPorTorneo:
     self.torneos->forAll(t |
       TiempoEquipo.allInstances()
-        ->select(te | te.equipos->includes(self) and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
+        ->select(te | te.equipos = self and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
         ->collect(te | te.jugadores)
         ->size() <= t.maxIntegrantesEquipo
     )
@@ -246,7 +246,7 @@ context Jugador
   inv DeporteConsistenteConEquipos:
     TiempoEquipo.allInstances()
       ->select(te | te.jugadores = self and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
-      ->forAll(te | te.equipos->forAll(e | e.deporte = self.deporte))
+      ->forAll(te | te.equipos.deporte = self.deporte)
 
   -- Solo puede haber un equipo nacional por jugador --
   inv EquipoNacionalUnico:
