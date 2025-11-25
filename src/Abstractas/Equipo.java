@@ -68,7 +68,8 @@ public abstract class Equipo {
         this.entrenador = nuevoEntrenador;
     }
 
-    public void inscribirEnTorneo(Torneo nuevoTorneo) {
+    // PROTECTED: Solo accesible por clases hijas y del mismo paquete (Torneo)
+    protected void inscribirEnTorneo(Torneo nuevoTorneo) {
         // RESTRICCIÓN: El torneo no puede ser nulo
         assert nuevoTorneo != null : "No puedes inscribirte a un torneo nulo";
 
@@ -77,9 +78,6 @@ public abstract class Equipo {
             assert !t.getTemporada().equals(nuevoTorneo.getTemporada())
             : "El equipo ya juega otro torneo en la temporada " + t.getTemporada();
         }
-
-        // Intentamos inscribir el equipo en el torneo, inscribirEquipo ya tiene el resto de asserts(competición, categoría, max jugadores)
-        nuevoTorneo.inscribirEquipo(this);
 
         // Tras asegurarnos que se cumplen las restricciones, añadimos el torneo
         this.torneosParticipados.add(nuevoTorneo);
