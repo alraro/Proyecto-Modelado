@@ -40,7 +40,7 @@ public class FabricaRugby implements FabricaDeporte {
     }
 
     @Override
-    public Partido crearPartido(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora) {
-        return new PartidoRugby(torneo, local, visitante, lugar, fecha, hora);
+    public Partido crearPartido(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora, Map<Jugador, TipoJugador> alineacionLocal, Map<Jugador, TipoJugador> alineacionVisitante) {
+        return new PartidoRugby(torneo, local, visitante, lugar, fecha, hora, alineacionLocal, alineacionVisitante);
     }
 }

@@ -40,7 +40,7 @@ public class FabricaTenis implements FabricaDeporte {
     }
 
     @Override
-    public Partido crearPartido(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora) {
-        return new PartidoTenis(torneo, local, visitante, lugar, fecha, hora);
+    public Partido crearPartido(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora, Map<Jugador, TipoJugador> alineacionLocal, Map<Jugador, TipoJugador> alineacionVisitante) {
+        return new PartidoTenis(torneo, local, visitante, lugar, fecha, hora, alineacionLocal, alineacionVisitante);
     }
 }

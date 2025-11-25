@@ -6,6 +6,7 @@ import Enumerados.*;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Map;
 
 public class FabricaPadel implements FabricaDeporte {
 
@@ -40,7 +41,7 @@ public class FabricaPadel implements FabricaDeporte {
     }
 
     @Override
-    public Partido crearPartido(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora) {
-        return new PartidoPadel(torneo, local, visitante, lugar, fecha, hora);
+    public Partido crearPartido(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora, Map<Jugador, TipoJugador> alineacionLocal, Map<Jugador, TipoJugador> alineacionVisitante) {
+        return new PartidoPadel(torneo, local, visitante, lugar, fecha, hora, alineacionLocal, alineacionVisitante);
     }
 }
