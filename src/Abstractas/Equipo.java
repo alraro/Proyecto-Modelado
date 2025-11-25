@@ -41,8 +41,26 @@ public abstract class Equipo {
         assert nuevoJugador.getTipoDeporte() == this.tipoDeporte
         : "Un jugador de " + nuevoJugador.getTipoDeporte() + " no puede jugar en un equipo de " + this.tipoDeporte;
 
+        // Intentamos fichar al jugador
+        nuevoJugador.registrarEquipo(this);
+
         // Tras asegurarnos que se cumplen las restricciones, añadimos el jugador
         this.jugadores.add(nuevoJugador);
+    }
+
+    public void despedirJugador(Jugador jugador) {
+        // RESTRICCIÓN: El jugador no puede ser nulo
+        assert jugador != null : "No se puede despedir a un null";
+
+        // RESTRICCIÓN: El jugador debe pertenecer al equipo
+        assert this.jugadores.contains(jugador) 
+        : "El jugador " + jugador.getNombreCompleto() + " no pertenece al equipo " + this.nombre;
+
+        // Informamos al jugador que abandona el equipo
+        jugador.abandonarEquipo(this);
+
+        // Borramos al jugador de la plantilla
+        this.jugadores.remove(jugador);
     }
 
     public void asignarEntrenador(Entrenador nuevoEntrenador) {
