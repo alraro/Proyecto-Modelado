@@ -46,7 +46,7 @@ public abstract class Arbitro extends Persona {
 
         // RESTRICCIÓN: Disponibilidad (No partidos a la misma hora)
         assert estaDisponible(nuevoPartido.getFecha(), nuevoPartido.getHora(), nuevoPartido.getTorneo().getDuracionPartidos())
-                : "El árbitro no está disponible en ese horario";
+        : "El árbitro no está disponible en ese horario";
 
         // Si todo es correcto, se añade a la agenda
         this.partidosAsignados.add(nuevoPartido);
