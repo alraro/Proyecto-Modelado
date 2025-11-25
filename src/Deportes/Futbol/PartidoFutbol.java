@@ -3,19 +3,24 @@ package Deportes.Futbol;
 import Abstractas.Partido;
 import Abstractas.Torneo;
 import Abstractas.Equipo;
+import Abstractas.Jugador;
+import Enumerados.TipoJugador;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Map;
 
 public class PartidoFutbol extends Partido {
-    public PartidoFutbol(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora) {
-        
+    public PartidoFutbol(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora, Map<Jugador, TipoJugador> alineacionLocal, Map<Jugador, TipoJugador> alineacionVisitante) {
+
         super(
             torneo, 
             local, 
             visitante, 
             lugar, 
             fecha, 
-            hora
+            hora,
+            alineacionLocal,
+            alineacionVisitante
         );
     }
 }

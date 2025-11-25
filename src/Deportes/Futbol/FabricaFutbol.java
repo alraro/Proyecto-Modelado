@@ -4,6 +4,7 @@ import Interfaces.FabricaDeporte;
 import Abstractas.*;
 import Enumerados.*;
 import java.util.List;
+import java.util.Map;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -40,7 +41,7 @@ public class FabricaFutbol implements FabricaDeporte {
     }
 
     @Override
-    public Partido crearPartido(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora) {
-        return new PartidoFutbol(torneo, local, visitante, lugar, fecha, hora);
+    public Partido crearPartido(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora, Map<Jugador, TipoJugador> alineacionLocal, Map<Jugador, TipoJugador> alineacionVisitante) {
+        return new PartidoFutbol(torneo, local, visitante, lugar, fecha, hora, alineacionLocal, alineacionVisitante);
     }
 }

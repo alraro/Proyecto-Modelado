@@ -3,6 +3,7 @@ package Interfaces;
 import Abstractas.*;
 import Enumerados.*;
 import java.util.List;
+import java.util.Map;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -24,5 +25,5 @@ public interface FabricaDeporte {
 
     Narrador crearNarrador(String nombre, String ap1, String ap2, int edad, String dni);
 
-    Partido crearPartido(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora);
+    Partido crearPartido(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora, Map<Jugador, TipoJugador> alineacionLocal, Map<Jugador, TipoJugador> alineacionVisitante);
 }

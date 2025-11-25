@@ -4,6 +4,7 @@ import Enumerados.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,6 +59,8 @@ public abstract class Partido {
         this.tipoDeporte = local.getTipoDeporte();
         this.categoria = local.getCategoria();
         this.competicion = local.getTipoCompeticion();
+        this.alineacionLocal = new HashMap<>(alineacionLocal);
+        this.alineacionVisitante = new HashMap<>(alineacionVisitante);
     }
 
     // Método para asignar alineaciones a ambos equipos
@@ -127,6 +130,30 @@ public abstract class Partido {
 
         this.resultado = resultado;
     }
+
+    // Método para obtener la alineación de un equipo
+    public Map<Jugador, TipoJugador> getAlineacion(Equipo equipo) {
+        if (equipo.equals(equipoLocal)) {
+            return new HashMap<>(alineacionLocal);
+        } else if (equipo.equals(equipoVisitante)) {
+            return new HashMap<>(alineacionVisitante);
+        } else {
+            throw new IllegalArgumentException("El equipo no participa en este partido");
+        }
+    }
+
+    // Método para mostrar las alineaciones de un equipo
+    public void mostrarAlineacion(Equipo equipo) {
+        Map<Jugador, TipoJugador> alineacion = getAlineacion(equipo);
+        System.out.println("Alineación del equipo " + equipo.getNombre() + ":");
+        for (Map.Entry<Jugador, TipoJugador> entry : alineacion.entrySet()) {
+            Jugador jugador = entry.getKey();
+            TipoJugador tipo = entry.getValue();
+            System.out.println("- " + jugador.getNombre() + " :" + tipo + "\n");
+        }
+    }
+
+
 
     public Torneo getTorneo() {
         return torneo;
