@@ -13,7 +13,6 @@ public abstract class Partido {
     private String lugar;
     private LocalDate fecha;
     private LocalTime hora;
-    private int duracion; // en minutos
     private String resultado;
     private TipoDeporte tipoDeporte;
     private Categoria categoria;
@@ -27,7 +26,6 @@ public abstract class Partido {
         assert visitante != null : "El equipo visitante no puede ser nulo";
         assert lugar != null && !lugar.isBlank() : "El lugar es obligatorio";
         assert fecha != null && hora != null : "Fecha y hora son obligatorias";
-        assert duracion < 0 : "La duración debe ser positiva";
         // RESTRICCIÓN: Equipos distintos
         assert !local.equals(visitante) : "Un equipo no puede jugar contra sí mismo";
 
@@ -44,7 +42,6 @@ public abstract class Partido {
         this.lugar = lugar;
         this.fecha = fecha;
         this.hora = hora;
-        this.duracion = duracion;
         this.resultado = null; // Aún no se ha jugado
         this.arbitros = new ArrayList<>();
         this.narradores = new ArrayList<>();
@@ -94,14 +91,6 @@ public abstract class Partido {
         assert resultado != null && !resultado.isBlank() : "El resultado no puede estar vacío";
 
         this.resultado = resultado;
-    }
-
-    public int getDuracion() {
-        return duracion;
-    }
-
-    public void setDuracion(int duracion) {
-        this.duracion = duracion;
     }
 
     public Torneo getTorneo() {

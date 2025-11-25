@@ -16,10 +16,11 @@ public abstract class Torneo {
     private List<Partido> partidos;
     private List<Arbitro> arbitros;
     private List<Narrador> narradores;
-    private Equipo ganador; 
+    private Equipo ganador;
+    private int duracionPartidos;// en minutos
 
-    public Torneo(String nombre, Pais paisSede, String temporada, int maxIntegrantes, 
-                  TipoDeporte tipoDeporte, Categoria categoria, TipoCompeticion competicion) {
+    public Torneo(String nombre, Pais paisSede, String temporada, int maxIntegrantes,
+                  TipoDeporte tipoDeporte, Categoria categoria, TipoCompeticion competicion, int duracionPartidos) {
 
         assert nombre != null && !nombre.isBlank() : "El nombre es obligatorio";
         assert paisSede != null : "Debe definirse un país sede";
@@ -28,7 +29,7 @@ public abstract class Torneo {
         assert tipoDeporte != null : "El deporte es obligatorio";
         assert categoria != null : "La categoría es obligatoria";
         assert competicion != null : "El tipo de competición es obligatorio";
-
+        assert duracionPartidos > 0 : "La duración de los partidos debe ser positiva";
         this.nombre = nombre;
         this.paisSede = paisSede;
         this.temporada = temporada;
@@ -41,6 +42,7 @@ public abstract class Torneo {
         this.arbitros = new ArrayList<>();
         this.narradores = new ArrayList<>();
         this.ganador = null;
+        this.duracionPartidos = duracionPartidos;
     }
 
     public void inscribirEquipo(Equipo equipo) {
@@ -194,5 +196,13 @@ public abstract class Torneo {
 
     public Equipo getGanador() {
         return ganador;
+    }
+
+    public int getDuracionPartidos() {
+        return duracionPartidos;
+    }
+
+    public void setDuracionPartidos(int duracionPartidos) {
+        this.duracionPartidos = duracionPartidos;
     }
 }
