@@ -13,6 +13,7 @@ public abstract class Partido {
     private String lugar;
     private LocalDate fecha;
     private LocalTime hora;
+    private int duracion; // en minutos
     private String resultado;
     private TipoDeporte tipoDeporte;
     private Categoria categoria;
@@ -20,13 +21,13 @@ public abstract class Partido {
     private List<Arbitro> arbitros;
     private List<Narrador> narradores;
 
-    public Partido(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora) {
+    public Partido(Torneo torneo, Equipo local, Equipo visitante, String lugar, LocalDate fecha, LocalTime hora, int duracion) {
         assert torneo != null : "El partido debe pertenecer a un torneo";
         assert local != null : "El equipo local no puede ser nulo";
         assert visitante != null : "El equipo visitante no puede ser nulo";
         assert lugar != null && !lugar.isBlank() : "El lugar es obligatorio";
         assert fecha != null && hora != null : "Fecha y hora son obligatorias";
-
+        assert duracion < 0 : "La duración debe ser positiva";
         // RESTRICCIÓN: Equipos distintos
         assert !local.equals(visitante) : "Un equipo no puede jugar contra sí mismo";
 
@@ -62,7 +63,7 @@ public abstract class Partido {
         : "El árbitro " + arbitro.getNombre() + " no ha sido contratado para el torneo " + torneo.getNombre();
 
         // Intentamos añadir el partido a la agenda del árbitro, añadirPartido ya tiene el resto de asserts
-        arbitro.añadirPartido(this);
+        arbitro.anadirPartido(this);
 
         // Si todo es correcto, lo añadimos a la lista de árbitros del partido
         this.arbitros.add(arbitro);

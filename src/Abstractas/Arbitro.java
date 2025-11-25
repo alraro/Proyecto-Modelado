@@ -24,7 +24,7 @@ public abstract class Arbitro extends Persona {
         this.partidosAsignados = new ArrayList<>();
     }
 
-    public void añadirCategoria(Categoria nuevaCategoria) {
+    public void anadirCategoria(Categoria nuevaCategoria) {
         // RESTRICCIÓN: La categoría no puede ser nula
         assert nuevaCategoria != null : "La categoría no puede ser nula";
 
@@ -36,7 +36,7 @@ public abstract class Arbitro extends Persona {
     }
 
     // PROTECTED: Solo accesible por clases hijas y del mismo paquete (Partido)
-    protected void añadirPartido(Partido nuevoPartido) {
+    protected void anadirPartido(Partido nuevoPartido) {
         // RESTRICCIÓN: El partido no puede ser nulo
         assert nuevoPartido != null : "Partido nulo";
 
@@ -62,7 +62,7 @@ public abstract class Arbitro extends Persona {
     private boolean estaDisponible(LocalDate fecha, LocalTime hora) {
         for (Partido p : partidosAsignados) {
             // Comprobamos fecha y hora
-            if (p.getFecha().equals(fecha) && p.getHora().equals(hora)) {
+            if (p.getFecha().equals(fecha) && p.getHora().equals(hora) && !p.isFinalizado()) {
                 return false; // No está disponible, hay conflicto
             }
         }
