@@ -10,8 +10,8 @@ import java.time.LocalTime;
 public class FabricaGolf implements FabricaDeporte {
 
     @Override
-    public Torneo crearTorneo(String nombre, Pais paisSede, String temporada, int maxIntegrantesEquipo, Categoria categoria, TipoCompeticion competicion) {
-        return new TorneoGolf(nombre, paisSede, temporada, maxIntegrantesEquipo, categoria, competicion);
+    public Torneo crearTorneo(String nombre, Pais paisSede, String temporada, int maxIntegrantesEquipo, Categoria categoria, TipoCompeticion competicion, int duracionPartidos) {
+        return new TorneoGolf(nombre, paisSede, temporada, maxIntegrantesEquipo, categoria, competicion, duracionPartidos);
     }
 
     @Override

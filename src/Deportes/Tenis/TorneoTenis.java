@@ -4,8 +4,8 @@ import Abstractas.Torneo;
 import Enumerados.*;
 
 public class TorneoTenis extends Torneo {
-    public TorneoTenis(String nombre, Pais paisSede, String temporada, int maxIntegrantesEquipo, Categoria categoria, TipoCompeticion competicion) {
-        
+    public TorneoTenis(String nombre, Pais paisSede, String temporada, int maxIntegrantesEquipo, Categoria categoria, TipoCompeticion competicion, int duracionPartidos) {
+
         super(
             nombre,
             paisSede,
@@ -13,7 +13,8 @@ public class TorneoTenis extends Torneo {
             maxIntegrantesEquipo,
             TipoDeporte.TENIS,
             categoria,
-            competicion
+            competicion,
+            duracionPartidos
         );
     }
 }
