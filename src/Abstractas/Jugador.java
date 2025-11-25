@@ -10,8 +10,8 @@ public abstract class Jugador extends Persona {
     private Categoria categoria;
     private List<Equipo> equiposActuales; // Lista de equipos (Máximo 2: Club + Selección)
 
-    public Jugador(String nombre, String ap1, String ap2, Integer edad, TipoDeporte tipoDeporte, Pais nacionalidad, Categoria categoria) {
-        super(nombre, ap1, ap2, edad);
+    public Jugador(String nombre, String ap1, String ap2, Integer edad, TipoDeporte tipoDeporte, Pais nacionalidad, Categoria categoria,String dni) {
+        super(nombre, ap1, ap2, edad,dni);
         
         assert tipoDeporte != null : "Deporte obligatorio";
         assert nacionalidad != null : "Nacionalidad obligatoria";

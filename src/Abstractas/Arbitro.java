@@ -10,8 +10,8 @@ public abstract class Arbitro extends Persona {
     private List<Categoria> categoriasPermitidas;
     private List<Partido> partidosAsignados;
 
-    public Arbitro(String nombre, String ap1, String ap2, Integer edad, TipoDeporte tipoDeporte, List<Categoria> categorias, TipoCompeticion competicion) {
-        super(nombre, ap1, ap2, edad);
+    public Arbitro(String nombre, String ap1, String ap2, Integer edad, String dni, TipoDeporte tipoDeporte, List<Categoria> categorias, TipoCompeticion competicion) {
+        super(nombre, ap1, ap2, edad,dni);
         
         assert tipoDeporte != null : "El deporte es obligatorio";
         assert competicion != null : "El ámbito es obligatorio";

@@ -9,14 +9,23 @@ public abstract class Persona {
 	private Integer Edad;
 	private String Dni;
 
-	public Persona(String nombre, String apellido1, String apellido2, Integer edad) {
+	public Persona(String nombre, String apellido1, String apellido2, Integer edad, String dni) {
+        this.Dni = dni;
 		this.nombre = nombre;
 		Apellido1 = apellido1;
 		Apellido2 = apellido2;
 		Edad = edad;
 	}
 
-	public String getNombre() {
+    public String getDni() {
+        return Dni;
+    }
+
+    public void setDni(String dni) {
+        Dni = dni;
+    }
+
+    public String getNombre() {
 		return nombre;
 	}
 

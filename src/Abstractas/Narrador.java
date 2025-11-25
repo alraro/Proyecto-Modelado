@@ -8,8 +8,8 @@ public abstract class Narrador extends Persona {
     private TipoDeporte tipoDeporte;
     private List<Torneo> torneosAsignados;
 
-    public Narrador(String nombre, String apellido1, String apellido2, Integer edad, TipoDeporte tipoDeporte) {
-        super(nombre, apellido1, apellido2, edad);
+    public Narrador(String nombre, String apellido1, String apellido2, Integer edad, String dni, TipoDeporte tipoDeporte) {
+        super(nombre, apellido1, apellido2, edad,dni);
         assert tipoDeporte != null : "El tipo de deporte no puede ser nulo";
         this.tipoDeporte = tipoDeporte;
         this.torneosAsignados = new ArrayList<>();
