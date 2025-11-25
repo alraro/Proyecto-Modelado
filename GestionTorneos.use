@@ -219,12 +219,12 @@ context Equipo
 
   -- Un equipo no puede jugar dos partidos a la misma hora y fecha --  
   inv NoPartidosSimultaneos:
-    let misPartidos = self.participacionPartido->collect(pp | pp.partidos) in
-    misPartidos->forAll(p1, p2 | 
-        (p1 <> p2 and p1.fecha = p2.fecha) 
-        implies 
-        p1.hora <> p2.hora
-    )
+    self.participacionPartido->collect(pp | pp.partidos)
+      ->forAll(p1, p2 | 
+          (p1 <> p2 and p1.fecha = p2.fecha) 
+          implies 
+          p1.hora <> p2.hora
+      )
 
 
 context Jugador
