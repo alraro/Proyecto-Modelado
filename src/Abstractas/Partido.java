@@ -86,6 +86,7 @@ public abstract class Partido {
 
         return true;
     }
+    
     public void asignarArbitro(Arbitro arbitro) {
         // RESTRICCIÓN: El árbitro no puede ser nulo
         assert arbitro != null : "Árbitro nulo";
