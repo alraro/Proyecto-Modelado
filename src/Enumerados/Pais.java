@@ -1,7 +1,7 @@
 package Enumerados;
 
 public enum Pais {
-    ESPAÑA,
+    ESPANA,
     FRANCIA,
     ALEMANIA,
     ITALIA,
