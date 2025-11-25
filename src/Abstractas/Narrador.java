@@ -16,7 +16,7 @@ public abstract class Narrador extends Persona {
     }
 
     // PROTECTED: Solo accesible por clases hijas y del mismo paquete (Torneo)
-    void asignarTorneo(Torneo nuevoTorneo) {
+    protected void asignarTorneo(Torneo nuevoTorneo) {
         // RESTRICCIÓN: El torneo no puede ser nulo
         assert nuevoTorneo != null : "El torneo no puede ser nulo";
 
