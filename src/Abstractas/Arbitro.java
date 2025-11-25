@@ -3,6 +3,7 @@ package Abstractas;
 import Enumerados.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.*;
 
 public abstract class Arbitro extends Persona {
     private TipoDeporte tipoDeporte;
@@ -48,15 +49,24 @@ public abstract class Arbitro extends Persona {
             : "El árbitro no está habilitado para la categoría " + nuevoPartido.getCategoria();
 
         // RESTRICCIÓN: Disponibilidad (No partidos a la misma hora)
-        for (Partido p : partidosAsignados) {
-            if (p.getFecha().equals(nuevoPartido.getFecha())) {
-                assert !p.getHora().equals(nuevoPartido.getHora())
-                : "El arbitro ya tiene un partido asignado el " + p.getFecha() + " a las " + p.getHora();
-            }
-        }
+        // El assert queda limpio y en una sola línea al principio
+        assert estaDisponible(nuevoPartido.getFecha(), nuevoPartido.getHora())
+                : "El árbitro no está disponible en ese horario";
 
         // Si todo es correcto, se añade a la agenda
         this.partidosAsignados.add(nuevoPartido);
+    }
+
+
+    // Método auxiliar privado para comprobar disponibilidad
+    private boolean estaDisponible(LocalDate fecha, LocalTime hora) {
+        for (Partido p : partidosAsignados) {
+            // Comprobamos fecha y hora
+            if (p.getFecha().equals(fecha) && p.getHora().equals(hora)) {
+                return false; // No está disponible, hay conflicto
+            }
+        }
+        return true; // No se encontró conflicto
     }
 
     public TipoDeporte getTipoDeporte() {
