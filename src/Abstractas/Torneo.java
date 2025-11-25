@@ -84,12 +84,22 @@ public abstract class Torneo {
         this.equiposInscritos.add(equipo);
     }
 
-    public void contratarArbitro(Arbitro arbitro) { // --- ARBITRO AUN NO ESTA IMPLEMENTADO ---
+    public void contratarArbitro(Arbitro arbitro) {
+        // RESTRICCIÓN: El árbitro no puede ser nulo
         assert arbitro != null : "Arbitro nulo";
-        // Validamos que el árbitro sea del mismo deporte
-        // Asumimos Arbitro.getTipoDeporte()
-        /* assert arbitro.getTipoDeporte() == this.tipoDeporte : "Arbitro de deporte incorrecto"; */
         
+        // RESTRICCIÓN: El árbitro ya está contratado
+        assert !arbitros.contains(arbitro)
+        : "El árbitro " + arbitro.getNombre() + " ya está contratado para el torneo " + this.nombre;
+
+        // RESTRICCIÓN: El árbitro debe ser del mismo deporte que el torneo
+        assert arbitro.getTipoDeporte() == this.tipoDeporte
+        : "Un arbitro de " + arbitro.getTipoDeporte() + " no puede arbitrar un torneo de " + this.tipoDeporte;
+
+        // RESTRICCIÓN: El árbitro debe estar cualificado para la categoría del partido
+        assert arbitro.getCategoriasPermitidas().contains(this.categoria)
+        : "El árbitro no está cualificado para la categoría " + this.categoria;
+
         this.arbitros.add(arbitro);
     }
 
@@ -97,12 +107,13 @@ public abstract class Torneo {
         // RESTRICCIÓN: El narrador no puede ser nulo
         assert narrador != null : "Narrador nulo";
 
+        // RESTRICCIÓN: El narrador ya está contratado
+        assert !narradores.contains(narrador)
+        : "El narrador " + narrador.getNombre() + " ya está contratado para el torneo " + this.nombre;
+
         // RESTRICCIÓN: El narrador debe ser del mismo deporte que el torneo
         assert narrador.getTipoDeporte() == this.tipoDeporte
         : "El narrador de " + narrador.getTipoDeporte() + " no puede narrar un torneo de " + this.tipoDeporte;
-
-        // Intentamos asignarle el torneo al narrador, asignarTorneo ya tiene el resto de asserts
-        narrador.asignarTorneo(this);
 
         // Tras asegurarnos que se cumplen las restricciones, añadimos el narrador
         this.narradores.add(narrador);
