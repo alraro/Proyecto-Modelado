@@ -11,7 +11,8 @@ public abstract class Equipo {
     private Categoria categoria;
     private TipoCompeticion tipoCompeticion;
     private Pais pais;
-    private int maxJugadores; // REQUISITO: Límite de integrantes
+    private int maxTitulares; // REQUISITO: Límite de integrantes
+    private int maxSuplentes;  // REQUISITO: Límite de integrantes
 
     // Relaciones
     private Entrenador entrenador;
@@ -19,21 +20,23 @@ public abstract class Equipo {
     private List<Torneo> torneosParticipados;
 
     // Constructor
-    public Equipo(String nombre, TipoDeporte tipoDeporte, Categoria categoria, TipoCompeticion competicion, Pais pais, int maxJugadores) {
+    public Equipo(String nombre, TipoDeporte tipoDeporte, Categoria categoria, TipoCompeticion competicion, Pais pais, int maxTtitulares, int maxSuplentes) {
         // Validaciones básicas de integridad
         assert nombre != null && !nombre.isBlank() : "El nombre es obligatorio";
         assert tipoDeporte != null : "El deporte es obligatorio";
         assert categoria != null : "La categoría es obligatoria";
         assert competicion != null : "El tipo de competición es obligatorio";
         assert pais != null : "El país es obligatorio";
-        assert maxJugadores > 0 : "El máximo de jugadores debe ser positivo";
+        assert maxTtitulares > 0 : "El máximo de jugadores debe ser positivo";
+        assert maxSuplentes >= 0 : "El máximo de suplentes no puede ser negativo";
 
         this.nombre = nombre;
         this.tipoDeporte = tipoDeporte;
         this.categoria = categoria;
         this.tipoCompeticion = competicion;
         this.pais = pais;
-        this.maxJugadores = maxJugadores;
+        this.maxTitulares = maxTtitulares;
+        this.maxSuplentes = maxSuplentes;
 
         // Inicialización de listas vacías para evitar NullPointerException
         this.jugadores = new ArrayList<>();
@@ -53,8 +56,8 @@ public abstract class Equipo {
                 : "Un jugador de " + nuevoJugador.getTipoDeporte() + " no puede jugar en un equipo de " + this.tipoDeporte;
 
         // RESTRICCIÓN: Límite de plantilla (Requisito del proyecto)
-        assert jugadores.size() < maxJugadores
-                : "El equipo ha alcanzado el máximo de " + maxJugadores + " jugadores. No caben más.";
+        assert jugadores.size() < (maxSuplentes + maxTitulares)
+                : "El equipo ha alcanzado el máximo de " + (maxSuplentes + maxTitulares) + " jugadores. No caben más.";
 
         // Intentamos fichar al jugador
         nuevoJugador.registrarEquipo(this);
@@ -132,8 +135,10 @@ public abstract class Equipo {
     public Categoria getCategoria() { return categoria; }
     public TipoCompeticion getTipoCompeticion() { return tipoCompeticion; }
     public Pais getPais() { return pais; }
-    public int getMaxJugadores() { return maxJugadores; }
+    public int getMaxJugadores() { return ((maxSuplentes + maxTitulares)); }
     public Entrenador getEntrenador() { return entrenador; }
+    public int getMaxTitulares() {return maxTitulares;}
+    public int getMaxSuplentes() {return maxSuplentes;}
 
     // Devolvemos copias defensivas o listas no modificables si queremos proteger la encapsulación,
     // pero para este nivel académico devolver la lista suele ser aceptable.
