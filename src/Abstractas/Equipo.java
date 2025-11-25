@@ -144,4 +144,16 @@ public abstract class Equipo {
     // pero para este nivel académico devolver la lista suele ser aceptable.
     public List<Jugador> getJugadores() { return jugadores; }
     public List<Torneo> getTorneos() { return torneosParticipados; }
+
+    // Método para comparar dos equipos por su nombre, tipoeDeporte, Categoria y TipoCompeticion
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Equipo otro = (Equipo) obj;
+        return this.nombre.equals(otro.nombre) &&
+                this.tipoDeporte == otro.tipoDeporte &&
+                this.categoria == otro.categoria &&
+                this.tipoCompeticion == otro.tipoCompeticion;
+    }
 }
