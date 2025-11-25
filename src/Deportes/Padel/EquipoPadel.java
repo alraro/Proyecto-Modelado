@@ -8,7 +8,7 @@ public class EquipoPadel extends Equipo {
     private static final int MAX_TITULARES = 2;
     private static final int MAX_SUPLENTES = 2;
 
-    public EquipoPadel(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais, int maxTitulares, int suplentes) {
+    public EquipoPadel(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais) {
         super(nombre, TipoDeporte.PADEL, categoria, competicion, pais, MAX_TITULARES, MAX_SUPLENTES);
     }
 }

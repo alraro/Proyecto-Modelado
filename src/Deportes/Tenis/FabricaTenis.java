@@ -16,8 +16,8 @@ public class FabricaTenis implements FabricaDeporte {
     }
 
     @Override
-    public Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais, int titulares, int suplentes) {
-        return new EquipoTenis(nombre, categoria, competicion, pais, titulares, suplentes);
+    public Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais) {
+        return new EquipoTenis(nombre, categoria, competicion, pais);
     }
 
     @Override

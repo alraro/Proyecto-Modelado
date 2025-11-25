@@ -16,8 +16,8 @@ public class FabricaRugby implements FabricaDeporte {
     }
 
     @Override
-    public Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais, int titulares, int suplentes) {
-        return new EquipoRugby(nombre, categoria, competicion, pais, titulares, suplentes);
+    public Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais) {
+        return new EquipoRugby(nombre, categoria, competicion, pais);
     }
 
     @Override

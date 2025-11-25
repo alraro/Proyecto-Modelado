@@ -15,7 +15,7 @@ public interface FabricaDeporte {
     // Métodos de fabricación de componentes
     Torneo crearTorneo(String nombre, Pais pais, String temporada, Categoria categoria, TipoCompeticion competicion, int duracionPartidos);
 
-    Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais, int titulares, int suplentes);
+    Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais);
 
     Jugador crearJugador(String nombre, String ap1, String ap2, int edad, Pais nacionalidad, Categoria categoria, String dni);
 

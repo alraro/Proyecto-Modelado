@@ -16,8 +16,8 @@ public class FabricaGolf implements FabricaDeporte {
     }
 
     @Override
-    public Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais, int titulares, int suplentes) {
-        return new EquipoGolf(nombre, categoria, competicion, pais, titulares, suplentes);
+    public Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais) {
+        return new EquipoGolf(nombre, categoria, competicion, pais);
     }
 
     @Override

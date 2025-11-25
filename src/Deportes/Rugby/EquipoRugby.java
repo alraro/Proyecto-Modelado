@@ -8,7 +8,7 @@ public class EquipoRugby extends Equipo {
     private static final int MAX_TITULARES = 15;
     private static final int MAX_SUPLENTES = 8;
 
-    public EquipoRugby(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais, int maxTitulares, int suplentes) {
+    public EquipoRugby(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais) {
         super(nombre, TipoDeporte.RUGBY, categoria, competicion, pais, MAX_TITULARES, MAX_SUPLENTES);
     }
 }
