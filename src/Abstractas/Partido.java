@@ -83,6 +83,11 @@ public abstract class Partido {
         this.narradores.add(narrador);
     }
 
+    // Método para determinar si ya ha finalizado el partido para poder evitar conflictos de horario y cerrar actas
+    public boolean isFinalizado() {
+        return this.resultado != null;
+    }
+
     public void setResultado(String resultado) {
         // RESTRICCIÓN: El resultado no puede ser nulo o vacío
         assert resultado != null && !resultado.isBlank() : "El resultado no puede estar vacío";
