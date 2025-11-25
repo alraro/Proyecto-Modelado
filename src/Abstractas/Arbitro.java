@@ -49,7 +49,6 @@ public abstract class Arbitro extends Persona {
             : "El árbitro no está habilitado para la categoría " + nuevoPartido.getCategoria();
 
         // RESTRICCIÓN: Disponibilidad (No partidos a la misma hora)
-        // El assert queda limpio y en una sola línea al principio
         assert estaDisponible(nuevoPartido.getFecha(), nuevoPartido.getHora(), nuevoPartido.getDuracion())
                 : "El árbitro no está disponible en ese horario";
 

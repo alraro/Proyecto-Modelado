@@ -25,7 +25,6 @@ public abstract class Jugador extends Persona {
         this.categoria = categoria;
         this.equiposActuales = new ArrayList<>();
     }
-
     // PROTECTED: Solo accesible por clases hijas y del mismo paquete (Equipo)
     protected void registrarEquipo(Equipo nuevoEquipo) {
 		// RESTRICCIÓN: El equipo no puede ser nulo

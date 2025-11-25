@@ -5,56 +5,68 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Equipo {
+    // Atributos de estado
     private String nombre;
     private TipoDeporte tipoDeporte;
     private Categoria categoria;
     private TipoCompeticion tipoCompeticion;
     private Pais pais;
+    private int maxJugadores; // REQUISITO: Límite de integrantes
+
+    // Relaciones
     private Entrenador entrenador;
     private List<Jugador> jugadores;
     private List<Torneo> torneosParticipados;
 
-    public Equipo(String nombre, TipoDeporte tipoDeporte, Categoria categoria, TipoCompeticion competicion, Pais pais) {
+    // Constructor
+    public Equipo(String nombre, TipoDeporte tipoDeporte, Categoria categoria, TipoCompeticion competicion, Pais pais, int maxJugadores) {
+        // Validaciones básicas de integridad
         assert nombre != null && !nombre.isBlank() : "El nombre es obligatorio";
         assert tipoDeporte != null : "El deporte es obligatorio";
         assert categoria != null : "La categoría es obligatoria";
         assert competicion != null : "El tipo de competición es obligatorio";
         assert pais != null : "El país es obligatorio";
+        assert maxJugadores > 0 : "El máximo de jugadores debe ser positivo";
 
         this.nombre = nombre;
         this.tipoDeporte = tipoDeporte;
         this.categoria = categoria;
         this.tipoCompeticion = competicion;
         this.pais = pais;
+        this.maxJugadores = maxJugadores;
+
+        // Inicialización de listas vacías para evitar NullPointerException
         this.jugadores = new ArrayList<>();
         this.torneosParticipados = new ArrayList<>();
     }
 
+    // Gestión de JUGADORES del equipo
     public void ficharJugador(Jugador nuevoJugador) {
         // RESTRICCIÓN: El jugador no puede ser nulo
         assert nuevoJugador != null : "No se puede fichar un jugador nulo";
-        
+
         // RESTRICCIÓN: El jugador no puede estar ya en el equipo
         assert !jugadores.contains(nuevoJugador) : "El jugador ya está en el equipo";
 
         // RESTRICCIÓN: El deporte debe coincidir
         assert nuevoJugador.getTipoDeporte() == this.tipoDeporte
-        : "Un jugador de " + nuevoJugador.getTipoDeporte() + " no puede jugar en un equipo de " + this.tipoDeporte;
+                : "Un jugador de " + nuevoJugador.getTipoDeporte() + " no puede jugar en un equipo de " + this.tipoDeporte;
+
+        // RESTRICCIÓN: Límite de plantilla (Requisito del proyecto)
+        assert jugadores.size() < maxJugadores
+                : "El equipo ha alcanzado el máximo de " + maxJugadores + " jugadores. No caben más.";
 
         // Intentamos fichar al jugador
         nuevoJugador.registrarEquipo(this);
 
-        // Tras asegurarnos que se cumplen las restricciones, añadimos el jugador
+        // Si el jugador nos acepta, lo añadimos a la lista
         this.jugadores.add(nuevoJugador);
     }
 
     public void despedirJugador(Jugador jugador) {
-        // RESTRICCIÓN: El jugador no puede ser nulo
         assert jugador != null : "No se puede despedir a un null";
-
-        // RESTRICCIÓN: El jugador debe pertenecer al equipo
-        assert this.jugadores.contains(jugador) 
-        : "El jugador " + jugador.getNombreCompleto() + " no pertenece al equipo " + this.nombre;
+        assert this.jugadores.contains(jugador)
+                : "El jugador " + jugador.getNombreCompleto() + " no pertenece al equipo " + this.nombre;
 
         // Informamos al jugador que abandona el equipo
         jugador.abandonarEquipo(this);
@@ -63,71 +75,68 @@ public abstract class Equipo {
         this.jugadores.remove(jugador);
     }
 
+    // Gestión de ENTRENADOR del equipo
     public void asignarEntrenador(Entrenador nuevoEntrenador) {
-        // RESTRICCIÓN: El entrenador no puede ser nulo
         assert nuevoEntrenador != null : "El entrenador no puede ser nulo";
-        
+
         // Si ya es nuestro entrenador, no hacemos nada
         if (this.entrenador == nuevoEntrenador) return;
 
-        // Intentamos que el nuevo entrenador nos acepte
-        // Si hay conflicto de torneos, el assert saltará y no se cambiará nada.
+        // IMPORTANTE: Llamamos al método del Entrenador.
+        // Allí es donde él verificará si ya entrena a otro equipo en nuestros torneos actuales.
+        // Si hay conflicto, saltará su assert y esta operación se cancelará.
         nuevoEntrenador.asignarEquipo(this);
 
-        // Si ya tenemos entrenador, lo despedimos primero
+        // Gestión del cambio: Si ya teníamos uno, lo liberamos
         if (this.entrenador != null) {
             this.entrenador.liberarEquipo(this);
-            this.entrenador = null;
         }
 
-        // Tras asegurarnos que se cumplen las restricciones, asignamos el entrenador
+        // Asignamos el nuevo
         this.entrenador = nuevoEntrenador;
     }
 
-    // PROTECTED: Solo accesible por clases hijas y del mismo paquete (Torneo)
+    // ---------------------------------------------------------
+    // GESTIÓN DE TORNEOS (Protected -> Solo llamado por clase Torneo)
+    // ---------------------------------------------------------
     protected void inscribirEnTorneo(Torneo nuevoTorneo) {
         // RESTRICCIÓN: El torneo no puede ser nulo
         assert nuevoTorneo != null : "No puedes inscribirte a un torneo nulo";
 
-        // RESTRICCIÓN: No estar en dos torneos la misma temporada
+        // RESTRICCIÓN: Temporada (Un equipo no puede jugar dos torneos simultáneos en la misma temporada/fecha)
         for (Torneo t : torneosParticipados) {
             assert !t.getTemporada().equals(nuevoTorneo.getTemporada())
-            : "El equipo ya juega otro torneo en la temporada " + t.getTemporada();
+                    : "El equipo ya juega otro torneo en la temporada " + t.getTemporada();
         }
 
-        // Tras asegurarnos que se cumplen las restricciones, añadimos el torneo
+        // RESTRICCIÓN: Conflicto de Entrenador (Validación Inversa)
+        // Si ya tenemos entrenador, debemos asegurar que él no está dirigiendo a OTRO equipo en ESTE nuevo torneo.
+        if (this.entrenador != null) {
+            for (Equipo otroEquipo : this.entrenador.getEquiposAsignados()) {
+                if (otroEquipo == this) continue; // Saltamos la comprobación con nosotros mismos
+
+                assert !otroEquipo.getTorneos().contains(nuevoTorneo)
+                        : "Conflicto: Nuestro entrenador " + entrenador.getNombre() + " ya dirige al equipo " + otroEquipo.getNombre() + " en este torneo.";
+            }
+        }
+
+        // Si pasa todas las validaciones, añadimos el torneo
         this.torneosParticipados.add(nuevoTorneo);
     }
 
-    public String getNombre() {
-        return nombre;
-    }
+    // ---------------------------------------------------------
+    // GETTERS
+    // ---------------------------------------------------------
+    public String getNombre() { return nombre; }
+    public TipoDeporte getTipoDeporte() { return tipoDeporte; }
+    public Categoria getCategoria() { return categoria; }
+    public TipoCompeticion getTipoCompeticion() { return tipoCompeticion; }
+    public Pais getPais() { return pais; }
+    public int getMaxJugadores() { return maxJugadores; }
+    public Entrenador getEntrenador() { return entrenador; }
 
-    public TipoDeporte getTipoDeporte() {
-        return tipoDeporte;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public TipoCompeticion getTipoCompeticion() {
-        return tipoCompeticion;
-    }
-
-    public Pais getPais() {
-        return pais;
-    }
-
-    public Entrenador getEntrenador() {
-        return entrenador;
-    }
-
-    public List<Jugador> getJugadores() {
-        return jugadores;
-    }
-
-    public List<Torneo> getTorneos() {
-        return torneosParticipados;
-    }
+    // Devolvemos copias defensivas o listas no modificables si queremos proteger la encapsulación,
+    // pero para este nivel académico devolver la lista suele ser aceptable.
+    public List<Jugador> getJugadores() { return jugadores; }
+    public List<Torneo> getTorneos() { return torneosParticipados; }
 }
