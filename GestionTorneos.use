@@ -167,7 +167,7 @@ context Partido
     ParticipacionPartido.allInstances()
       -> select(p | p.partidos = self)
       -> forAll(pp | 
-          self.torneos->exists(t | t.equipos->includesAll(pp.equipos))
+          self.torneos->exists(t | t.equipos->includes(pp.equipos))
       )
 
   -- El deporte, categoría y competición del partido deben coincidir con los del torneo --
@@ -302,7 +302,9 @@ context Entrenador
 
   -- Un entrenador solo puede entrenar equipos de su deporte
   inv DeporteConsistenteConEquipos:
-    self.equipos -> forAll(e | e.deporte = self.deporte)  
+    TiempoEquipo.allInstances()
+      ->select(te | te.jugadores = self and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
+      ->forAll(te | te.equipos.deporte = self.deporte) 
 
 
 context Narrador
