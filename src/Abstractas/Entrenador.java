@@ -15,7 +15,8 @@ public abstract class Entrenador extends Persona {
         this.equiposAsignados = new ArrayList<>();
     }
     
-    public void asignarEquipo(Equipo nuevoEquipo) {
+    // PROTECTED: Solo accesible por clases hijas y del mismo paquete (Equipo)
+    protected void asignarEquipo(Equipo nuevoEquipo) {
         // RESTRICCIÓN: El equipo no puede ser nulo
         assert nuevoEquipo != null : "El equipo a asignar no puede ser nulo";
 
