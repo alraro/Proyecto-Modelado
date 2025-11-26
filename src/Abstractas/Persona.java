@@ -4,25 +4,36 @@ import java.util.Objects;
 
 public abstract class Persona {
 	private String nombre;
-	private String Apellido1;
-	private String Apellido2;
-	private Integer Edad;
-	private String Dni;
+	private String apellido1;
+	private String apellido2;
+	private Integer edad;
+	private String dni;
 
 	public Persona(String nombre, String apellido1, String apellido2, Integer edad, String dni) {
-        this.Dni = dni;
+        // RESTRICCIÓN: El DNI no puede ser nulo o vacío
+        assert dni != null && !dni.isBlank() : "El DNI es obligatorio";
+        // RESTRICCIÓN: El nombre no puede ser nulo o vacío
+        assert nombre != null && !nombre.isBlank() : "El nombre es obligatorio";
+        // RESTRICCIÓN: El primer apellido no puede ser nulo o vacío
+        assert apellido1 != null && !apellido1.isBlank() : "El primer apellido es obligatorio";
+        // RESTRICCIÓN: El segundo apellido no puede ser nulo o vacío
+        assert apellido2 != null && !apellido2.isBlank() : "El segundo apellido es obligatorio";
+        // RESTRICCIÓN: La edad debe ser positiva
+        assert edad != null && edad > 0 : "La edad debe ser un número positivo";
+
+        this.dni = dni;
 		this.nombre = nombre;
-		Apellido1 = apellido1;
-		Apellido2 = apellido2;
-		Edad = edad;
+		this.apellido1 = apellido1;
+		this.apellido2 = apellido2;
+		this.edad = edad;
 	}
 
     public String getDni() {
-        return Dni;
+        return dni;
     }
 
     public void setDni(String dni) {
-        Dni = dni;
+        this.dni = dni;
     }
 
     public String getNombre() {
@@ -34,52 +45,55 @@ public abstract class Persona {
 	}
 
 	public String getApellido1() {
-		return Apellido1;
+		return apellido1;
 	}
 
 	public void setApellido1(String apellido1) {
-		Apellido1 = apellido1;
+		this.apellido1 = apellido1;
 	}
 
 	public String getApellido2() {
-		return Apellido2;
+		return apellido2;
 	}
 
 	public void setApellido2(String apellido2) {
-		Apellido2 = apellido2;
+		this.apellido2 = apellido2;
 	}
 
 	public Integer getEdad() {
-		return Edad;
+		return edad;
 	}
 
 	public void setEdad(Integer edad) {
-		Edad = edad;
+		this.edad = edad;
 	}
 
 	public String getNombreCompleto() {
-		return this.nombre + " " + this.Apellido1 + " " + this.Apellido2;
+		return this.nombre + " " + this.apellido1 + " " + this.apellido2;
 	}
 
-	public void setNombreCompleto(String name) {
-		String[] splitted = name.split(" ");
-		if (splitted.length != 3) {
-			throw new IllegalArgumentException("Error poniendo nombre, formato: Nombre Apellido1 Apellido2");
-		}
-		setNombre(splitted[0]);
-		setApellido1(splitted[1]);
-		setApellido2(splitted[2]);
-	}
+    public void setNombreCompleto(String name) {
+        assert name != null : "El nombre completo no puede ser nulo";
+        String[] splitted = name.split(" ");
+
+
+        // RESTRICCIÓN: El nombre completo debe tener al menos 3 partes, de manera que tenemos en cuenta los nombres compuestos
+        assert splitted.length >= 3 : "El nombre completo debe tener al menos 3 partes: nombre, primer apellido y segundo apellido";
+
+        setNombre(splitted[0]);
+        setApellido1(splitted[1]);
+        setApellido2(splitted[2]);
+    }
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Persona persona)) return false;
-		return Objects.equals(Dni, persona.Dni);
+		return Objects.equals(dni, persona.dni);
 	}
 
     @Override
 	public int hashCode() {
-		return Objects.hashCode(Dni);
+		return Objects.hashCode(dni);
 	}
 }
