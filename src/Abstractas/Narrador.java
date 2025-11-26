@@ -7,60 +7,93 @@ import java.util.List;
 import Enumerados.*;
 
 public abstract class Narrador extends Persona {
+    // Atributos
     private TipoDeporte tipoDeporte;
-    private List<Partido> partidosAsignados;
+
+    // REQUISITO: Atributo "Torneos Asignados"
+    private List<Torneo> torneosAsignados;
+
+    // Mantenemos esto para controlar que no narre dos partidos a la vez
+    private List<Partido> partidosNarrados;
 
     public Narrador(String nombre, String apellido1, String apellido2, Integer edad, String dni, TipoDeporte tipoDeporte) {
-        super(nombre, apellido1, apellido2, edad,dni);
+        super(nombre, apellido1, apellido2, edad, dni);
+
         assert tipoDeporte != null : "El tipo de deporte no puede ser nulo";
+
         this.tipoDeporte = tipoDeporte;
-        this.partidosAsignados = new ArrayList<>();
+        this.torneosAsignados = new ArrayList<>();
+        this.partidosNarrados = new ArrayList<>();
     }
 
-    // PROTECTED: Solo accesible por clases hijas y del mismo paquete (Partido)
+    // ---------------------------------------------------------
+    // GESTIÓN DE TORNEOS (Nuevo Requisito)
+    // ---------------------------------------------------------
+    // PROTECTED: Se llama desde la clase Torneo para mantener bidireccionalidad
+    protected void asignarTorneo(Torneo nuevoTorneo) {
+        // Validación básica
+        assert nuevoTorneo != null : "El torneo no puede ser nulo";
+
+        // RESTRICCIÓN: Solo puede narrar un deporte
+        // (Verificamos que el torneo sea del deporte del narrador)
+        assert this.tipoDeporte == nuevoTorneo.getTipoDeporte()
+                : "El narrador es de " + this.tipoDeporte + " y no puede narrar en un torneo de " + nuevoTorneo.getTipoDeporte();
+
+        // RESTRICCIÓN: Puede estar en varios torneos, NO en la misma temporada
+        for (Torneo t : torneosAsignados) {
+            assert !t.getTemporada().equals(nuevoTorneo.getTemporada())
+                    : "Conflicto de temporada: El narrador ya trabaja en el torneo " + t.getNombre() + " durante la temporada " + t.getTemporada();
+        }
+
+        // Nota: No restringimos TipoCompeticion, cumpliendo: "Puede narrar distintas competiciones"
+
+        this.torneosAsignados.add(nuevoTorneo);
+    }
+
+    // ---------------------------------------------------------
+    // GESTIÓN DE PARTIDOS (Tu código existente + integración)
+    // ---------------------------------------------------------
     protected void anadirPartido(Partido nuevoPartido) {
-        // RESTRICCIÓN: El partido no puede ser nulo
         assert nuevoPartido != null : "Partido nulo";
 
-        // RESTRICCIÓN: El narrador debe estar contratado para el torneo del partido
-        assert nuevoPartido.getTorneo().getNarradores().contains(this)
-        : "El narrador no está contratado para el torneo " + nuevoPartido.getTorneo().getNombre();
+        // RESTRICCIÓN: Coherencia (Debe estar asignado al torneo del partido primero)
+        assert this.torneosAsignados.contains(nuevoPartido.getTorneo())
+                : "El narrador no ha sido contratado para el torneo " + nuevoPartido.getTorneo().getNombre();
 
         // RESTRICCIÓN: Disponibilidad (No partidos a la misma hora)
         assert estaDisponible(nuevoPartido.getFecha(), nuevoPartido.getHora(), nuevoPartido.getTorneo().getDuracionPartidos())
-        : "El narrador no está disponible en ese horario";
+                : "El narrador no está disponible en ese horario (coincide con otro partido)";
 
-        // Si todo es correcto, se añade a la agenda
-        this.partidosAsignados.add(nuevoPartido);
+        this.partidosNarrados.add(nuevoPartido);
     }
 
-    // Método auxiliar privado para comprobar disponibilidad
+    // Método auxiliar privado para comprobar disponibilidad (Tu lógica correcta)
     private boolean estaDisponible(LocalDate fecha, LocalTime hora, int duracion) {
-        final int TIEMPO_DESCANSO_MINUTOS = 30; // Tiempo de descanso entre partidos para los narradores
-        LocalTime horaFinNuevoPartido = hora.plusMinutes(duracion);
-        LocalTime horaFinConDescanso = horaFinNuevoPartido.plusMinutes(TIEMPO_DESCANSO_MINUTOS);
-        for (Partido p : partidosAsignados) {
-            if (!p.getFecha().equals(fecha)) {
-                continue; // Si es en otro día, no hay conflicto
-            }
+        final int TIEMPO_DESCANSO_MINUTOS = 30;
 
-            // Comprobamos si hay solapamiento
-            LocalTime horaInicioExistente = p.getHora();
-            LocalTime horaFinExistente = horaInicioExistente.plusMinutes(p.getTorneo().getDuracionPartidos());
-            // Verificamos si los intervalos de tiempo se solapan
-            boolean solapan = !(horaFinConDescanso.isBefore(horaInicioExistente) || hora.isAfter(horaFinExistente.plusMinutes(TIEMPO_DESCANSO_MINUTOS)));
-            if (solapan) {
+        // Calculamos fin del nuevo partido + descanso
+        LocalTime finNuevo = hora.plusMinutes(duracion + TIEMPO_DESCANSO_MINUTOS);
+
+        for (Partido p : partidosNarrados) {
+            if (!p.getFecha().equals(fecha)) continue;
+
+            LocalTime inicioExistente = p.getHora();
+            LocalTime finExistente = inicioExistente.plusMinutes(p.getTorneo().getDuracionPartidos() + TIEMPO_DESCANSO_MINUTOS);
+
+            // Lógica de solapamiento de intervalos
+            if (hora.isBefore(finExistente) && inicioExistente.isBefore(finNuevo)) {
                 return false; // Hay conflicto
             }
         }
-        return true; // No hay conflictos
+        return true;
     }
 
-    public TipoDeporte getTipoDeporte() {
-        return tipoDeporte;
-    }
+    // ---------------------------------------------------------
+    // GETTERS
+    // ---------------------------------------------------------
+    public TipoDeporte getTipoDeporte() { return tipoDeporte; }
 
-    public List<Partido> getPartidosAsignados() {
-        return partidosAsignados;
-    }
+    // Devolvemos copias para proteger encapsulamiento
+    public List<Torneo> getTorneosAsignados() { return new ArrayList<>(torneosAsignados); }
+    public List<Partido> getPartidosNarrados() { return new ArrayList<>(partidosNarrados); }
 }
