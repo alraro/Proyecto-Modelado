@@ -28,22 +28,28 @@ public abstract class Jugador extends Persona {
 		// RESTRICCIÓN: El equipo no puede ser nulo
         assert nuevoEquipo != null : "Equipo nulo";
 
-        // RESTRICCIÓN: Solo puede jugar en la Selección (equipo internacional) de su país
-        if (nuevoEquipo.getTipoCompeticion() == TipoCompeticion.INTERNACIONAL) {
+        // RESTRICCIÓN: Máximo en 2 equipos
+        assert this.equiposActuales.size() < 2
+        : "El jugador ya está en el máximo de equipos permitidos (2)";
+
+        boolean esNuevaSeleccion = nuevoEquipo.getTipoCompeticion() == TipoCompeticion.INTERNACIONAL;
+
+        // RESTRICCIÓN: Si es selección, debe ser de su país
+        if (esNuevaSeleccion) {
             assert nuevoEquipo.getPais() == this.nacionalidad
-            : "Un jugador de " + this.nacionalidad + " no puede jugar en la Selección de " + nuevoEquipo.getPais();
+                    : "Un jugador de " + this.nacionalidad + " no puede jugar en la Selección de " + nuevoEquipo.getPais();
         }
 
-        // RESTRICCIÓN: Puede estar en dos equipos si es nacional/local e internacional
+        // RESTRICCIÓN: Compatibilidad de equipos (1 Club + 1 Selección)
         for (Equipo e : equiposActuales) {
-            if (e.getTipoCompeticion() == TipoCompeticion.INTERNACIONAL) {
-                assert nuevoEquipo.getTipoCompeticion() != TipoCompeticion.INTERNACIONAL
-                : "El jugador ya juega en una Selección Nacional";
-            }
-            
-            else {
-                assert nuevoEquipo.getTipoCompeticion() == TipoCompeticion.INTERNACIONAL
-                : "El jugador ya tiene un club, debe abandonar el actual antes de fichar por otro";
+            boolean esSeleccionActual = e.getTipoCompeticion() == TipoCompeticion.INTERNACIONAL;
+
+            if (esNuevaSeleccion) {
+                // Si intento entrar en una selección, no puedo tener otra selección ya
+                assert !esSeleccionActual : "El jugador ya pertenece a una Selección Nacional";
+            } else {
+                // Si intento entrar en un club (Local/Nacional), no puedo tener otro club ya
+                assert esSeleccionActual : "El jugador ya pertenece a un Club, debe abandonarlo antes de fichar por otro";
             }
         }
 
@@ -79,7 +85,9 @@ public abstract class Jugador extends Persona {
         // RESTRICCIÓN: El jugador debe pertenecer al equipo
         assert this.equiposActuales.contains(equipo)
         : "El jugador no pertenece al equipo " + equipo.getNombre();
-        this.equiposActuales.remove(equipo);
+
+        // Delegamos al equipo la gestión del abandono.
+        // El equipo llamará de vuelta a 'abandonarEquipo' (protected) para actualizar nuestra lista.
         equipo.despedirJugador(this);
     }
 
