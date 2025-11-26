@@ -24,7 +24,7 @@ public class Main {
         FabricaDeporte fabrica = new FabricaFutbol();
 
         try {
-            // --- FASE 1: CREACIÓN DE ESTRUCTURAS (RUTA FELIZ) ---
+            // --- CREACIÓN DE ESTRUCTURAS ---
             System.out.println("\n[1] Creando Torneos y Entidades...");
 
             // Torneo Nacional (La Liga) - con duracionPartidos

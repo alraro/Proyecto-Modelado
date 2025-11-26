@@ -20,7 +20,7 @@ public abstract class Entrenador extends Persona {
         // RESTRICCIÓN: El equipo no puede ser nulo
         assert nuevoEquipo != null : "El equipo a asignar no puede ser nulo";
 
-        // RESTRICCIÓN: El deporte debe coincidir
+        // RESTRICCIÓN: No puede estar en dos deportes diferentes
         assert nuevoEquipo.getTipoDeporte() == this.tipoDeporte
         : "El entrenador de " + this.tipoDeporte + " no puede entrenar " + nuevoEquipo.getTipoDeporte();
 

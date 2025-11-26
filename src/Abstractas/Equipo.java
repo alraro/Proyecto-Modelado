@@ -55,7 +55,7 @@ public abstract class Equipo {
         assert nuevoJugador.getTipoDeporte() == this.tipoDeporte
         : "Un jugador de " + nuevoJugador.getTipoDeporte() + " no puede jugar en un equipo de " + this.tipoDeporte;
 
-        // RESTRICCIÓN: Límite de plantilla (Requisito del proyecto)
+        // RESTRICCIÓN: Límite de plantilla no superado
         assert jugadores.size() < (maxSuplentes + maxTitulares)
         : "El equipo ha alcanzado el máximo de " + (maxSuplentes + maxTitulares) + " jugadores. No caben más.";
 

@@ -72,6 +72,17 @@ public abstract class Jugador extends Persona {
         this.categoria = nuevaCategoria;
     }
 
+    // Implementamos si el jugador quiere abandonar un equipo por su cuenta
+    public void abandonarEquipoPorCuentaPropia(Equipo equipo) {
+        // RESTRICCIÓN: El equipo no puede ser nulo
+        assert equipo != null : "Equipo nulo";
+        // RESTRICCIÓN: El jugador debe pertenecer al equipo
+        assert this.equiposActuales.contains(equipo)
+        : "El jugador no pertenece al equipo " + equipo.getNombre();
+        this.equiposActuales.remove(equipo);
+        equipo.despedirJugador(this);
+    }
+
     public TipoDeporte getTipoDeporte() {
 		return tipoDeporte;
 	}
