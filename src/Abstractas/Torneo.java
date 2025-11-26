@@ -1,6 +1,8 @@
 package Abstractas;
 
 import Enumerados.*;
+
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,10 +18,13 @@ public abstract class Torneo {
     private List<Arbitro> arbitros;
     private List<Narrador> narradores;
     private Equipo ganador;
-    private int duracionPartidos;// en minutos
+    private int duracionPartidos; // en minutos
+
+    // REQUISITO: "No puede haber más equipos que el número máximo de equipos."
+    private int maxEquipos;
 
     public Torneo(String nombre, Pais paisSede, String temporada,
-        TipoDeporte tipoDeporte, Categoria categoria, TipoCompeticion competicion, int duracionPartidos) {
+                  TipoDeporte tipoDeporte, Categoria categoria, TipoCompeticion competicion, int duracionPartidos, int maxEquipos) {
 
         assert nombre != null && !nombre.isBlank() : "El nombre es obligatorio";
         assert paisSede != null : "Debe definirse un país sede";
@@ -28,6 +33,10 @@ public abstract class Torneo {
         assert categoria != null : "La categoría es obligatoria";
         assert competicion != null : "El tipo de competición es obligatorio";
         assert duracionPartidos > 0 : "La duración de los partidos debe ser positiva";
+
+        // Validación del nuevo atributo
+        assert maxEquipos > 1 : "Un torneo debe tener al menos 2 equipos de cupo";
+
         this.nombre = nombre;
         this.paisSede = paisSede;
         this.temporada = temporada;
@@ -40,90 +49,92 @@ public abstract class Torneo {
         this.narradores = new ArrayList<>();
         this.ganador = null;
         this.duracionPartidos = duracionPartidos;
+        this.maxEquipos = maxEquipos;
     }
 
     public void inscribirEquipo(Equipo equipo) {
-        // RESTRICCIÓN: El equipo no puede ser nulo
         assert equipo != null : "Equipo nulo";
 
-        // RESTRICCIÓN: El equipo tiene que ser del mismo deporte que el torneo
-        assert equipo.getTipoDeporte() == this.tipoDeporte 
-        : "No puedes inscribir un equipo de " + equipo.getTipoDeporte() + " en un torneo de " + this.tipoDeporte;
+        // RESTRICCIÓN: Número máximo de equipos
+        assert equiposInscritos.size() < maxEquipos
+                : "Cupo de equipos lleno. Máximo permitido: " + maxEquipos;
 
-        // RESTRICCIÓN: El equipo tiene que ser de la misma categoría que el torneo
+        // RESTRICCIÓN: Mismo deporte
+        assert equipo.getTipoDeporte() == this.tipoDeporte
+                : "No puedes inscribir un equipo de " + equipo.getTipoDeporte() + " en un torneo de " + this.tipoDeporte;
+
+        // RESTRICCIÓN: Misma categoría
         assert equipo.getCategoria() == this.categoria
-        : "Categoría incorrecta: Se espera " + this.categoria;
+                : "Categoría incorrecta: Se espera " + this.categoria;
 
-        // RESTRICCIÓN: El equipo no puede estar ya inscrito
-        assert !this.equiposInscritos.contains(equipo) 
-        : "El equipo " + equipo.getNombre() + " ya está inscrito en el torneo";
+        // RESTRICCIÓN: No repetidos
+        assert !this.equiposInscritos.contains(equipo)
+                : "El equipo " + equipo.getNombre() + " ya está inscrito en el torneo";
 
-        // RESTRICCIÓN: En un torneo internacional no puede haber dos equipos del mismo país
+        // RESTRICCIÓN: Internacional (No dos equipos del mismo país)
         if (this.competicion == TipoCompeticion.INTERNACIONAL) {
             for (Equipo e : equiposInscritos) {
                 assert e.getPais() != equipo.getPais()
-                : "Regla Internacional violada: Ya existe un equipo de " + equipo.getPais();
+                        : "Regla Internacional violada: Ya existe un equipo de " + equipo.getPais();
             }
         }
-        
-        // RESTRICCIÓN: En un torneo nacional los equipos deben ser del país sede
+        // RESTRICCIÓN: Nacional (Equipos del país sede)
         else if (this.competicion == TipoCompeticion.NACIONAL) {
             assert equipo.getPais() == this.paisSede
-            : "Regla Nacional violada: Un equipo de " + equipo.getPais() + " no puede jugar un torneo nacional de " + this.paisSede;
+                    : "Regla Nacional violada: Un equipo de " + equipo.getPais() + " no puede jugar un torneo nacional de " + this.paisSede;
         }
 
-        // Intentamos que el equipo se inscriba en el torneo, inscribirEnTorneo ya tiene el resto de asserts
+        // Intentamos que el equipo se inscriba (él validará si tiene agenda libre)
         equipo.inscribirEnTorneo(this);
 
-        // Si pasa todas las validaciones, entra.
         this.equiposInscritos.add(equipo);
     }
 
     public void contratarArbitro(Arbitro arbitro) {
-        // RESTRICCIÓN: El árbitro no puede ser nulo
         assert arbitro != null : "Arbitro nulo";
-        
-        // RESTRICCIÓN: El árbitro ya está contratado
-        assert !arbitros.contains(arbitro)
-        : "El árbitro " + arbitro.getNombre() + " ya está contratado para el torneo " + this.nombre;
+        assert !arbitros.contains(arbitro) : "El árbitro ya está contratado";
 
-        // RESTRICCIÓN: El árbitro debe ser del mismo deporte que el torneo
         assert arbitro.getTipoDeporte() == this.tipoDeporte
-        : "Un arbitro de " + arbitro.getTipoDeporte() + " no puede arbitrar un torneo de " + this.tipoDeporte;
+                : "Un arbitro de " + arbitro.getTipoDeporte() + " no puede arbitrar un torneo de " + this.tipoDeporte;
 
-        // RESTRICCIÓN: El árbitro debe estar cualificado para la categoría del partido
         assert arbitro.getCategoriasPermitidas().contains(this.categoria)
-        : "El árbitro no está cualificado para la categoría " + this.categoria;
+                : "El árbitro no está cualificado para la categoría " + this.categoria;
 
         this.arbitros.add(arbitro);
+
+        // Notificamos al árbitro (si fuera necesario en tu modelo, aunque Arbitro gestiona Partidos, no Torneos directamente)
     }
 
     public void contratarNarrador(Narrador narrador) {
-        // RESTRICCIÓN: El narrador no puede ser nulo
         assert narrador != null : "Narrador nulo";
+        assert !narradores.contains(narrador) : "El narrador ya está contratado";
 
-        // RESTRICCIÓN: El narrador ya está contratado
-        assert !narradores.contains(narrador)
-        : "El narrador " + narrador.getNombre() + " ya está contratado para el torneo " + this.nombre;
-
-        // RESTRICCIÓN: El narrador debe ser del mismo deporte que el torneo
         assert narrador.getTipoDeporte() == this.tipoDeporte
-        : "El narrador de " + narrador.getTipoDeporte() + " no puede narrar un torneo de " + this.tipoDeporte;
+                : "Deporte incorrecto para el narrador";
 
-        // Tras asegurarnos que se cumplen las restricciones, añadimos el narrador
+        // IMPORTANTE: Vinculación bidireccional para que el narrador sepa que trabaja aquí
+        // (Esto es necesario para que luego Narrador.anadirPartido funcione, ya que comprueba 'torneosAsignados')
+        narrador.asignarTorneo(this);
+
         this.narradores.add(narrador);
     }
 
     public void registrarPartido(Partido nuevoPartido) {
-        // RESTRICCIÓN: El partido no puede ser nulo
-        assert nuevoPartido != null : "El partido no puede ser nulo";
+        assert nuevoPartido != null : "Partido nulo";
 
-        // RESTRICCIÓN: No se pueden jugar varios partidos a la misma hora en el mismo lugar"
+        // RESTRICCIÓN: No solapamiento de lugar y hora
         for (Partido p : partidos) {
-            if (p.getFecha().equals(nuevoPartido.getFecha())) { // Mismo día
-                if (p.getLugar().equalsIgnoreCase(nuevoPartido.getLugar())) { // Mismo lugar
-                    assert !p.getHora().equals(nuevoPartido.getHora()) // Misma hora
-                    : "Ya hay un partido en " + p.getLugar() +  " el " + p.getFecha() + " a las " + p.getHora();
+            if (p.getFecha().equals(nuevoPartido.getFecha())) {
+                if (p.getLugar().equalsIgnoreCase(nuevoPartido.getLugar())) {
+                    // Aquí calculamos si chocan las horas usando la duración
+                    LocalTime finExistente = p.getHora().plusMinutes(p.getTorneo().getDuracionPartidos());
+                    LocalTime finNuevo = nuevoPartido.getHora().plusMinutes(nuevoPartido.getTorneo().getDuracionPartidos());
+
+                    // Solapamiento de intervalos
+                    boolean solapan = nuevoPartido.getHora().isBefore(finExistente) && p.getHora().isBefore(finNuevo);
+
+                    assert !solapan
+                            : "Conflicto de pista: Ya hay un partido en " + p.getLugar() + " a esa hora.";
                 }
             }
         }
@@ -132,66 +143,24 @@ public abstract class Torneo {
     }
 
     public void finalizarTorneo(Equipo ganador) {
-        // RESTRICCIÓN: Tiene que haberse jugado al menos un partido
-        assert !partidos.isEmpty() 
-        : "No se puede finalizar un torneo sin partidos jugados";
-        
-        // RESTRICCIÓN: El ganador debe ser un equipo del torneo
-        assert equiposInscritos.contains(ganador) 
-        : "El ganador no estaba inscrito en el torneo";
+        assert !partidos.isEmpty() : "No se puede finalizar un torneo sin partidos jugados";
+        assert equiposInscritos.contains(ganador) : "El ganador no estaba inscrito en el torneo";
 
         this.ganador = ganador;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public Pais getPaisSede() {
-        return paisSede;
-    }
-
-    public String getTemporada() {
-        return temporada;
-    }
-
-    public TipoDeporte getTipoDeporte() {
-        return tipoDeporte;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public TipoCompeticion getCompeticion() {
-        return competicion;
-    }
-
-    public List<Equipo> getEquiposInscritos() {
-        return equiposInscritos;
-    }
-
-    public List<Partido> getPartidos() {
-        return partidos;
-    }
-
-    public List<Arbitro> getArbitros() {
-        return arbitros;
-    }
-
-    public List<Narrador> getNarradores() {
-        return narradores;
-    }
-
-    public Equipo getGanador() {
-        return ganador;
-    }
-
-    public int getDuracionPartidos() {
-        return duracionPartidos;
-    }
-
-    public void setDuracionPartidos(int duracionPartidos) {
-        this.duracionPartidos = duracionPartidos;
-    }
+    // Getters
+    public String getNombre() { return nombre; }
+    public Pais getPaisSede() { return paisSede; }
+    public String getTemporada() { return temporada; }
+    public TipoDeporte getTipoDeporte() { return tipoDeporte; }
+    public Categoria getCategoria() { return categoria; }
+    public TipoCompeticion getCompeticion() { return competicion; }
+    public List<Equipo> getEquiposInscritos() { return new ArrayList<>(equiposInscritos); }
+    public List<Partido> getPartidos() { return new ArrayList<>(partidos); }
+    public List<Arbitro> getArbitros() { return new ArrayList<>(arbitros); }
+    public List<Narrador> getNarradores() { return new ArrayList<>(narradores); }
+    public Equipo getGanador() { return ganador; }
+    public int getDuracionPartidos() { return duracionPartidos; }
+    public int getMaxEquipos() { return maxEquipos; }
 }
