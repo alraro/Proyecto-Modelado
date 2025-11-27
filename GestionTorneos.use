@@ -264,12 +264,15 @@ context Equipo
     self.torneos->forAll(t | t.competicion = self.competicion)
 
   -- Un equipo no puede jugar dos partidos a la misma hora y fecha --  
-  inv NoPartidosSimultaneos:
+ inv NoPartidosSimultaneos:
     self.participacionPartido->collect(pp | pp.partidos)
       ->forAll(p1, p2 | 
           (p1 <> p2 and p1.fecha = p2.fecha) 
           implies 
-          p1.hora <> p2.hora
+          not (
+             p1.horaInicio < p2.horaFin and
+             p1.horaFin > p2.horaInicio
+          )
       )
 
 
@@ -324,10 +327,10 @@ context Jugador
       ->forAll(te | te.equipos->forAll(e | e.categoria = self.categoria))
 
   -- Si el jugador quiere abandonar un equipo, debe pertenecer a él --
-  inv SoloAbandonaSiPertenece:
+  inv NoCambiaCategoriaSiPerteneceEquipo:
     TiempoEquipo.allInstances()
       ->select(te | te.jugadores = self and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
-      ->forAll(te | te.equipos->includesAll(self.equipos))  
+      ->forAll(te | te.equipos.categoria = self.categoria) 
 
 
 context Arbitro
