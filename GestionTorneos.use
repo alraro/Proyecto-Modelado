@@ -324,12 +324,6 @@ context Jugador
   inv NoCambiaCategoriaSiPerteneceEquipo:
     TiempoEquipo.allInstances()
       ->select(te | te.jugadores = self and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
-      ->forAll(te | te.equipos->forAll(e | e.categoria = self.categoria))
-
-  -- Si el jugador quiere abandonar un equipo, debe pertenecer a él --
-  inv NoCambiaCategoriaSiPerteneceEquipo:
-    TiempoEquipo.allInstances()
-      ->select(te | te.jugadores = self and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
       ->forAll(te | te.equipos.categoria = self.categoria) 
 
 
