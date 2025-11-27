@@ -82,6 +82,7 @@ public abstract class Jugador extends Persona {
     public void abandonarEquipoPorCuentaPropia(Equipo equipo) {
         // RESTRICCIÓN: El equipo no puede ser nulo
         assert equipo != null : "Equipo nulo";
+        
         // RESTRICCIÓN: El jugador debe pertenecer al equipo
         assert this.equiposActuales.contains(equipo)
         : "El jugador no pertenece al equipo " + equipo.getNombre();

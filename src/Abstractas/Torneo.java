@@ -9,6 +9,7 @@ import java.util.List;
 public abstract class Torneo {
     private String nombre;
     private Pais paisSede;
+    private String provinciaSede;
     private String temporada;
     private TipoDeporte tipoDeporte;
     private Categoria categoria;
@@ -23,11 +24,12 @@ public abstract class Torneo {
     // REQUISITO: "No puede haber más equipos que el número máximo de equipos."
     private int maxEquipos;
 
-    public Torneo(String nombre, Pais paisSede, String temporada,
+    public Torneo(String nombre, Pais paisSede, String provinciaSede, String temporada,
                   TipoDeporte tipoDeporte, Categoria categoria, TipoCompeticion competicion, int duracionPartidos, int maxEquipos) {
 
         assert nombre != null && !nombre.isBlank() : "El nombre es obligatorio";
         assert paisSede != null : "Debe definirse un país sede";
+        assert provinciaSede != null && !provinciaSede.isBlank() : "Debe definirse una ciudad sede";
         assert temporada != null && !temporada.isBlank() : "La temporada es obligatoria";
         assert tipoDeporte != null : "El deporte es obligatorio";
         assert categoria != null : "La categoría es obligatoria";
@@ -39,6 +41,7 @@ public abstract class Torneo {
 
         this.nombre = nombre;
         this.paisSede = paisSede;
+        this.provinciaSede = provinciaSede;
         this.temporada = temporada;
         this.tipoDeporte = tipoDeporte;
         this.categoria = categoria;
@@ -75,13 +78,18 @@ public abstract class Torneo {
         if (this.competicion == TipoCompeticion.INTERNACIONAL) {
             for (Equipo e : equiposInscritos) {
                 assert e.getPais() != equipo.getPais()
-                        : "Regla Internacional violada: Ya existe un equipo de " + equipo.getPais();
+                : "Regla Internacional violada: Ya existe un equipo de " + equipo.getPais();
             }
         }
         // RESTRICCIÓN: Nacional (Equipos del país sede)
         else if (this.competicion == TipoCompeticion.NACIONAL) {
             assert equipo.getPais() == this.paisSede
-                    : "Regla Nacional violada: Un equipo de " + equipo.getPais() + " no puede jugar un torneo nacional de " + this.paisSede;
+            : "Regla Nacional violada: Un equipo de " + equipo.getPais() + " no puede jugar un torneo nacional de " + this.paisSede;
+        }
+        // RESTRICCIÓN: Local (Equipos de la provincia sede)
+        else if (this.competicion == TipoCompeticion.LOCAL) {
+            assert equipo.getProvincia().equals(this.provinciaSede)
+            : "Regla Local violada: Un equipo de " + equipo.getProvincia() + " no puede jugar un torneo local de " + this.provinciaSede;
         }
 
         // Intentamos que el equipo se inscriba (él validará si tiene agenda libre)
@@ -152,6 +160,7 @@ public abstract class Torneo {
     // Getters
     public String getNombre() { return nombre; }
     public Pais getPaisSede() { return paisSede; }
+    public String getProvinciaSede() { return provinciaSede; }
     public String getTemporada() { return temporada; }
     public TipoDeporte getTipoDeporte() { return tipoDeporte; }
     public Categoria getCategoria() { return categoria; }

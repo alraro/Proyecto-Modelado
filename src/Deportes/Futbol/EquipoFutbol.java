@@ -8,7 +8,7 @@ public class EquipoFutbol extends Equipo {
     private static final int MAX_TITULARES = 11;
     private static final int MAX_SUPLENTES = 7;
 
-    public EquipoFutbol(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais) {
-        super(nombre, TipoDeporte.FUTBOL, categoria, competicion, pais, MAX_TITULARES, MAX_SUPLENTES);
+    public EquipoFutbol(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais, String provincia) {
+        super(nombre, TipoDeporte.FUTBOL, categoria, competicion, pais, provincia, MAX_TITULARES, MAX_SUPLENTES);
     }
 }

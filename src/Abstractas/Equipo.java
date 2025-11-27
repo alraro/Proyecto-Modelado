@@ -11,6 +11,7 @@ public abstract class Equipo {
     private Categoria categoria;
     private TipoCompeticion tipoCompeticion;
     private Pais pais;
+    private String provincia;
     private int maxTitulares; // REQUISITO: Límite de integrantes
     private int maxSuplentes;  // REQUISITO: Límite de integrantes
 
@@ -19,14 +20,14 @@ public abstract class Equipo {
     private List<Jugador> jugadores;
     private List<Torneo> torneosParticipados;
 
-    // Constructor
-    public Equipo(String nombre, TipoDeporte tipoDeporte, Categoria categoria, TipoCompeticion competicion, Pais pais, int maxTtitulares, int maxSuplentes) {
-        // Validaciones básicas de integridad
+    public Equipo(String nombre, TipoDeporte tipoDeporte, Categoria categoria, TipoCompeticion competicion,
+                    Pais pais, String provincia, int maxTtitulares, int maxSuplentes) {
         assert nombre != null && !nombre.isBlank() : "El nombre es obligatorio";
         assert tipoDeporte != null : "El deporte es obligatorio";
         assert categoria != null : "La categoría es obligatoria";
         assert competicion != null : "El tipo de competición es obligatorio";
         assert pais != null : "El país es obligatorio";
+        assert provincia != null && provincia.isBlank() : "La provincia es obligatoria";
         assert maxTtitulares > 0 : "El máximo de jugadores debe ser positivo";
         assert maxSuplentes >= 0 : "El máximo de suplentes no puede ser negativo";
 
@@ -35,10 +36,9 @@ public abstract class Equipo {
         this.categoria = categoria;
         this.tipoCompeticion = competicion;
         this.pais = pais;
+        this.provincia = provincia;
         this.maxTitulares = maxTtitulares;
         this.maxSuplentes = maxSuplentes;
-
-        // Inicialización de listas vacías para evitar NullPointerException
         this.jugadores = new ArrayList<>();
         this.torneosParticipados = new ArrayList<>();
     }
@@ -67,9 +67,12 @@ public abstract class Equipo {
     }
 
     public void despedirJugador(Jugador jugador) {
+        // RESTRICCIÓN: El jugador no puede ser nulo
         assert jugador != null : "No se puede despedir a un null";
+
+        // RESTRICCIÓN: El jugador debe estar en el equipo
         assert this.jugadores.contains(jugador)
-                : "El jugador " + jugador.getNombreCompleto() + " no pertenece al equipo " + this.nombre;
+        : "El jugador " + jugador.getNombreCompleto() + " no pertenece al equipo " + this.nombre;
 
         // Informamos al jugador que abandona el equipo
         jugador.abandonarEquipo(this);
@@ -135,6 +138,7 @@ public abstract class Equipo {
     public Categoria getCategoria() { return categoria; }
     public TipoCompeticion getTipoCompeticion() { return tipoCompeticion; }
     public Pais getPais() { return pais; }
+    public String getProvincia() { return provincia; }
     public int getMaxJugadores() { return ((maxSuplentes + maxTitulares)); }
     public Entrenador getEntrenador() { return entrenador; }
     public int getMaxTitulares() {return maxTitulares;}
