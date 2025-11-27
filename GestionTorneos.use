@@ -1,10 +1,10 @@
 model GestionTorneos
 
 --- Enumerations ---
-enum TipoDeporte {Futbol, Baloncesto, Volleyball, Golf, Tenis, Padel}
+enum TipoDeporte {Futbol, Baloncesto, Volleyball, Rugby, Tenis, Padel}
 enum TipoJugador {Suplente, Titular}
 enum TipoCategoria {Infantil, Juvenil, Senior, Veterano}
-enum TipoCompeticion {Local, Nacional}
+enum TipoCompeticion {Local, Nacional, Internacional}
 --- End Enumerations ---
 
 --- Classes ---
@@ -20,14 +20,13 @@ class Jugador < Persona
     deporte: TipoDeporte
     tipoJugador: TipoJugador
     categoria: TipoCategoria
-    competicion: TipoCompeticion
+    nacionalidad: String
 end
 
 class Arbitro < Persona
   attributes
     deporte: TipoDeporte
     categoria: TipoCategoria
-    disponibilidad: Boolean
     competicion: TipoCompeticion
 end
 
@@ -35,6 +34,7 @@ class Entrenador < Persona
   attributes
     deporte: TipoDeporte
     competicion: TipoCompeticion
+    categoria: TipoCategoria
 end
 
 class Narrador < Persona
@@ -52,8 +52,10 @@ class Torneo
     categoria: TipoCategoria
     competicion: TipoCompeticion
     maxIntegrantesEquipo: Integer
-    ganador: Equipo
-    partidoJugado: Boolean
+    ganador: String
+    pais_sede: String
+    provincia_sede: String
+    maxEquipos: Integer
 end
 
 class Partido 
@@ -61,9 +63,13 @@ class Partido
     tipoCategoria: TipoCategoria
     tipoCompeticion: TipoCompeticion
     tipoDeporte: TipoDeporte
+    equipoLocal: String
+    equipoVisitante: String
     lugar: String
     fecha: String
-    hora: String
+    horaInicio: String
+    horaFin: String
+    resultado: String
 end
 
 class Equipo 
@@ -73,6 +79,9 @@ class Equipo
     categoria: TipoCategoria
     competicion: TipoCompeticion
     pais: String
+    provincia: String
+    maxTitulares: Integer
+    maxSuplentes: Integer
 end
 --- End Classes ---
 
@@ -143,6 +152,20 @@ context Torneo
         -> size() <= self.maxIntegrantesEquipo
     )
 
+  -- El torneo no admite más equipos que el máximo permitido
+  inv MaxEquipos:
+    self.equipos->size() <= self.maxEquipos
+
+  -- En un torneo nacional, el país sede debe coincidir con el país de los equipos
+  inv PaisSedeConsistente:
+    self.competicion = #Nacional implies 
+    self.equipos->forAll(e | e.pais = self.pais_sede)
+
+  -- En un torneo local, la provincia del equipo debe coincidir con la provincia sede
+  inv ProvinciaSedeConsistente:
+    self.competicion = #Local implies 
+    self.equipos->forAll(e | e.provincia = self.provincia_sede)
+
   -- Los tipos del equipo tiene que coincidir con los tipos del torneo
   inv CoherenciaInscripcion:
     self.equipos->forAll(e | 
@@ -178,28 +201,51 @@ context Partido
       self.tipoCompeticion = t.competicion
     )
 
-  -- No puede haber dos partidos en el mismo lugar, fecha y hora --
-  inv UnicidadLugarFechaHora:
-    Partido.allInstances()
-      ->forAll(p | p = self or
-        p.lugar <> self.lugar or
-        p.fecha <> self.fecha or
-        p.hora <> self.hora
+  -- No puede haber solapamiento de partidos en fecha, hora y lugar --
+  inv NoSolapamientoPartidos:
+    Partido.allInstances()->forAll(p2 |
+        -- Solo comparamos si es OTRO partido (no yo mismo)
+        -- Y si coinciden en FECHA y LUGAR
+        (p2 <> self and p2.fecha = self.fecha and p2.lugar = self.lugar)
+        implies
+        not (
+            self.horaInicio < p2.horaFin and 
+            self.horaFin > p2.horaInicio
+        )
     )
 
   -- Un partido no puede tener equipos locales y nacionales a la vez --
   inv NoLocalVSNacional:
     self.equipos->forAll(e1, e2 | e1.competicion = e2.competicion)
 
+  -- Un partido debe tener un equipo local y un equipo visitante --
   inv UnLocalYVisitante:
-    self.tipoDeporte <> #Golf implies (
-      self.participacionPartido->select(pp | pp.esLocal = true)->size() = 1
-      and
-      self.participacionPartido->select(pp | pp.esLocal = false)->size() = 1
-    )
+    self.participacionPartido->select(pp | pp.esLocal = true)->size() = 1
+    and
+    self.participacionPartido->select(pp | pp.esLocal = false)->size() = 1
+
+  -- El resultado no puede estar vacío una vez finalizado el partido --
+  inv ResultadoNoVacio:
+    not self.resultado.oclIsUndefined() and self.resultado.size() > 0
 
 
 context Equipo
+  -- El equipo no debe superar el máximo de titulares --
+  inv MaxTitulares:
+    TiempoEquipo.allInstances()
+      ->select(te | te.equipos = self and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
+      ->collect(te | te.jugadores)
+      ->select(j | j.tipoJugador = #Titular)
+      ->size() <= self.maxTitulares
+
+  -- El equipo no debe superar el máximo de suplentes --
+  inv MaxSuplentes:
+    TiempoEquipo.allInstances()
+      ->select(te | te.equipos = self and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
+      ->collect(te | te.jugadores)
+      ->select(j | j.tipoJugador = #Suplente)
+      ->size() <= self.maxSuplentes    
+
   -- El número de jugadores en el equipo no puede superar el máximo permitido por torneo --
   inv MaxJugadoresPorTorneo:
     self.torneos->forAll(t |
@@ -271,14 +317,29 @@ context Jugador
         )
     )
 
+  -- Un jugador no puede cambiar de categoría si pertenece a un equipo de dichar categoría --
+  inv NoCambiaCategoriaSiPerteneceEquipo:
+    TiempoEquipo.allInstances()
+      ->select(te | te.jugadores = self and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
+      ->forAll(te | te.equipos->forAll(e | e.categoria = self.categoria))
+
+  -- Si el jugador quiere abandonar un equipo, debe pertenecer a él --
+  inv SoloAbandonaSiPertenece:
+    TiempoEquipo.allInstances()
+      ->select(te | te.jugadores = self and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
+      ->forAll(te | te.equipos->includesAll(self.equipos))  
+
 
 context Arbitro
   -- Un árbitro no puede arbitrar dos partidos a la misma hora o fecha
-  inv PartidoUnicoPorFechaHora:
+  inv NoSolapamientoArbitro:
     self.partidos->forAll(p1, p2 |
-      p1 = p2 or
-      p1.hora <> p2.hora or
-      p1.fecha <> p2.fecha
+      (p1 <> p2 and p1.fecha = p2.fecha)
+      implies
+      not (
+        p1.horaInicio < p2.horaFin and 
+        p1.horaFin > p2.horaInicio
+      )
     )
 
   -- Un árbitro solo puede arbitrar partidos de su deporte
@@ -291,6 +352,10 @@ context Arbitro
     self.partidos-> forAll(p | 
       p.tipoCategoria = self.categoria)
 
+  -- Un árbitro tiene que tener una categoría para poder ser contratado
+  inv CategoriaNoVacia:
+    not self.categoria.oclIsUndefined()
+
 
 context Entrenador
   -- Un entrenador no puede entrenar a varios equipos que pertenezcan al mismo torneo
@@ -302,9 +367,14 @@ context Entrenador
 
   -- Un entrenador solo puede entrenar equipos de su deporte
   inv DeporteConsistenteConEquipos:
-    TiempoEquipo.allInstances()
-      ->select(te | te.jugadores = self and (te.fechaFin.oclIsUndefined() or te.fechaFin = ''))
-      ->forAll(te | te.equipos.deporte = self.deporte) 
+    self.equipos->forAll(e | e.deporte = self.deporte)
+
+  -- Un entrenador puede entrenar varios equipos en distintas categorías y competiciones
+  inv VariedadCategoriasYCompeticiones:
+    self.equipos->forAll(e1, e2 | 
+      e1 <> e2 implies 
+      (e1.categoria <> e2.categoria or e1.competicion <> e2.competicion)
+    ) 
 
 
 context Narrador
@@ -321,8 +391,11 @@ context Narrador
     self.partidos->forAll(p1, p2 |
       (p1 <> p2 and p1.fecha = p2.fecha) 
       implies
-      p1.hora <> p2.hora
-    )  
+      not (
+         p1.horaInicio < p2.horaFin and 
+         p1.horaFin > p2.horaInicio
+      )
+    )
 
 
 context Persona
