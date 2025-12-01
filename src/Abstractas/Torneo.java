@@ -1,6 +1,7 @@
 package Abstractas;
 
 import Enumerados.*;
+import Interfaces.Strategy;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public abstract class Torneo {
     private List<Narrador> narradores;
     private Equipo ganador;
     private int duracionPartidos; // en minutos
+    protected Strategy puntuacionStrategy;
 
     // REQUISITO: "No puede haber más equipos que el número máximo de equipos."
     private int maxEquipos;
@@ -155,6 +157,21 @@ public abstract class Torneo {
         assert equiposInscritos.contains(ganador) : "El ganador no estaba inscrito en el torneo";
 
         this.ganador = ganador;
+    }
+
+    // Método para mostrar la clasificación de los equipos según la estrategia de puntuación
+    public void mostrarClasificacion() {
+        System.out.println("Clasificación del Torneo: " + nombre);
+        for (Equipo equipo : equiposInscritos) {
+            int puntos = 0;
+            for (Partido partido : partidos) {
+                // Comprobamos que los partidos involucren a los equipos correctos
+                if (partido.getEquipoLocal().equals(equipo) || partido.getEquipoVisitante().equals(equipo)) {
+                    puntos += puntuacionStrategy.calcularPuntos(equipo, partido);
+                }
+            }
+            System.out.println(equipo.getNombre() + ": " + puntos + " puntos");
+        }
     }
 
     // Getters

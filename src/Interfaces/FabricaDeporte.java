@@ -13,9 +13,9 @@ import java.time.LocalTime;
  */
 public interface FabricaDeporte {
     // Métodos de fabricación de componentes
-    Torneo crearTorneo(String nombre, Pais pais, String provinciaSede, String temporada, Categoria categoria, TipoCompeticion competicion, int duracionPartidos);
+    Torneo crearTorneo(String nombre, Pais pais, String temporada, Categoria categoria, TipoCompeticion competicion, int duracionPartidos, int maxEquipos);
 
-    Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais, String provincia);
+    Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais);
 
     Jugador crearJugador(String nombre, String ap1, String ap2, int edad, Pais nacionalidad, Categoria categoria, String dni);
 

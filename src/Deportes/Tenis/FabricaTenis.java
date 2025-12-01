@@ -11,13 +11,13 @@ import java.util.Map;
 public class FabricaTenis implements FabricaDeporte {
 
     @Override
-    public Torneo crearTorneo(String nombre, Pais paisSede, String provinciaSede, String temporada, Categoria categoria, TipoCompeticion competicion, int duracionPartidos) {
-        return new TorneoTenis(nombre, paisSede, provinciaSede, temporada, categoria, competicion, duracionPartidos);
+    public Torneo crearTorneo(String nombre, Pais paisSede, String temporada, Categoria categoria, TipoCompeticion competicion, int duracionPartidos, int maxEquipos) {
+        return new TorneoTenis(nombre, paisSede, null, temporada, categoria, competicion, duracionPartidos, maxEquipos);
     }
 
     @Override
-    public Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais, String provincia) {
-        return new EquipoTenis(nombre, categoria, competicion, pais, provincia);
+    public Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais) {
+        return new EquipoTenis(nombre, categoria, competicion, pais, null);
     }
 
     @Override
