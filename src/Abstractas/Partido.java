@@ -153,6 +153,9 @@ public abstract class Partido {
         }
     }
 
+    public void finalizarPartido(String resultado) {
+        setResultado(resultado);
+    }
 
 
     public Torneo getTorneo() {

@@ -12,8 +12,9 @@ import java.time.LocalTime;
  * relacionados (Abstractas.Equipo y Árbitro) sin especificar sus clases concretas.
  */
 public interface FabricaDeporte {
+
     // Métodos de fabricación de componentes
-    Torneo crearTorneo(String nombre, Pais pais, String provinciaSede, String temporada, Categoria categoria, TipoCompeticion competicion, int duracionPartidos);
+    Torneo crearTorneo(String nombre, Pais pais, String provinciaSede, String temporada, Categoria categoria, TipoCompeticion competicion, int duracionPartidos, int maxEquipos);
 
     Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais, String provincia);
 

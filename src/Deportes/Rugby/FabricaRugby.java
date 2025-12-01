@@ -10,9 +10,23 @@ import java.util.Map;
 
 public class FabricaRugby implements FabricaDeporte {
 
+    // Implementación del patrón de Singleton
+    private static FabricaRugby instance;
+
+    // Constructor privado para evitar instanciación externa
+    private FabricaRugby() {}
+
+    // Creamos la instancia
+    public static FabricaRugby getInstance() {
+        if (instance == null) {
+            instance = new FabricaRugby();
+        }
+        return instance;
+    }
+
     @Override
-    public Torneo crearTorneo(String nombre, Pais paisSede, String provinciaSede, String temporada, Categoria categoria, TipoCompeticion competicion, int duracionPartidos) {
-        return new TorneoRugby(nombre, paisSede, provinciaSede, temporada, categoria, competicion, duracionPartidos);
+    public Torneo crearTorneo(String nombre, Pais paisSede, String provinciaSede, String temporada, Categoria categoria, TipoCompeticion competicion, int duracionPartidos, int maxEquipos) {
+        return new TorneoRugby(nombre, paisSede, provinciaSede, temporada, categoria, competicion, duracionPartidos, maxEquipos);
     }
 
     @Override

@@ -15,36 +15,38 @@ import java.util.HashMap;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("=================================================");
-        System.out.println("   INICIANDO SISTEMA DE GESTIÓN DE TORNEOS   ");
-        System.out.println("=================================================");
-
-        // 1. CONFIGURACIÓN DE LA FÁBRICA
-        // Aquí decidimos que vamos a trabajar con FÚTBOL
-        FabricaDeporte fabrica = new FabricaFutbol();
-
         try {
+            System.out.println("=================================================");
+            System.out.println("   INICIANDO SISTEMA DE GESTIÓN DE TORNEOS   ");
+            System.out.println("=================================================");
+
+            // 1. CONFIGURACIÓN DE LA FÁBRICA
+            // Aquí decidimos que vamos a trabajar con FÚTBOL
+            FabricaDeporte fabrica = FabricaFutbol.getInstance();
+
             // --- CREACIÓN DE ESTRUCTURAS ---
             System.out.println("\n[1] Creando Torneos y Entidades...");
 
             // Torneo Nacional (La Liga) - con duracionPartidos
             Torneo laLiga = fabrica.crearTorneo(
-                "La Liga", Pais.ESPANA, "2024/2025", 
+                "La Liga", Pais.ESPANA, "Madrid", "2024/2025",
                 Categoria.SENIOR, TipoCompeticion.NACIONAL,
-                90  // duracionPartidos en minutos
+                90,  // duracionPartidos en minutos
+                20 // maxEquipos
             );
 
             // Torneo Internacional (Champions League)
             Torneo champions = fabrica.crearTorneo(
-                "Champions League", Pais.ALEMANIA, "2024/2025", 
+                "Champions League", Pais.ALEMANIA, "Baviera", "2024/2025",
                 Categoria.SENIOR, TipoCompeticion.INTERNACIONAL,
-                90  // duracionPartidos en minutos
+                90,  // duracionPartidos en minutos
+                32 // maxEquipos
             );
 
             // Equipos (sin parámetros de titulares/suplentes, usan valores fijos)
-            Equipo madrid = fabrica.crearEquipo("Real Madrid", Categoria.SENIOR, TipoCompeticion.NACIONAL, Pais.ESPANA);
-            Equipo barca = fabrica.crearEquipo("FC Barcelona", Categoria.SENIOR, TipoCompeticion.NACIONAL, Pais.ESPANA);
-            Equipo bayern = fabrica.crearEquipo("Bayern Munich", Categoria.SENIOR, TipoCompeticion.NACIONAL, Pais.ALEMANIA);
+            Equipo madrid = fabrica.crearEquipo("Real Madrid", Categoria.SENIOR, TipoCompeticion.NACIONAL, Pais.ESPANA, "Madrid");
+            Equipo barca = fabrica.crearEquipo("FC Barcelona", Categoria.SENIOR, TipoCompeticion.NACIONAL, Pais.ESPANA, "Barcelona");
+            Equipo bayern = fabrica.crearEquipo("Bayern Munich", Categoria.SENIOR, TipoCompeticion.NACIONAL, Pais.ALEMANIA, "Baviera");
 
             // Personal - ahora con DNI
             Entrenador ancelotti = fabrica.crearEntrenador("Carlo", "Ancelotti", "Guida", 64, "12345678A");
@@ -121,6 +123,12 @@ public class Main {
             System.out.println("    Titulares Barça: Lewandowski");
             System.out.println("    Suplentes Barça: Gavi");
 
+            // Finalizar partido y mostrar clasificación
+            elClasico.finalizarPartido("3-1");
+            System.out.println("\n--- CLASIFICACIÓN LALIGA ---");
+            laLiga.mostrarClasificacion();
+
+
 
             // --- FASE 4: SIMULACIÓN DE ERRORES (ASSERTS) ---
             System.out.println("\n[4] INICIANDO BATERÍA DE PRUEBAS DE ESTRÉS (ASSERTS)");
@@ -134,7 +142,7 @@ public class Main {
             // PRUEBA B: Entrenador con conflicto de Torneos
             // Creamos un equipo nuevo que juega La Liga. Ancelotti ya entrena al Madrid en La Liga.
             probarFallo("Entrenador Conflicto Intereses", () -> {
-                Equipo sevilla = fabrica.crearEquipo("Sevilla", Categoria.SENIOR, TipoCompeticion.NACIONAL, Pais.ESPANA);
+                Equipo sevilla = fabrica.crearEquipo("Sevilla", Categoria.SENIOR, TipoCompeticion.NACIONAL, Pais.ESPANA, "Sevilla");
                 // Inscribimos al Sevilla en La Liga (donde ya entrena Ancelotti con el Madrid)
                 laLiga.inscribirEquipo(sevilla);
                 sevilla.asignarEntrenador(ancelotti);
@@ -150,7 +158,7 @@ public class Main {
 
                 Partido otroPartido = fabrica.crearPartido(
                     laLiga, barca, madrid, "Camp Nou", 
-                    LocalDate.of(2025, 4, 20), LocalTime.of(23, 22), // Misma fecha/hora
+                    LocalDate.of(2025, 4, 20), LocalTime.of(21, 15), // Hora cercana
                     alin1, alin2
                 );
                 // Mateu ya pita elClasico a esa hora
@@ -166,7 +174,7 @@ public class Main {
                 Map<Jugador, TipoJugador> alinBarca2 = new HashMap<>();
                 alinBarca2.put(lewandowski, TipoJugador.TITULAR);
 
-                Partido partidoIlegal = fabrica.crearPartido(
+                fabrica.crearPartido(
                     laLiga, madrid, barca, "Bernabéu",
                     LocalDate.of(2025, 4, 21), LocalTime.of(20, 0),
                     alinMadrid2, alinBarca2
@@ -180,7 +188,7 @@ public class Main {
                 Map<Jugador, TipoJugador> alinBarca3 = new HashMap<>();
                 alinBarca3.put(gavi, TipoJugador.TITULAR);
 
-                Partido partidoIlegal2 = fabrica.crearPartido(
+                fabrica.crearPartido(
                     laLiga, madrid, barca, "Bernabéu",
                     LocalDate.of(2025, 4, 22), LocalTime.of(20, 0),
                     alinMadrid3, alinBarca3
@@ -193,16 +201,17 @@ public class Main {
 
             // ===== BALONCESTO =====
             System.out.println("\n--- BALONCESTO (NBA) ---");
-            FabricaDeporte fabricaBasket = new FabricaBaloncesto();
+            FabricaDeporte fabricaBasket = FabricaBaloncesto.getInstance();
 
             Torneo nba = fabricaBasket.crearTorneo(
-                "NBA", Pais.EEUU, "2024/2025",
+                "NBA", Pais.EEUU, "California", "2024/2025",
                 Categoria.SENIOR, TipoCompeticion.NACIONAL,
-                48  // duracionPartidos en minutos
+                48,  // duracionPartidos en minutos
+                30 // maxEquipos
             );
 
-            Equipo lakers = fabricaBasket.crearEquipo("LA Lakers", Categoria.SENIOR, TipoCompeticion.NACIONAL, Pais.EEUU);
-            Equipo celtics = fabricaBasket.crearEquipo("Boston Celtics", Categoria.SENIOR, TipoCompeticion.NACIONAL, Pais.EEUU);
+            Equipo lakers = fabricaBasket.crearEquipo("LA Lakers", Categoria.SENIOR, TipoCompeticion.NACIONAL, Pais.EEUU, "California");
+            Equipo celtics = fabricaBasket.crearEquipo("Boston Celtics", Categoria.SENIOR, TipoCompeticion.NACIONAL, Pais.EEUU, "Massachusetts");
 
             Entrenador darvin = fabricaBasket.crearEntrenador("Darvin", "Ham", "", 50, "NBA001");
             Jugador lebron = fabricaBasket.crearJugador("LeBron", "James", "", 39, Pais.EEUU, Categoria.SENIOR, "NBA002");
@@ -232,22 +241,26 @@ public class Main {
                 LocalDate.of(2025, 5, 10), LocalTime.of(19, 30),
                 alinLakers, alinCeltics
             );
+            partidoNBA.finalizarPartido("120-118");
 
             System.out.println("✅ Partido NBA creado: Lakers vs Celtics");
             System.out.println("   Duración: 48 minutos | Titulares Lakers: LeBron, Davis");
+            System.out.println("\n--- CLASIFICACIÓN NBA ---");
+            nba.mostrarClasificacion();
 
             // ===== TENIS =====
             System.out.println("\n--- TENIS (Copa Davis) ---");
-            FabricaDeporte fabricaTenis = new FabricaTenis();
+            FabricaDeporte fabricaTenis = FabricaTenis.getInstance();
 
             Torneo copaDavis = fabricaTenis.crearTorneo(
-                "Copa Davis", Pais.ESPANA, "2024",
+                "Copa Davis", Pais.ESPANA, "Madrid", "2024",
                 Categoria.SENIOR, TipoCompeticion.INTERNACIONAL,
-                180  // duracionPartidos estimada en minutos
+                180,  // duracionPartidos estimada en minutos
+                16
             );
 
-            Equipo equipoEspana = fabricaTenis.crearEquipo("España", Categoria.SENIOR, TipoCompeticion.INTERNACIONAL, Pais.ESPANA);
-            Equipo equipoFrancia = fabricaTenis.crearEquipo("Francia", Categoria.SENIOR, TipoCompeticion.INTERNACIONAL, Pais.FRANCIA);
+            Equipo equipoEspana = fabricaTenis.crearEquipo("España", Categoria.SENIOR, TipoCompeticion.INTERNACIONAL, Pais.ESPANA, "N/A");
+            Equipo equipoFrancia = fabricaTenis.crearEquipo("Francia", Categoria.SENIOR, TipoCompeticion.INTERNACIONAL, Pais.FRANCIA, "N/A");
 
             Jugador alcaraz = fabricaTenis.crearJugador("Carlos", "Alcaraz", "", 21, Pais.ESPANA, Categoria.SENIOR, "TEN001");
             Jugador nadal = fabricaTenis.crearJugador("Rafael", "Nadal", "", 38, Pais.ESPANA, Categoria.SENIOR, "TEN002");
@@ -272,22 +285,26 @@ public class Main {
                 LocalDate.of(2025, 6, 15), LocalTime.of(16, 0),
                 alinEspana, alinFrancia
             );
+            partidoTenis.finalizarPartido("2-1");
 
             System.out.println("✅ Partido Copa Davis creado: España vs Francia");
             System.out.println("   Titulares España: Alcaraz | Suplentes: Nadal");
+            System.out.println("\n--- CLASIFICACIÓN COPA DAVIS ---");
+            copaDavis.mostrarClasificacion();
 
             // ===== RUGBY =====
             System.out.println("\n--- RUGBY (Six Nations) ---");
-            FabricaDeporte fabricaRugby = new FabricaRugby();
+            FabricaDeporte fabricaRugby = FabricaRugby.getInstance();
 
             Torneo sixNations = fabricaRugby.crearTorneo(
-                "Six Nations", Pais.REINO_UNIDO, "2025",
+                "Six Nations", Pais.REINO_UNIDO, "N/A", "2025",
                 Categoria.SENIOR, TipoCompeticion.INTERNACIONAL,
-                80  // duracionPartidos en minutos
+                80,  // duracionPartidos en minutos
+                6
             );
 
-            Equipo inglaterra = fabricaRugby.crearEquipo("Inglaterra", Categoria.SENIOR, TipoCompeticion.INTERNACIONAL, Pais.REINO_UNIDO);
-            Equipo francia = fabricaRugby.crearEquipo("Francia Rugby", Categoria.SENIOR, TipoCompeticion.INTERNACIONAL, Pais.FRANCIA);
+            Equipo inglaterra = fabricaRugby.crearEquipo("Inglaterra", Categoria.SENIOR, TipoCompeticion.INTERNACIONAL, Pais.REINO_UNIDO, "N/A");
+            Equipo francia = fabricaRugby.crearEquipo("Francia Rugby", Categoria.SENIOR, TipoCompeticion.INTERNACIONAL, Pais.FRANCIA, "N/A");
 
             Jugador owen = fabricaRugby.crearJugador("Owen", "Farrell", "", 32, Pais.REINO_UNIDO, Categoria.SENIOR, "RUG001");
             Jugador maro = fabricaRugby.crearJugador("Maro", "Itoje", "", 29, Pais.REINO_UNIDO, Categoria.SENIOR, "RUG002");
@@ -312,9 +329,12 @@ public class Main {
                 LocalDate.of(2025, 3, 8), LocalTime.of(15, 0),
                 alinInglaterra, alinFranciaRugby
             );
+            partidoRugby.finalizarPartido("24-17");
 
             System.out.println("✅ Partido Six Nations creado: Inglaterra vs Francia");
             System.out.println("   Duración: 80 minutos | Estadio: Twickenham");
+            System.out.println("\n--- CLASIFICACIÓN SIX NATIONS ---");
+            sixNations.mostrarClasificacion();
 
             // --- PRUEBAS ADICIONALES MULTI-DEPORTE ---
             System.out.println("\n[6] PRUEBAS ADICIONALES CON MÚLTIPLES DEPORTES");
