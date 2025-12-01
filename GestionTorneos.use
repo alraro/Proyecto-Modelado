@@ -280,6 +280,7 @@ context Equipo
           )
       )
 
+
 context Jugador
   -- Edad deberá ser coherente con la categoría del jugador --
   inv EdadCoherenteConCategoria:
