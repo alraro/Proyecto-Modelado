@@ -63,8 +63,6 @@ class Partido
     tipoCategoria: TipoCategoria
     tipoCompeticion: TipoCompeticion
     tipoDeporte: TipoDeporte
-    equipoLocal: String
-    equipoVisitante: String
     lugar: String
     fecha: String
     horaInicio: String
@@ -131,13 +129,19 @@ associationclass TiempoEquipo between
     fechaFin: String
 end  
 
-associationclass ParticipacionPartido between
+associationclass ParticipacionPartidoLocal between
   Partido[0..*] role partidos
-  Equipo[2] role equipos
+  Equipo[1] role equipoLocal
   attributes
-    esLocal: Boolean
     puntuacion: Integer
 end  
+
+associationclass ParticipacionPartidoVisitante between
+  Partido[0..*] role partidos
+  Equipo[1] role equipoVisitante
+  attributes
+    puntuacion: Integer
+end
 --- End Association Classes ---
 
 --- Invariants ---
