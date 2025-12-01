@@ -60,6 +60,9 @@ end
 
 class Partido 
   attributes
+    tipoCategoria: TipoCategoria
+    tipoCompeticion: TipoCompeticion
+    tipoDeporte: TipoDeporte
     equipoLocal: String
     equipoVisitante: String
     lugar: String
