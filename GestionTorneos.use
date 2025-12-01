@@ -17,6 +17,7 @@ end
 
 class Jugador < PersonalEquipo
   attributes
+    tipoJugador: TipoJugador
     nacionalidad: String
 end
 
