@@ -133,7 +133,7 @@ end
 
 associationclass ParticipacionPartido between
   Partido[0..*] role partidos
-  Equipo[1..*] role equipos
+  Equipo[2] role equipos
   attributes
     esLocal: Boolean
     puntuacion: Integer
