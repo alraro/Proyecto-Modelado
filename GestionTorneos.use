@@ -15,11 +15,9 @@ abstract class Persona
     DNI: String
 end
 
-class Jugador < Persona
+class Jugador < PersonalEquipo
   attributes
-    deporte: TipoDeporte
     tipoJugador: TipoJugador
-    categoria: TipoCategoria
     nacionalidad: String
 end
 
@@ -30,11 +28,8 @@ class Arbitro < Persona
     competicion: TipoCompeticion
 end
 
-class Entrenador < Persona
+class Entrenador < PersonalEquipo
   attributes
-    deporte: TipoDeporte
-    competicion: TipoCompeticion
-    categoria: TipoCategoria
 end
 
 class Narrador < Persona
@@ -60,8 +55,9 @@ end
 
 class Partido 
   attributes
-    equipoLocal: String
-    equipoVisitante: String
+    tipoCategoria: TipoCategoria
+    tipoCompeticion: TipoCompeticion
+    tipoDeporte: TipoDeporte
     lugar: String
     fecha: String
     horaInicio: String
@@ -80,14 +76,23 @@ class Equipo
     maxTitulares: Integer
     maxSuplentes: Integer
 end
+
+class PersonalEquipo < Persona
+  attributes
+    tipoDeporte: TipoDeporte
+    tipoCategoria: TipoCategoria
+    tipoCompeticion: TipoCompeticion
+end
+
+
+class TiempoEquipo
+  attributes
+    fechaInicio: String
+    fechaFin: String
+end
 --- End Classes ---
 
 --- Associations ---
-association entrenadorEquipo between
-  Entrenador[1..*] role entrenadores
-  Equipo[1..*] role equipos
-end
-
 association partidoTorneo between
   Partido[1..*] role partidos
   Torneo[1..*] role torneos
@@ -117,24 +122,32 @@ association equipoTorneo between
   Equipo[1..*] role equipos
   Torneo[0..*] role torneos
 end
+
+aggregation PersonalesEquipo between
+  PersonalEquipo[1] role personasEquipo
+  TiempoEquipo[0..*] role tiemposEquipo
+end
+
+association TiempoEnEquipo between
+  TiempoEquipo[*] role tiemposEquipo
+  Equipo[1] role equipos
+end
 --- End Associations ---
 
 --- Association Classes ---
-associationclass TiempoEquipo between
-  Jugador[*] role jugadores
-  Equipo[*] role equipos
-  attributes
-    fechaInicio: String
-    fechaFin: String
-end  
-
-associationclass ParticipacionPartido between
+associationclass ParticipacionPartidoLocal between
   Partido[0..*] role partidos
-  Equipo[2] role equipos
+  Equipo[1] role equipoLocal
   attributes
-    esLocal: Boolean
     puntuacion: Integer
 end  
+
+associationclass ParticipacionPartidoVisitante between
+  Partido[0..*] role partidos
+  Equipo[1] role equipoVisitante
+  attributes
+    puntuacion: Integer
+end
 --- End Association Classes ---
 
 --- Invariants ---
