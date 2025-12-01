@@ -13,24 +13,24 @@
     <node id="Entrenador" sizeCalculated="true" type="Class">
         <name>Entrenador</name>
         <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-            <x>680.0</x>
-            <y>208.0</y>
+            <x>517.0</x>
+            <y>18.0</y>
         </strategy>
         <hidden>false</hidden>
     </node>
     <node id="Equipo" sizeCalculated="true" type="Class">
         <name>Equipo</name>
         <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-            <x>444.0</x>
-            <y>301.0</y>
+            <x>877.0</x>
+            <y>356.0</y>
         </strategy>
         <hidden>false</hidden>
     </node>
     <node id="TiempoEquipo" sizeCalculated="true" type="Class">
         <name>TiempoEquipo</name>
         <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToCorner">
-            <userOffsetX>2.0</userOffsetX>
-            <userOffsetY>72.0</userOffsetY>
+            <userOffsetX>-57.0</userOffsetX>
+            <userOffsetY>-2.0</userOffsetY>
             <basisDeltaX>ABSOLUTE</basisDeltaX>
             <deltaX>0.0</deltaX>
             <maxDeltaX>1.7976931348623157E308</maxDeltaX>
@@ -45,8 +45,8 @@
     <node id="ParticipacionPartido" sizeCalculated="true" type="Class">
         <name>ParticipacionPartido</name>
         <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToCorner">
-            <userOffsetX>1.0</userOffsetX>
-            <userOffsetY>85.0</userOffsetY>
+            <userOffsetX>-34.0</userOffsetX>
+            <userOffsetY>32.0</userOffsetY>
             <basisDeltaX>ABSOLUTE</basisDeltaX>
             <deltaX>0.0</deltaX>
             <maxDeltaX>1.7976931348623157E308</maxDeltaX>
@@ -61,80 +61,80 @@
     <node id="Partido" sizeCalculated="true" type="Class">
         <name>Partido</name>
         <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-            <x>27.0</x>
-            <y>288.0</y>
+            <x>388.0</x>
+            <y>267.0</y>
         </strategy>
         <hidden>false</hidden>
     </node>
     <node id="Persona" sizeCalculated="true" type="Class">
         <name>Persona</name>
         <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-            <x>716.0</x>
-            <y>30.0</y>
+            <x>239.0</x>
+            <y>17.0</y>
         </strategy>
         <hidden>false</hidden>
     </node>
     <node id="Torneo" sizeCalculated="true" type="Class">
         <name>Torneo</name>
         <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-            <x>35.0</x>
-            <y>26.0</y>
+            <x>52.0</x>
+            <y>319.0</y>
         </strategy>
         <hidden>false</hidden>
     </node>
     <node id="Arbitro" sizeCalculated="true" type="Class">
         <name>Arbitro</name>
         <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-            <x>925.0</x>
-            <y>102.0</y>
+            <x>9.0</x>
+            <y>155.0</y>
         </strategy>
         <hidden>false</hidden>
     </node>
     <node id="Narrador" sizeCalculated="true" type="Class">
         <name>Narrador</name>
         <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-            <x>454.0</x>
-            <y>18.0</y>
+            <x>203.0</x>
+            <y>129.0</y>
         </strategy>
         <hidden>false</hidden>
     </node>
     <node id="Jugador" sizeCalculated="true" type="Class">
         <name>Jugador</name>
         <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-            <x>910.0</x>
-            <y>276.0</y>
+            <x>482.0</x>
+            <y>123.0</y>
         </strategy>
         <hidden>false</hidden>
     </node>
     <node id="TipoDeporte" sizeCalculated="true" type="Enumeration">
         <name>TipoDeporte</name>
         <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-            <x>1168.0</x>
-            <y>87.0</y>
+            <x>1181.0</x>
+            <y>5.0</y>
         </strategy>
         <hidden>false</hidden>
     </node>
     <node id="TipoJugador" sizeCalculated="true" type="Enumeration">
         <name>TipoJugador</name>
         <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-            <x>1170.0</x>
-            <y>11.0</y>
+            <x>1080.0</x>
+            <y>5.0</y>
         </strategy>
         <hidden>false</hidden>
     </node>
     <node id="TipoCategoria" sizeCalculated="true" type="Enumeration">
         <name>TipoCategoria</name>
         <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-            <x>1166.0</x>
-            <y>233.0</y>
+            <x>864.0</x>
+            <y>8.0</y>
         </strategy>
         <hidden>false</hidden>
     </node>
     <node id="TipoCompeticion" sizeCalculated="true" type="Enumeration">
         <name>TipoCompeticion</name>
         <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-            <x>1156.0</x>
-            <y>342.0</y>
+            <x>970.0</x>
+            <y>6.0</y>
         </strategy>
         <hidden>false</hidden>
     </node>
@@ -150,7 +150,7 @@
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
                     <userOffsetX>0.0</userOffsetX>
                     <userOffsetY>0.0</userOffsetY>
-                    <attached>arbitroPartido::WayPoint::2</attached>
+                    <attached>arbitroPartido::WayPoint::1</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>TOP</placement>
@@ -164,39 +164,10 @@
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
                     <userOffsetX>0.0</userOffsetX>
                     <userOffsetY>0.0</userOffsetY>
-                    <attached>arbitroPartido::WayPoint::2</attached>
+                    <attached>arbitroPartido::WayPoint::1</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>BOTTOM</placement>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
-            <edgeproperty id="arbitroPartido::AssociationName"
-                sizeCalculated="true" type="associationName"
-                userDefined="true" visible="true">
-                <name>arbitroPartido</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
-                    <userOffsetX>-35.0</userOffsetX>
-                    <userOffsetY>-35.0</userOffsetY>
-                    <offsetX>0.0</offsetX>
-                    <offsetY>-10.0</offsetY>
-                    <related length="2">
-                        <related0>arbitroPartido::WayPoint::0</related0>
-                        <related1>arbitroPartido::WayPoint::2</related1>
-                    </related>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
-            <edgeproperty id="arbitroPartido::source::rolename"
-                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
-                <name>arbitros</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>4.0</userOffsetX>
-                    <userOffsetY>15.0</userOffsetY>
-                    <attached>arbitroPartido::WayPoint::0</attached>
-                    <offset_x>8</offset_x>
-                    <offset_y>8</offset_y>
-                    <placement>TOP</placement>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -205,12 +176,41 @@
                 userDefined="true" visible="true">
                 <name>1..*</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>11.0</userOffsetX>
-                    <userOffsetY>26.0</userOffsetY>
+                    <userOffsetX>12.0</userOffsetX>
+                    <userOffsetY>-18.0</userOffsetY>
                     <attached>arbitroPartido::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty id="arbitroPartido::source::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>arbitros</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>-8.0</userOffsetX>
+                    <userOffsetY>1.0</userOffsetY>
+                    <attached>arbitroPartido::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty id="arbitroPartido::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="true" visible="true">
+                <name>arbitroPartido</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>30.0</userOffsetX>
+                    <userOffsetY>-1.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>arbitroPartido::WayPoint::0</related0>
+                        <related1>arbitroPartido::WayPoint::1</related1>
+                    </related>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -229,25 +229,14 @@
                 <hidden>false</hidden>
             </edgeproperty>
             <edgeproperty id="arbitroPartido::WayPoint::1"
-                sizeCalculated="true" type="WayPoint" userDefined="true" visible="true">
-                <name>1</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-                    <x>530.0</x>
-                    <y>156.0</y>
-                </strategy>
-                <id>1</id>
-                <specialid>0</specialid>
-                <hidden>false</hidden>
-            </edgeproperty>
-            <edgeproperty id="arbitroPartido::WayPoint::2"
                 sizeCalculated="true" type="WayPoint"
                 userDefined="false" visible="true">
-                <name>2</name>
+                <name>1</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
                     <userOffsetX>0.0</userOffsetX>
                     <userOffsetY>0.0</userOffsetY>
                 </strategy>
-                <id>2</id>
+                <id>1</id>
                 <specialid>2</specialid>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -277,8 +266,8 @@
                 sizeCalculated="true" type="rolename" userDefined="true" visible="true">
                 <name>torneos</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>56.0</userOffsetX>
-                    <userOffsetY>2.0</userOffsetY>
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>20.0</userOffsetY>
                     <attached>partidoTorneo::WayPoint::1</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
@@ -286,28 +275,12 @@
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
-            <edgeproperty id="partidoTorneo::AssociationName"
-                sizeCalculated="true" type="associationName"
-                userDefined="false" visible="true">
-                <name>partidoTorneo</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
-                    <userOffsetX>0.0</userOffsetX>
-                    <userOffsetY>0.0</userOffsetY>
-                    <offsetX>0.0</offsetX>
-                    <offsetY>-10.0</offsetY>
-                    <related length="2">
-                        <related0>partidoTorneo::WayPoint::0</related0>
-                        <related1>partidoTorneo::WayPoint::1</related1>
-                    </related>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
             <edgeproperty id="partidoTorneo::source::rolename"
                 sizeCalculated="true" type="rolename" userDefined="true" visible="true">
                 <name>partidos</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>-3.0</userOffsetX>
-                    <userOffsetY>3.0</userOffsetY>
+                    <userOffsetX>8.0</userOffsetX>
+                    <userOffsetY>15.0</userOffsetY>
                     <attached>partidoTorneo::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
@@ -317,15 +290,31 @@
             </edgeproperty>
             <edgeproperty id="partidoTorneo::source::multiplicity"
                 sizeCalculated="true" type="multiplicity"
-                userDefined="true" visible="true">
+                userDefined="false" visible="true">
                 <name>1..*</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>32.0</userOffsetX>
-                    <userOffsetY>3.0</userOffsetY>
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
                     <attached>partidoTorneo::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty id="partidoTorneo::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="true" visible="true">
+                <name>partidoTorneo</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>2.0</userOffsetX>
+                    <userOffsetY>26.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>partidoTorneo::WayPoint::0</related0>
+                        <related1>partidoTorneo::WayPoint::1</related1>
+                    </related>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -367,9 +356,9 @@
                 sizeCalculated="true" type="rolename" userDefined="true" visible="true">
                 <name>equipos</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>52.0</userOffsetX>
-                    <userOffsetY>3.0</userOffsetY>
-                    <attached>entrenadorEquipo::WayPoint::2</attached>
+                    <userOffsetX>51.0</userOffsetX>
+                    <userOffsetY>-9.0</userOffsetY>
+                    <attached>entrenadorEquipo::WayPoint::1</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>TOP</placement>
@@ -378,12 +367,39 @@
             </edgeproperty>
             <edgeproperty id="entrenadorEquipo::target::multiplicity"
                 sizeCalculated="true" type="multiplicity"
+                userDefined="true" visible="true">
+                <name>1..*</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>2.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>entrenadorEquipo::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty id="entrenadorEquipo::source::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>entrenadores</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>88.0</userOffsetX>
+                    <userOffsetY>-1.0</userOffsetY>
+                    <attached>entrenadorEquipo::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty id="entrenadorEquipo::source::multiplicity"
+                sizeCalculated="true" type="multiplicity"
                 userDefined="false" visible="true">
                 <name>1..*</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
                     <userOffsetX>0.0</userOffsetX>
                     <userOffsetY>0.0</userOffsetY>
-                    <attached>entrenadorEquipo::WayPoint::2</attached>
+                    <attached>entrenadorEquipo::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>BOTTOM</placement>
@@ -395,41 +411,14 @@
                 userDefined="true" visible="true">
                 <name>entrenadorEquipo</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
-                    <userOffsetX>-11.0</userOffsetX>
-                    <userOffsetY>3.0</userOffsetY>
+                    <userOffsetX>56.0</userOffsetX>
+                    <userOffsetY>8.0</userOffsetY>
                     <offsetX>0.0</offsetX>
                     <offsetY>-10.0</offsetY>
                     <related length="2">
                         <related0>entrenadorEquipo::WayPoint::0</related0>
-                        <related1>entrenadorEquipo::WayPoint::2</related1>
+                        <related1>entrenadorEquipo::WayPoint::1</related1>
                     </related>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
-            <edgeproperty id="entrenadorEquipo::source::rolename"
-                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
-                <name>entrenadores</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>6.0</userOffsetX>
-                    <userOffsetY>-15.0</userOffsetY>
-                    <attached>entrenadorEquipo::WayPoint::0</attached>
-                    <offset_x>8</offset_x>
-                    <offset_y>8</offset_y>
-                    <placement>TOP</placement>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
-            <edgeproperty id="entrenadorEquipo::source::multiplicity"
-                sizeCalculated="true" type="multiplicity"
-                userDefined="true" visible="true">
-                <name>1..*</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>4.0</userOffsetX>
-                    <userOffsetY>9.0</userOffsetY>
-                    <attached>entrenadorEquipo::WayPoint::0</attached>
-                    <offset_x>8</offset_x>
-                    <offset_y>8</offset_y>
-                    <placement>BOTTOM</placement>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -448,25 +437,14 @@
                 <hidden>false</hidden>
             </edgeproperty>
             <edgeproperty id="entrenadorEquipo::WayPoint::1"
-                sizeCalculated="true" type="WayPoint" userDefined="true" visible="true">
-                <name>1</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-                    <x>523.0</x>
-                    <y>236.0</y>
-                </strategy>
-                <id>1</id>
-                <specialid>0</specialid>
-                <hidden>false</hidden>
-            </edgeproperty>
-            <edgeproperty id="entrenadorEquipo::WayPoint::2"
                 sizeCalculated="true" type="WayPoint"
                 userDefined="false" visible="true">
-                <name>2</name>
+                <name>1</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
                     <userOffsetX>0.0</userOffsetX>
                     <userOffsetY>0.0</userOffsetY>
                 </strategy>
-                <id>2</id>
+                <id>1</id>
                 <specialid>2</specialid>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -478,19 +456,6 @@
         <target>Torneo</target>
         <name>arbitroTorneo</name>
         <properties>
-            <edgeproperty id="arbitroTorneo::target::rolename"
-                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
-                <name>torneos</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>0.0</userOffsetX>
-                    <userOffsetY>6.0</userOffsetY>
-                    <attached>arbitroTorneo::WayPoint::1</attached>
-                    <offset_x>8</offset_x>
-                    <offset_y>8</offset_y>
-                    <placement>TOP</placement>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
             <edgeproperty id="arbitroTorneo::target::multiplicity"
                 sizeCalculated="true" type="multiplicity"
                 userDefined="false" visible="true">
@@ -505,29 +470,14 @@
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
-            <edgeproperty id="arbitroTorneo::AssociationName"
-                sizeCalculated="true" type="associationName"
+            <edgeproperty id="arbitroTorneo::target::rolename"
+                sizeCalculated="true" type="rolename"
                 userDefined="false" visible="true">
-                <name>arbitroTorneo</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                <name>torneos</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
                     <userOffsetX>0.0</userOffsetX>
                     <userOffsetY>0.0</userOffsetY>
-                    <offsetX>0.0</offsetX>
-                    <offsetY>-10.0</offsetY>
-                    <related length="2">
-                        <related0>arbitroTorneo::WayPoint::0</related0>
-                        <related1>arbitroTorneo::WayPoint::1</related1>
-                    </related>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
-            <edgeproperty id="arbitroTorneo::source::rolename"
-                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
-                <name>arbitros</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>-1.0</userOffsetX>
-                    <userOffsetY>-14.0</userOffsetY>
-                    <attached>arbitroTorneo::WayPoint::0</attached>
+                    <attached>arbitroTorneo::WayPoint::1</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>TOP</placement>
@@ -536,15 +486,44 @@
             </edgeproperty>
             <edgeproperty id="arbitroTorneo::source::multiplicity"
                 sizeCalculated="true" type="multiplicity"
-                userDefined="true" visible="true">
+                userDefined="false" visible="true">
                 <name>1..*</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>8.0</userOffsetX>
-                    <userOffsetY>-24.0</userOffsetY>
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
                     <attached>arbitroTorneo::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>BOTTOM</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty id="arbitroTorneo::source::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>arbitros</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>50.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>arbitroTorneo::WayPoint::0</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty id="arbitroTorneo::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="true" visible="true">
+                <name>arbitroTorneo</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>-45.0</userOffsetX>
+                    <userOffsetY>5.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>arbitroTorneo::WayPoint::0</related0>
+                        <related1>arbitroTorneo::WayPoint::1</related1>
+                    </related>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -597,12 +576,11 @@
                 <hidden>false</hidden>
             </edgeproperty>
             <edgeproperty id="equipoTorneo::target::rolename"
-                sizeCalculated="true" type="rolename"
-                userDefined="false" visible="true">
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
                 <name>torneos</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>0.0</userOffsetX>
-                    <userOffsetY>0.0</userOffsetY>
+                    <userOffsetX>6.0</userOffsetX>
+                    <userOffsetY>-18.0</userOffsetY>
                     <attached>equipoTorneo::WayPoint::1</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
@@ -610,29 +588,13 @@
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
-            <edgeproperty id="equipoTorneo::AssociationName"
-                sizeCalculated="true" type="associationName"
-                userDefined="true" visible="true">
-                <name>equipoTorneo</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
-                    <userOffsetX>29.0</userOffsetX>
-                    <userOffsetY>3.0</userOffsetY>
-                    <offsetX>0.0</offsetX>
-                    <offsetY>-10.0</offsetY>
-                    <related length="2">
-                        <related0>equipoTorneo::WayPoint::0</related0>
-                        <related1>equipoTorneo::WayPoint::1</related1>
-                    </related>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
             <edgeproperty id="equipoTorneo::source::multiplicity"
                 sizeCalculated="true" type="multiplicity"
-                userDefined="false" visible="true">
+                userDefined="true" visible="true">
                 <name>1..*</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>0.0</userOffsetX>
-                    <userOffsetY>0.0</userOffsetY>
+                    <userOffsetX>3.0</userOffsetX>
+                    <userOffsetY>7.0</userOffsetY>
                     <attached>equipoTorneo::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
@@ -644,8 +606,8 @@
                 sizeCalculated="true" type="rolename" userDefined="true" visible="true">
                 <name>equipos</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>34.0</userOffsetX>
-                    <userOffsetY>-20.0</userOffsetY>
+                    <userOffsetX>4.0</userOffsetX>
+                    <userOffsetY>-14.0</userOffsetY>
                     <attached>equipoTorneo::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
@@ -653,27 +615,57 @@
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
+            <edgeproperty id="equipoTorneo::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="false" visible="true">
+                <name>equipoTorneo</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>equipoTorneo::WayPoint::0</related0>
+                        <related1>equipoTorneo::WayPoint::1</related1>
+                    </related>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
         </properties>
         <waypoints>
             <edgeproperty id="equipoTorneo::WayPoint::0"
-                sizeCalculated="true" type="WayPoint"
-                userDefined="false" visible="true">
+                sizeCalculated="true" type="WayPoint" userDefined="true" visible="true">
                 <name>0</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
-                    <userOffsetX>0.0</userOffsetX>
-                    <userOffsetY>0.0</userOffsetY>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToCorner">
+                    <userOffsetX>-5.0</userOffsetX>
+                    <userOffsetY>155.14004276863915</userOffsetY>
+                    <basisDeltaX>ABSOLUTE</basisDeltaX>
+                    <deltaX>0.0</deltaX>
+                    <maxDeltaX>1.7976931348623157E308</maxDeltaX>
+                    <basisDeltaY>ABSOLUTE</basisDeltaY>
+                    <deltaY>0.0</deltaY>
+                    <maxDeltaY>1.7976931348623157E308</maxDeltaY>
+                    <corner>NORTH_WEST</corner>
+                    <relativeNodeId>Equipo</relativeNodeId>
                 </strategy>
                 <id>0</id>
                 <specialid>1</specialid>
                 <hidden>false</hidden>
             </edgeproperty>
             <edgeproperty id="equipoTorneo::WayPoint::1"
-                sizeCalculated="true" type="WayPoint"
-                userDefined="false" visible="true">
+                sizeCalculated="true" type="WayPoint" userDefined="true" visible="true">
                 <name>1</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
-                    <userOffsetX>0.0</userOffsetX>
-                    <userOffsetY>0.0</userOffsetY>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToCorner">
+                    <userOffsetX>158.484375</userOffsetX>
+                    <userOffsetY>176.58130797317602</userOffsetY>
+                    <basisDeltaX>ABSOLUTE</basisDeltaX>
+                    <deltaX>0.0</deltaX>
+                    <maxDeltaX>1.7976931348623157E308</maxDeltaX>
+                    <basisDeltaY>ABSOLUTE</basisDeltaY>
+                    <deltaY>0.0</deltaY>
+                    <maxDeltaY>1.7976931348623157E308</maxDeltaY>
+                    <corner>NORTH_WEST</corner>
+                    <relativeNodeId>Torneo</relativeNodeId>
                 </strategy>
                 <id>1</id>
                 <specialid>2</specialid>
@@ -688,12 +680,13 @@
         <name>narradorTorneo</name>
         <properties>
             <edgeproperty id="narradorTorneo::target::rolename"
-                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                sizeCalculated="true" type="rolename"
+                userDefined="false" visible="true">
                 <name>torneos</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>1.0</userOffsetX>
-                    <userOffsetY>-15.0</userOffsetY>
-                    <attached>narradorTorneo::WayPoint::2</attached>
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
+                    <attached>narradorTorneo::WayPoint::1</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>TOP</placement>
@@ -707,26 +700,10 @@
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
                     <userOffsetX>0.0</userOffsetX>
                     <userOffsetY>0.0</userOffsetY>
-                    <attached>narradorTorneo::WayPoint::2</attached>
+                    <attached>narradorTorneo::WayPoint::1</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>BOTTOM</placement>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
-            <edgeproperty id="narradorTorneo::AssociationName"
-                sizeCalculated="true" type="associationName"
-                userDefined="true" visible="true">
-                <name>narradorTorneo</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
-                    <userOffsetX>-13.0</userOffsetX>
-                    <userOffsetY>-2.0</userOffsetY>
-                    <offsetX>0.0</offsetX>
-                    <offsetY>-10.0</offsetY>
-                    <related length="2">
-                        <related0>narradorTorneo::WayPoint::0</related0>
-                        <related1>narradorTorneo::WayPoint::2</related1>
-                    </related>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -735,8 +712,8 @@
                 userDefined="true" visible="true">
                 <name>1..*</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>6.0</userOffsetX>
-                    <userOffsetY>10.0</userOffsetY>
+                    <userOffsetX>29.0</userOffsetX>
+                    <userOffsetY>2.0</userOffsetY>
                     <attached>narradorTorneo::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
@@ -749,11 +726,27 @@
                 <name>narradores</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
                     <userOffsetX>4.0</userOffsetX>
-                    <userOffsetY>-22.0</userOffsetY>
+                    <userOffsetY>2.0</userOffsetY>
                     <attached>narradorTorneo::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty id="narradorTorneo::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="true" visible="true">
+                <name>narradorTorneo</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>32.0</userOffsetX>
+                    <userOffsetY>44.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>narradorTorneo::WayPoint::0</related0>
+                        <related1>narradorTorneo::WayPoint::1</related1>
+                    </related>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -772,25 +765,14 @@
                 <hidden>false</hidden>
             </edgeproperty>
             <edgeproperty id="narradorTorneo::WayPoint::1"
-                sizeCalculated="true" type="WayPoint" userDefined="true" visible="true">
-                <name>1</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-                    <x>305.0</x>
-                    <y>21.0</y>
-                </strategy>
-                <id>1</id>
-                <specialid>0</specialid>
-                <hidden>false</hidden>
-            </edgeproperty>
-            <edgeproperty id="narradorTorneo::WayPoint::2"
                 sizeCalculated="true" type="WayPoint"
                 userDefined="false" visible="true">
-                <name>2</name>
+                <name>1</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
                     <userOffsetX>0.0</userOffsetX>
                     <userOffsetY>0.0</userOffsetY>
                 </strategy>
-                <id>2</id>
+                <id>1</id>
                 <specialid>2</specialid>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -802,6 +784,19 @@
         <target>Partido</target>
         <name>narradorPartido</name>
         <properties>
+            <edgeproperty id="narradorPartido::target::rolename"
+                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                <name>partidos</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
+                    <userOffsetX>43.0</userOffsetX>
+                    <userOffsetY>-16.0</userOffsetY>
+                    <attached>narradorPartido::WayPoint::1</attached>
+                    <offset_x>8</offset_x>
+                    <offset_y>8</offset_y>
+                    <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
             <edgeproperty id="narradorPartido::target::multiplicity"
                 sizeCalculated="true" type="multiplicity"
                 userDefined="false" visible="true">
@@ -816,43 +811,13 @@
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
-            <edgeproperty id="narradorPartido::target::rolename"
-                sizeCalculated="true" type="rolename"
-                userDefined="false" visible="true">
-                <name>partidos</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>0.0</userOffsetX>
-                    <userOffsetY>0.0</userOffsetY>
-                    <attached>narradorPartido::WayPoint::1</attached>
-                    <offset_x>8</offset_x>
-                    <offset_y>8</offset_y>
-                    <placement>TOP</placement>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
-            <edgeproperty id="narradorPartido::AssociationName"
-                sizeCalculated="true" type="associationName"
-                userDefined="true" visible="true">
-                <name>narradorPartido</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
-                    <userOffsetX>67.0</userOffsetX>
-                    <userOffsetY>-6.0</userOffsetY>
-                    <offsetX>0.0</offsetX>
-                    <offsetY>-10.0</offsetY>
-                    <related length="2">
-                        <related0>narradorPartido::WayPoint::0</related0>
-                        <related1>narradorPartido::WayPoint::1</related1>
-                    </related>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
             <edgeproperty id="narradorPartido::source::multiplicity"
                 sizeCalculated="true" type="multiplicity"
                 userDefined="true" visible="true">
                 <name>1..*</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>32.0</userOffsetX>
-                    <userOffsetY>2.0</userOffsetY>
+                    <userOffsetX>36.0</userOffsetX>
+                    <userOffsetY>-1.0</userOffsetY>
                     <attached>narradorPartido::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
@@ -864,12 +829,28 @@
                 sizeCalculated="true" type="rolename" userDefined="true" visible="true">
                 <name>narradores</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>-12.0</userOffsetX>
-                    <userOffsetY>4.0</userOffsetY>
+                    <userOffsetX>15.0</userOffsetX>
+                    <userOffsetY>5.0</userOffsetY>
                     <attached>narradorPartido::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty id="narradorPartido::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="true" visible="true">
+                <name>narradorPartido</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>38.0</userOffsetX>
+                    <userOffsetY>1.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>narradorPartido::WayPoint::0</related0>
+                        <related1>narradorPartido::WayPoint::1</related1>
+                    </related>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -908,11 +889,12 @@
         <name>TiempoEquipo</name>
         <properties>
             <edgeproperty id="TiempoEquipo::target::rolename"
-                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                sizeCalculated="true" type="rolename"
+                userDefined="false" visible="true">
                 <name>equipos</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>3.0</userOffsetX>
-                    <userOffsetY>16.0</userOffsetY>
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
                     <attached>TiempoEquipo::WayPoint::1</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
@@ -934,29 +916,13 @@
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
-            <edgeproperty id="TiempoEquipo::AssociationName"
-                sizeCalculated="true" type="associationName"
-                userDefined="false" visible="true">
-                <name>TiempoEquipo</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
-                    <userOffsetX>0.0</userOffsetX>
-                    <userOffsetY>0.0</userOffsetY>
-                    <offsetX>0.0</offsetX>
-                    <offsetY>-10.0</offsetY>
-                    <related length="2">
-                        <related0>TiempoEquipo::WayPoint::0</related0>
-                        <related1>TiempoEquipo::WayPoint::1</related1>
-                    </related>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
             <edgeproperty id="TiempoEquipo::source::multiplicity"
                 sizeCalculated="true" type="multiplicity"
-                userDefined="true" visible="true">
+                userDefined="false" visible="true">
                 <name>*</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>3.0</userOffsetX>
-                    <userOffsetY>-6.0</userOffsetY>
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
                     <attached>TiempoEquipo::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
@@ -968,8 +934,8 @@
                 sizeCalculated="true" type="rolename" userDefined="true" visible="true">
                 <name>jugadores</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>2.0</userOffsetX>
-                    <userOffsetY>13.0</userOffsetY>
+                    <userOffsetX>59.0</userOffsetX>
+                    <userOffsetY>-12.0</userOffsetY>
                     <attached>TiempoEquipo::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
@@ -977,22 +943,31 @@
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
+            <edgeproperty id="TiempoEquipo::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="true" visible="true">
+                <name>TiempoEquipo</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>12.0</userOffsetX>
+                    <userOffsetY>-13.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>TiempoEquipo::WayPoint::0</related0>
+                        <related1>TiempoEquipo::WayPoint::1</related1>
+                    </related>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
         </properties>
         <waypoints>
             <edgeproperty id="TiempoEquipo::WayPoint::0"
-                sizeCalculated="true" type="WayPoint" userDefined="true" visible="true">
+                sizeCalculated="true" type="WayPoint"
+                userDefined="false" visible="true">
                 <name>0</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToCorner">
-                    <userOffsetX>-2.0</userOffsetX>
-                    <userOffsetY>82.26549978624598</userOffsetY>
-                    <basisDeltaX>ABSOLUTE</basisDeltaX>
-                    <deltaX>0.0</deltaX>
-                    <maxDeltaX>1.7976931348623157E308</maxDeltaX>
-                    <basisDeltaY>ABSOLUTE</basisDeltaY>
-                    <deltaY>0.0</deltaY>
-                    <maxDeltaY>1.7976931348623157E308</maxDeltaY>
-                    <corner>NORTH_WEST</corner>
-                    <relativeNodeId>Jugador</relativeNodeId>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
                 </strategy>
                 <id>0</id>
                 <specialid>1</specialid>
@@ -1036,8 +1011,8 @@
             <node id="TiempoEquipo" sizeCalculated="true" type="Class">
                 <name>TiempoEquipo</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToCorner">
-                    <userOffsetX>2.0</userOffsetX>
-                    <userOffsetY>72.0</userOffsetY>
+                    <userOffsetX>-57.0</userOffsetX>
+                    <userOffsetY>-2.0</userOffsetY>
                     <basisDeltaX>ABSOLUTE</basisDeltaX>
                     <deltaX>0.0</deltaX>
                     <maxDeltaX>1.7976931348623157E308</maxDeltaX>
@@ -1060,8 +1035,8 @@
                 sizeCalculated="true" type="rolename" userDefined="true" visible="true">
                 <name>equipos</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>5.0</userOffsetX>
-                    <userOffsetY>8.0</userOffsetY>
+                    <userOffsetX>10.0</userOffsetX>
+                    <userOffsetY>-17.0</userOffsetY>
                     <attached>ParticipacionPartido::WayPoint::1</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
@@ -1072,31 +1047,15 @@
             <edgeproperty
                 id="ParticipacionPartido::target::multiplicity"
                 sizeCalculated="true" type="multiplicity"
-                userDefined="true" visible="true">
+                userDefined="false" visible="true">
                 <name>1..*</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>5.0</userOffsetX>
-                    <userOffsetY>-8.0</userOffsetY>
+                    <userOffsetX>0.0</userOffsetX>
+                    <userOffsetY>0.0</userOffsetY>
                     <attached>ParticipacionPartido::WayPoint::1</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>BOTTOM</placement>
-                </strategy>
-                <hidden>false</hidden>
-            </edgeproperty>
-            <edgeproperty id="ParticipacionPartido::AssociationName"
-                sizeCalculated="true" type="associationName"
-                userDefined="false" visible="true">
-                <name>ParticipacionPartido</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
-                    <userOffsetX>0.0</userOffsetX>
-                    <userOffsetY>0.0</userOffsetY>
-                    <offsetX>0.0</offsetX>
-                    <offsetY>-10.0</offsetY>
-                    <related length="2">
-                        <related0>ParticipacionPartido::WayPoint::0</related0>
-                        <related1>ParticipacionPartido::WayPoint::1</related1>
-                    </related>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -1106,8 +1065,8 @@
                 userDefined="true" visible="true">
                 <name>*</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
-                    <userOffsetX>3.0</userOffsetX>
-                    <userOffsetY>-5.0</userOffsetY>
+                    <userOffsetX>6.0</userOffsetX>
+                    <userOffsetY>-10.0</userOffsetY>
                     <attached>ParticipacionPartido::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
@@ -1116,15 +1075,32 @@
                 <hidden>false</hidden>
             </edgeproperty>
             <edgeproperty id="ParticipacionPartido::source::rolename"
-                sizeCalculated="true" type="rolename" userDefined="true" visible="true">
+                sizeCalculated="true" type="rolename"
+                userDefined="false" visible="true">
                 <name>partidos</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToAttached">
                     <userOffsetX>0.0</userOffsetX>
-                    <userOffsetY>9.0</userOffsetY>
+                    <userOffsetY>0.0</userOffsetY>
                     <attached>ParticipacionPartido::WayPoint::0</attached>
                     <offset_x>8</offset_x>
                     <offset_y>8</offset_y>
                     <placement>TOP</placement>
+                </strategy>
+                <hidden>false</hidden>
+            </edgeproperty>
+            <edgeproperty id="ParticipacionPartido::AssociationName"
+                sizeCalculated="true" type="associationName"
+                userDefined="true" visible="true">
+                <name>ParticipacionPartido</name>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyInBetween">
+                    <userOffsetX>10.0</userOffsetX>
+                    <userOffsetY>-8.0</userOffsetY>
+                    <offsetX>0.0</offsetX>
+                    <offsetY>-10.0</offsetY>
+                    <related length="2">
+                        <related0>ParticipacionPartido::WayPoint::0</related0>
+                        <related1>ParticipacionPartido::WayPoint::1</related1>
+                    </related>
                 </strategy>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -1180,8 +1156,8 @@
             <node id="ParticipacionPartido" sizeCalculated="true" type="Class">
                 <name>ParticipacionPartido</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToCorner">
-                    <userOffsetX>1.0</userOffsetX>
-                    <userOffsetY>85.0</userOffsetY>
+                    <userOffsetX>-34.0</userOffsetX>
+                    <userOffsetY>32.0</userOffsetY>
                     <basisDeltaX>ABSOLUTE</basisDeltaX>
                     <deltaX>0.0</deltaX>
                     <maxDeltaX>1.7976931348623157E308</maxDeltaX>
@@ -1251,38 +1227,14 @@
             </edgeproperty>
             <edgeproperty
                 id="Generalization::Jugador::Persona::WayPoint::1"
-                sizeCalculated="true" type="WayPoint" userDefined="true" visible="true">
-                <name>1</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-                    <x>1100.0</x>
-                    <y>318.0</y>
-                </strategy>
-                <id>1</id>
-                <specialid>0</specialid>
-                <hidden>false</hidden>
-            </edgeproperty>
-            <edgeproperty
-                id="Generalization::Jugador::Persona::WayPoint::2"
-                sizeCalculated="true" type="WayPoint" userDefined="true" visible="true">
-                <name>2</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-                    <x>1101.0</x>
-                    <y>63.0</y>
-                </strategy>
-                <id>2</id>
-                <specialid>0</specialid>
-                <hidden>false</hidden>
-            </edgeproperty>
-            <edgeproperty
-                id="Generalization::Jugador::Persona::WayPoint::3"
                 sizeCalculated="true" type="WayPoint"
                 userDefined="false" visible="true">
-                <name>3</name>
+                <name>1</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
                     <userOffsetX>0.0</userOffsetX>
                     <userOffsetY>0.0</userOffsetY>
                 </strategy>
-                <id>3</id>
+                <id>1</id>
                 <specialid>2</specialid>
                 <hidden>false</hidden>
             </edgeproperty>
@@ -1297,12 +1249,19 @@
         <waypoints>
             <edgeproperty
                 id="Generalization::Arbitro::Persona::WayPoint::0"
-                sizeCalculated="true" type="WayPoint"
-                userDefined="false" visible="true">
+                sizeCalculated="true" type="WayPoint" userDefined="true" visible="true">
                 <name>0</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
-                    <userOffsetX>0.0</userOffsetX>
-                    <userOffsetY>0.0</userOffsetY>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToCorner">
+                    <userOffsetX>34.88517549612226</userOffsetX>
+                    <userOffsetY>1.0</userOffsetY>
+                    <basisDeltaX>ABSOLUTE</basisDeltaX>
+                    <deltaX>0.0</deltaX>
+                    <maxDeltaX>1.7976931348623157E308</maxDeltaX>
+                    <basisDeltaY>ABSOLUTE</basisDeltaY>
+                    <deltaY>0.0</deltaY>
+                    <maxDeltaY>1.7976931348623157E308</maxDeltaY>
+                    <corner>NORTH_WEST</corner>
+                    <relativeNodeId>Arbitro</relativeNodeId>
                 </strategy>
                 <id>0</id>
                 <specialid>1</specialid>
@@ -1313,8 +1272,8 @@
                 sizeCalculated="true" type="WayPoint" userDefined="true" visible="true">
                 <name>1</name>
                 <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyFixed">
-                    <x>1000.0</x>
-                    <y>63.0</y>
+                    <x>42.0</x>
+                    <y>50.0</y>
                 </strategy>
                 <id>1</id>
                 <specialid>0</specialid>
@@ -1357,12 +1316,19 @@
             </edgeproperty>
             <edgeproperty
                 id="Generalization::Narrador::Persona::WayPoint::1"
-                sizeCalculated="true" type="WayPoint"
-                userDefined="false" visible="true">
+                sizeCalculated="true" type="WayPoint" userDefined="true" visible="true">
                 <name>1</name>
-                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyAttachedIntersection">
-                    <userOffsetX>0.0</userOffsetX>
-                    <userOffsetY>0.0</userOffsetY>
+                <strategy type="org.tzi.use.gui.views.diagrams.elements.positioning.StrategyRelativeToCorner">
+                    <userOffsetX>48.20068359375</userOffsetX>
+                    <userOffsetY>59.30446755083449</userOffsetY>
+                    <basisDeltaX>ABSOLUTE</basisDeltaX>
+                    <deltaX>0.0</deltaX>
+                    <maxDeltaX>1.7976931348623157E308</maxDeltaX>
+                    <basisDeltaY>ABSOLUTE</basisDeltaY>
+                    <deltaY>0.0</deltaY>
+                    <maxDeltaY>1.7976931348623157E308</maxDeltaY>
+                    <corner>NORTH_WEST</corner>
+                    <relativeNodeId>Persona</relativeNodeId>
                 </strategy>
                 <id>1</id>
                 <specialid>2</specialid>
