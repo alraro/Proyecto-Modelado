@@ -10,9 +10,23 @@ import java.util.Map;
 
 public class FabricaVolleyball implements FabricaDeporte {
 
+    // Implementación del patrón de Singleton
+    private static FabricaVolleyball instance;
+
+    // Constructor privado para evitar instanciación externa
+    private FabricaVolleyball() {}
+
+    // Creamos la instancia
+    public static FabricaVolleyball getInstance() {
+        if (instance == null) {
+            instance = new FabricaVolleyball();
+        }
+        return instance;
+    }
+
     @Override
-    public Torneo crearTorneo(String nombre, Pais paisSede, String provinciaSede, String temporada, Categoria categoria, TipoCompeticion competicion, int duracionPartidos) {
-        return new TorneoVolleyball(nombre, paisSede, provinciaSede, temporada, categoria, competicion, duracionPartidos);
+    public Torneo crearTorneo(String nombre, Pais paisSede, String provinciaSede, String temporada, Categoria categoria, TipoCompeticion competicion, int duracionPartidos, int maxEquipos) {
+        return new TorneoVolleyball(nombre, paisSede, provinciaSede, temporada, categoria, competicion, duracionPartidos, maxEquipos);
     }
 
     @Override

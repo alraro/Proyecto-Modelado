@@ -10,9 +10,23 @@ import java.util.Map;
 
 public class FabricaPadel implements FabricaDeporte {
 
+    // Implementación del patrón de Singleton
+    private static FabricaPadel instance;
+
+    // Constructor privado para evitar instanciación externa
+    private FabricaPadel() {}
+
+    // Creamos la instancia
+    public static FabricaPadel getInstance() {
+        if (instance == null) {
+            instance = new FabricaPadel();
+        }
+        return instance;
+    }
+
     @Override
-    public Torneo crearTorneo(String nombre, Pais paisSede, String provinciaSede, String temporada, Categoria categoria, TipoCompeticion competicion, int duracionPartidos) {
-        return new TorneoPadel(nombre, paisSede, provinciaSede, temporada, categoria, competicion, duracionPartidos);
+    public Torneo crearTorneo(String nombre, Pais paisSede, String provinciaSede, String temporada, Categoria categoria, TipoCompeticion competicion, int duracionPartidos, int maxEquipos) {
+        return new TorneoPadel(nombre, paisSede, provinciaSede, temporada, categoria, competicion, duracionPartidos, maxEquipos);
     }
 
     @Override

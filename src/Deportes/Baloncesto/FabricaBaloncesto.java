@@ -10,14 +10,28 @@ import java.util.Map;
 
 public class FabricaBaloncesto implements FabricaDeporte {
 
-    @Override
-    public Torneo crearTorneo(String nombre, Pais paisSede, String temporada, Categoria categoria, TipoCompeticion competicion, int duracionPartidos, int maxEquipos) {
-        return new TorneoBaloncesto(nombre, paisSede, null, temporada, categoria, competicion, duracionPartidos, maxEquipos);
+    // Implementación del patrón de Singleton
+    private static FabricaBaloncesto instance;
+
+    // Constructor privado para evitar instanciación externa
+    private FabricaBaloncesto() {}
+
+    // Creamos la instancia
+    public static FabricaBaloncesto getInstance() {
+        if (instance == null) {
+            instance = new FabricaBaloncesto();
+        }
+        return instance;
     }
 
     @Override
-    public Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais) {
-        return new EquipoBaloncesto(nombre, categoria, competicion, pais, null);
+    public Torneo crearTorneo(String nombre, Pais paisSede, String provinciaSede, String temporada, Categoria categoria, TipoCompeticion competicion, int duracionPartidos, int maxEquipos) {
+        return new TorneoBaloncesto(nombre, paisSede, provinciaSede, temporada, categoria, competicion, duracionPartidos, maxEquipos);
+    }
+
+    @Override
+    public Equipo crearEquipo(String nombre, Categoria categoria, TipoCompeticion competicion, Pais pais, String provincia) {
+        return new EquipoBaloncesto(nombre, categoria, competicion, pais, provincia);
     }
 
     @Override

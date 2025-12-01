@@ -27,7 +27,7 @@ public abstract class Equipo {
         assert categoria != null : "La categoría es obligatoria";
         assert competicion != null : "El tipo de competición es obligatorio";
         assert pais != null : "El país es obligatorio";
-        assert provincia != null && provincia.isBlank() : "La provincia es obligatoria";
+        assert provincia != null && !provincia.isBlank() : "La provincia es obligatoria";
         assert maxTtitulares > 0 : "El máximo de jugadores debe ser positivo";
         assert maxSuplentes >= 0 : "El máximo de suplentes no puede ser negativo";
 
