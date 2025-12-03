@@ -163,20 +163,20 @@ check
 -- !create teSexto : TiempoEquipo
 -- !insert (jSexto, teSexto) into PersonalesEquipo
 -- !insert (teSexto, eUnicaja) into TiempoEnEquipo
--- check -- Debe fallar
+-- check -- Debe fallar por la invariantes MaxTitulares
 
 -- 2. PRUEBA DE ENTRENADOR EN MISMO TORNEO
 -- !create teSaraRincon : TiempoEquipo
 -- !insert (entSara, teSaraRincon) into PersonalesEquipo
 -- !insert (teSaraRincon, eRincon) into TiempoEnEquipo
--- check -- Debe fallar, Sara ya entrena a Unicaja en el mismo torneo
+-- check -- Debe fallar, Sara ya entrena a Unicaja en el mismo torneo. Invariante: UnicoEquipoPorTorneo
 
 -- 3. PRUEBA DE EDAD INCORRECTA
 -- !create jBebe : Jugador
 -- !set jBebe.edad := 5 -- Muy joven para Juvenil
 -- !set jBebe.tipoCategoria := #Juvenil
 -- !set jBebe.DNI := '000B'
--- check -- Debe fallar
+-- check -- Debe fallar por EdadCoherenteConCategoria
 
 -- 4. PRUEBA DE SOLAPAMIENTO DE PARTIDOS (Mismo Equipo)
 -- Intentamos crear otro partido para Unicaja que coincida en hora con pFinal (18:00 - 20:00)
