@@ -1,313 +1,247 @@
+-- ESCENARIO VÁLIDO: TORNEO DE BALONCESTO JUVENIL
 reset
--- Escenario para Fútbol Senior Nacional 2024
 
-!create T_NacionalFutbolSenior : Torneo
-!set T_NacionalFutbolSenior.nombre := 'Copa Nacional Senior'
-!set T_NacionalFutbolSenior.deporte := #Futbol
-!set T_NacionalFutbolSenior.temporada := 2024
-!set T_NacionalFutbolSenior.categoria := #Senior
-!set T_NacionalFutbolSenior.competicion := #Nacional
-!set T_NacionalFutbolSenior.maxIntegrantesEquipo := 18
-!set T_NacionalFutbolSenior.ganador := 'España'
-!set T_NacionalFutbolSenior.pais_sede := 'España'
-!set T_NacionalFutbolSenior.provincia_sede := '' -- Nacional, no requiere provincia
-!set T_NacionalFutbolSenior.maxEquipos := 8
+print '--- 1. CREANDO TORNEO ---'
+!create tBasket : Torneo
+!set tBasket.nombre := 'Liga Juvenil Malaga'
+!set tBasket.deporte := #Baloncesto
+!set tBasket.temporada := 2024
+!set tBasket.categoria := #Juvenil
+!set tBasket.competicion := #Local
+!set tBasket.maxIntegrantesEquipo := 12
+!set tBasket.maxEquipos := 4
+!set tBasket.pais_sede := 'Espana'
+!set tBasket.provincia_sede := 'Malaga'
 
--- Equipo 1 (España)
-!create E_España : Equipo
-!set E_España.nombre := 'Selección Española'
-!set E_España.deporte := #Futbol
-!set E_España.categoria := #Senior
-!set E_España.competicion := #Nacional
-!set E_España.pais := 'España'
-!set E_España.provincia := 'Madrid'
-!set E_España.maxTitulares := 11
-!set E_España.maxSuplentes := 7
+print '--- 2. CREANDO EQUIPOS ---'
+-- Equipo 1: Unicaja
+!create eUnicaja : Equipo
+!set eUnicaja.nombre := 'Unicaja Malaga'
+!set eUnicaja.deporte := #Baloncesto
+!set eUnicaja.categoria := #Juvenil
+!set eUnicaja.competicion := #Local
+!set eUnicaja.pais := 'Espana'
+!set eUnicaja.provincia := 'Malaga'
+!set eUnicaja.maxTitulares := 5
+!set eUnicaja.maxSuplentes := 7
 
--- Equipo 2 (Francia)
-!create E_Francia : Equipo
-!set E_Francia.nombre := 'Selección Francesa'
-!set E_Francia.deporte := #Futbol
-!set E_Francia.categoria := #Senior
-!set E_Francia.competicion := #Nacional
-!set E_Francia.pais := 'Francia'
-!set E_Francia.provincia := ''
-!set E_Francia.maxTitulares := 11
-!set E_Francia.maxSuplentes := 7
+-- Equipo 2: Rincon
+!create eRincon : Equipo
+!set eRincon.nombre := 'Rincon Basket'
+!set eRincon.deporte := #Baloncesto
+!set eRincon.categoria := #Juvenil
+!set eRincon.competicion := #Local
+!set eRincon.pais := 'Espana'
+!set eRincon.provincia := 'Malaga'
+!set eRincon.maxTitulares := 5
+!set eRincon.maxSuplentes := 7
 
--- Jugador (Titular)
-!create J_Sergio : Jugador
-!set J_Sergio.DNI := '222B'
-!set J_Sergio.nombre := 'Sergio Ramos'
-!set J_Sergio.edad := 38
-!set J_Sergio.tipoDeporte := #Futbol
-!set J_Sergio.tipoCategoria := #Senior
-!set J_Sergio.tipoCompeticion := #Nacional
-!set J_Sergio.tipoJugador := #Titular
-!set J_Sergio.nacionalidad := 'Español'
+!insert (eUnicaja, tBasket) into equipoTorneo
+!insert (eRincon, tBasket) into equipoTorneo
 
+print '--- 3. CREANDO JUGADORES (Plantilla Unicaja) ---'
+-- Creamos 5 titulares (Límite exacto)
+!create jHugo : Jugador
+!set jHugo.nombre := 'Hugo'
+!set jHugo.tipoDeporte := #Baloncesto
+!set jHugo.tipoCategoria := #Juvenil
+!set jHugo.tipoCompeticion := #Local
+!set jHugo.tipoJugador := #Titular
+!set jHugo.edad := 15
+!set jHugo.DNI := '111A'
 
--- Entrenador
-!create EN_Luis : Entrenador
-!set EN_Luis.DNI := '333C'
-!set EN_Luis.nombre := 'Luis Enrique'
-!set EN_Luis.edad := 54
-!set EN_Luis.tipoDeporte := #Futbol
-!set EN_Luis.tipoCategoria := #Senior
-!set EN_Luis.tipoCompeticion := #Nacional
+!create jAlfonso : Jugador
+!set jAlfonso.nombre := 'Alfonso'
+!set jAlfonso.tipoDeporte := #Baloncesto
+!set jAlfonso.tipoCategoria := #Juvenil
+!set jAlfonso.tipoCompeticion := #Local
+!set jAlfonso.tipoJugador := #Titular
+!set jAlfonso.edad := 14
+!set jAlfonso.DNI := '222B'
 
--- Árbitro
-!create AR_Mateu : Arbitro
-!set AR_Mateu.DNI := '444D'
-!set AR_Mateu.nombre := 'Mateu Lahoz'
-!set AR_Mateu.edad := 47
-!set AR_Mateu.deporte := #Futbol
-!set AR_Mateu.categoria := #Senior
-!set AR_Mateu.competicion := #Nacional
+!create jFer : Jugador
+!set jFer.nombre := 'Fernando'
+!set jFer.tipoDeporte := #Baloncesto
+!set jFer.tipoCategoria := #Juvenil
+!set jFer.tipoCompeticion := #Local
+!set jFer.tipoJugador := #Titular
+!set jFer.edad := 15
+!set jFer.DNI := '333C'
 
--- Partido
-!create P_Final : Partido
-!set P_Final.tipoCategoria := #Senior
-!set P_Final.tipoCompeticion := #Nacional
-!set P_Final.tipoDeporte := #Futbol
-!set P_Final.lugar := 'Estadio Metropolitano'
-!set P_Final.fecha := '2024-12-15'
-!set P_Final.horaInicio := '20:00'
-!set P_Final.horaFin := '22:00'
-!set P_Final.resultado := '2-1'
+!create jAlberto : Jugador
+!set jAlberto.nombre := 'Alberto'
+!set jAlberto.tipoDeporte := #Baloncesto
+!set jAlberto.tipoCategoria := #Juvenil
+!set jAlberto.tipoCompeticion := #Local
+!set jAlberto.tipoJugador := #Titular
+!set jAlberto.edad := 15
+!set jAlberto.DNI := '444D'
 
+!create jNacho : Jugador
+!set jNacho.nombre := 'Nacho'
+!set jNacho.tipoDeporte := #Baloncesto
+!set jNacho.tipoCategoria := #Juvenil
+!set jNacho.tipoCompeticion := #Local
+!set jNacho.tipoJugador := #Titular
+!set jNacho.edad := 16
+!set jNacho.DNI := '555E'
 
---- Associaciones ---
+-- Vinculamos a los 5
+!create teHugo : TiempoEquipo
+!insert (jHugo, teHugo) into PersonalesEquipo
+!insert (teHugo, eUnicaja) into TiempoEnEquipo
 
--- Equipos se inscriben en el Torneo
-!insert (E_España, T_NacionalFutbolSenior) into equipoTorneo
-!insert (E_Francia, T_NacionalFutbolSenior) into equipoTorneo
+!create teAlfonso : TiempoEquipo
+!insert (jAlfonso, teAlfonso) into PersonalesEquipo
+!insert (teAlfonso, eUnicaja) into TiempoEnEquipo
 
--- Partido pertenece al Torneo
-!insert (P_Final, T_NacionalFutbolSenior) into partidoTorneo
+!create teFer : TiempoEquipo
+!insert (jFer, teFer) into PersonalesEquipo
+!insert (teFer, eUnicaja) into TiempoEnEquipo
 
--- Árbitro asignado al Partido y al Torneo
-!insert (AR_Mateu, T_NacionalFutbolSenior) into arbitroTorneo
-!insert (AR_Mateu, P_Final) into arbitroPartido
+!create teAlberto : TiempoEquipo
+!insert (jAlberto, teAlberto) into PersonalesEquipo
+!insert (teAlberto, eUnicaja) into TiempoEnEquipo
 
--- Registro de Tiempo en Equipo: Jugador en Equipo (ACTUAL)
-!create TE_SRamos_España : TiempoEquipo
-!set TE_SRamos_España.fechaInicio := '2024-01-01'
--- fechaFin se deja vacía para indicar que es el equipo actual
+!create teNacho : TiempoEquipo
+!insert (jNacho, teNacho) into PersonalesEquipo
+!insert (teNacho, eUnicaja) into TiempoEnEquipo
 
-!insert (J_Sergio, TE_SRamos_España) into PersonalEnTiempoEquipo
-!insert (TE_SRamos_España, E_España) into TiempoEnEquipo
+print '--- 4. CREANDO ENTRENADOR Y ARBITRO ---'
+!create entSara : Entrenador
+!set entSara.nombre := 'Sara Doble'
+!set entSara.tipoDeporte := #Baloncesto
+!set entSara.tipoCategoria := #Juvenil
+!set entSara.tipoCompeticion := #Local
+!set entSara.DNI := '999Z'
 
--- Registro de Tiempo en Equipo: Entrenador en Equipo (ACTUAL)
-!create TE_LEnrique_España : TiempoEquipo
-!set TE_LEnrique_España.fechaInicio := '2024-07-01'
+!create teSara : TiempoEquipo
+!insert (entSara, teSara) into PersonalesEquipo
+!insert (teSara, eUnicaja) into TiempoEnEquipo
 
-!insert (EN_Luis, TE_LEnrique_España) into PersonalEnTiempoEquipo
-!insert (TE_LEnrique_España, E_España) into TiempoEnEquipo
+!create arbLuis : Arbitro
+!set arbLuis.nombre := 'Luis Arbitro'
+!set arbLuis.deporte := #Baloncesto
+!set arbLuis.categoria := #Juvenil
+!set arbLuis.competicion := #Local
+!set arbLuis.DNI := '888X'
 
+!insert (arbLuis, tBasket) into arbitroTorneo
 
--- Participación en Partido
-!create PPL_España : ParticipacionPartidoLocal
-!set PPL_España.puntuacion := 2
-!insert (P_Final, E_España) into PPL_España
+print '--- 5. PARTIDO ---'
+!create pFinal : Partido
+!set pFinal.tipoDeporte := #Baloncesto
+!set pFinal.tipoCategoria := #Juvenil
+!set pFinal.tipoCompeticion := #Local
+!set pFinal.fecha := '2024-05-20'
+!set pFinal.horaInicio := '18:00'
+!set pFinal.horaFin := '20:00'
+!set pFinal.lugar := 'Pabellon Martin Carpena'
+!set pFinal.resultado := 'PENDIENTE'
 
-!create PPV_Francia : ParticipacionPartidoVisitante
-!set PPV_Francia.puntuacion := 1
-!insert (P_Final, E_Francia) into PPV_Francia
+!insert (pFinal, tBasket) into partidoTorneo
+!insert (arbLuis, pFinal) into arbitroPartido
 
+-- Asignar Local y Visitante
+!insert (pFinal, eUnicaja) into ParticipacionPartidoLocal
+!insert (pFinal, eRincon) into ParticipacionPartidoVisitante
 
+print '--- VERIFICACION DEL ESCENARIO ---'
+check 
+-- Si sale OK, el sistema base funciona.
 
+-- PRUEBAS DE FALLOS (Descomentar línea a línea en USE)
 
+-- 1. PRUEBA DE MAX TITULARES (Intentar meter al 6º titular)
+-- !create jSexto : Jugador
+-- !set jSexto.tipoJugador := #Titular
+-- !set jSexto.tipoDeporte := #Baloncesto
+-- !set jSexto.tipoCategoria := #Juvenil
+-- !set jSexto.tipoCompeticion := #Local
+-- !set jSexto.edad := 15
+-- !set jSexto.DNI := '666F'
+-- !create teSexto : TiempoEquipo
+-- !insert (jSexto, teSexto) into PersonalesEquipo
+-- !insert (teSexto, eUnicaja) into TiempoEnEquipo
+-- check -- ¡Debe fallar!
 
+-- 2. PRUEBA DE ENTRENADOR EN MISMO TORNEO
+-- !create teSaraRincon : TiempoEquipo
+-- !insert (entSara, teSaraRincon) into PersonalesEquipo
+-- !insert (teSaraRincon, eRincon) into TiempoEnEquipo
+-- check -- ¡Debe fallar! (Sara ya entrena a Unicaja en el mismo torneo)
 
--- Torneo Local de Baloncesto Juvenil 2024
-!create T_LocalBaloncestoJuvenil : Torneo
-!set T_LocalBaloncestoJuvenil.nombre := 'Liga Juvenil Malaga'
-!set T_LocalBaloncestoJuvenil.deporte := #Baloncesto
-!set T_LocalBaloncestoJuvenil.temporada := 2024
-!set T_LocalBaloncestoJuvenil.categoria := #Juvenil
-!set T_LocalBaloncestoJuvenil.competicion := #Local
-!set T_LocalBaloncestoJuvenil.maxIntegrantesEquipo := 12
-!set T_LocalBaloncestoJuvenil.ganador := 'Unicaja Malaga'
-!set T_LocalBaloncestoJuvenil.pais_sede := 'España'
-!set T_LocalBaloncestoJuvenil.provincia_sede := 'Malaga'
-!set T_LocalBaloncestoJuvenil.maxEquipos := 4
+-- 3. PRUEBA DE EDAD INCORRECTA
+-- !create jBebe : Jugador
+-- !set jBebe.edad := 5 -- Muy joven para Juvenil
+-- !set jBebe.tipoCategoria := #Juvenil
+-- !set jBebe.DNI := '000B'
+-- check -- ¡Debe fallar!
 
--- Equipo Local 1
-!create E_Malaga : Equipo
-!set E_Malaga.nombre := 'Unicaja Malaga'
-!set E_Malaga.deporte := #Baloncesto
-!set E_Malaga.categoria := #Juvenil
-!set E_Malaga.competicion := #Local
-!set E_Malaga.pais := 'España'
-!set E_Malaga.provincia := 'Malaga'
-!set E_Malaga.maxTitulares := 5
-!set E_Malaga.maxSuplentes := 7
+-- 4. PRUEBA DE SOLAPAMIENTO DE PARTIDOS (Mismo Equipo)
+-- Intentamos crear otro partido para Unicaja que coincida en hora con pFinal (18:00 - 20:00)
+-- !create pSolapado : Partido
+-- !set pSolapado.tipoDeporte := #Baloncesto
+-- !set pSolapado.tipoCategoria := #Juvenil
+-- !set pSolapado.tipoCompeticion := #Local
+-- !set pSolapado.fecha := '2024-05-20' -- Misma fecha
+-- !set pSolapado.horaInicio := '19:00' -- Empieza cuando el otro aún no ha acabado
+-- !set pSolapado.horaFin := '21:00'
+-- !set pSolapado.lugar := 'Otro Pabellon'
+-- !set pSolapado.resultado := 'PENDIENTE'
+-- !insert (pSolapado, tBasket) into partidoTorneo
+-- !insert (pSolapado, eUnicaja) into ParticipacionPartidoLocal -- ¡Unicaja ya juega a esa hora!
+-- !insert (pSolapado, eRincon) into ParticipacionPartidoVisitante
+-- check -- ¡Debe fallar por NoPartidosSimultaneos!
 
--- Equipo Local 2
-!create E_Rincon : Equipo
-!set E_Rincon.nombre := 'Rincon Basket Club'
-!set E_Rincon.deporte := #Baloncesto
-!set E_Rincon.categoria := #Juvenil
-!set E_Rincon.competicion := #Local
-!set E_Rincon.pais := 'España'
-!set E_Rincon.provincia := 'Malaga'
-!set E_Rincon.maxTitulares := 5
-!set E_Rincon.maxSuplentes := 7
+-- 5. PRUEBA DE SOLAPAMIENTO DE ÁRBITRO
+-- El árbitro Luis ya pita de 18:00 a 20:00. Intentamos asignarle otro.
+-- !create pArbitroDoble : Partido
+-- !set pArbitroDoble.tipoDeporte := #Baloncesto
+-- !set pArbitroDoble.tipoCategoria := #Juvenil
+-- !set pArbitroDoble.tipoCompeticion := #Local
+-- !set pArbitroDoble.fecha := '2024-05-20'
+-- !set pArbitroDoble.horaInicio := '18:30'
+-- !set pArbitroDoble.horaFin := '20:30'
+-- !set pArbitroDoble.lugar := 'Pista 3'
+-- !set pArbitroDoble.resultado := 'PENDIENTE'
+-- !insert (pArbitroDoble, tBasket) into partidoTorneo
+-- !insert (arbLuis, pArbitroDoble) into arbitroPartido
+-- check -- ¡Debe fallar por NoSolapamientoArbitro!
 
--- Equipo Local 3 (De otra provincia)
-!create E_Madrid : Equipo
-!set E_Madrid.nombre := 'Real Madrid baloncesto Juvenil'
-!set E_Madrid.deporte := #Baloncesto
-!set E_Madrid.categoria := #Juvenil
-!set E_Madrid.competicion := #Local
-!set E_Madrid.pais := 'España'
-!set E_Madrid.provincia := 'Madrid' -- De otra provincia
-!set E_Madrid.maxTitulares := 5
-!set E_Madrid.maxSuplentes := 7
+-- 6. PRUEBA DE INCOHERENCIA DE DEPORTE (Equipo Futbol en Torneo Basket)
+-- !create eFutbolIntruso : Equipo
+-- !set eFutbolIntruso.nombre := 'Malaga FC'
+-- !set eFutbolIntruso.deporte := #Futbol -- ES FUTBOL
+-- !set eFutbolIntruso.categoria := #Juvenil
+-- !set eFutbolIntruso.competicion := #Local
+-- !set eFutbolIntruso.pais := 'Espana'
+-- !set eFutbolIntruso.provincia := 'Malaga'
+-- !insert (eFutbolIntruso, tBasket) into equipoTorneo -- tBasket es de Baloncesto
+-- check -- ¡Debe fallar por CoherenciaInscripcion!
 
+-- 7. PRUEBA DE PARTIDO CONTRA SÍ MISMO
+-- !create pSuicida : Partido
+-- !set pSuicida.tipoDeporte := #Baloncesto
+-- !set pSuicida.tipoCategoria := #Juvenil
+-- !set pSuicida.tipoCompeticion := #Local
+-- !set pSuicida.fecha := '2024-06-01'
+-- !set pSuicida.horaInicio := '10:00'
+-- !set pSuicida.horaFin := '12:00'
+-- !set pSuicida.lugar := 'Calle'
+-- !set pSuicida.resultado := 'PENDIENTE'
+-- !insert (pSuicida, tBasket) into partidoTorneo
+-- !insert (pSuicida, eUnicaja) into ParticipacionPartidoLocal
+-- !insert (pSuicida, eUnicaja) into ParticipacionPartidoVisitante -- ¡Unicaja vs Unicaja!
+-- check -- ¡Debe fallar por NoJuegaContraSiMismo!
 
--- Inscripción de equipos en el Torneo Local
-!insert (E_Madrid, T_LocalBaloncestoJuvenil) into equipoTorneo
-!insert (E_Malaga, T_LocalBaloncestoJuvenil) into equipoTorneo
-!insert (E_Rincon, T_LocalBaloncestoJuvenil) into equipoTorneo
-
-
--- Creación Jugadores y Entrenadores para los equipos locales
--- Jugador Juvenil (Titular) Edad 15
-!create J_Hugo : Jugador
-!set J_Hugo.DNI := '555E'
-!set J_Hugo.nombre := 'Hugo Herrero'
-!set J_Hugo.edad := 15
-!set J_Hugo.tipoDeporte := #Baloncesto
-!set J_Hugo.tipoCategoria := #Juvenil
-!set J_Hugo.tipoCompeticion := #Local
-!set J_Hugo.tipoJugador := #Titular
-!set J_Hugo.nacionalidad := 'Español'
-
--- Jugador Juvenil (Titular) - Edad 14
-!create J_Alfonso : Jugador
-!set J_Alfonso.DNI := '666F'
-!set J_Alfonso.nombre := 'Alfonso Ramos'
-!set J_Alfonso.edad := 14
-!set J_Alfonso.tipoDeporte := #Baloncesto
-!set J_Alfonso.tipoCategoria := #Juvenil
-!set J_Alfonso.tipoCompeticion := #Local
-!set J_Alfonso.tipoJugador := #Titular
-!set J_Alfonso.nacionalidad := 'Español'
-
--- Jugador Juvenil (Titular) - Edad 14
-!create J_Fernando : Jugador
-!set J_Fernando.DNI := '123A'
-!set J_Fernando.nombre := 'Fernando Pinilla'
-!set J_Fernando.edad := 15
-!set J_Fernando.tipoDeporte := #Baloncesto
-!set J_Fernando.tipoCategoria := #Juvenil
-!set J_Fernando.tipoCompeticion := #Local
-!set J_Fernando.tipoJugador := #Titular
-!set J_Fernando.nacionalidad := 'Español'
-
--- Jugador Juvenil (Titular) - Edad 14
-!create J_Alberto : Jugador
-!set J_Alberto.DNI := '234F'
-!set J_Alberto.nombre := 'Alberto Banderas'
-!set J_Alberto.edad := 15
-!set J_Alberto.tipoDeporte := #Baloncesto
-!set J_Alberto.tipoCategoria := #Juvenil
-!set J_Alberto.tipoCompeticion := #Local
-!set J_Alberto.tipoJugador := #Titular
-!set J_Alberto.nacionalidad := 'Español'
-
--- Jugador Juvenil (Titular) - Edad 14
-!create J_Nacho : Jugador
-!set J_Nacho.DNI := '567L'
-!set J_Nacho.nombre := 'Nacho Freijeiro'
-!set J_Nacho.edad := 16
-!set J_Nacho.tipoDeporte := #Baloncesto
-!set J_Nacho.tipoCategoria := #Juvenil
-!set J_Nacho.tipoCompeticion := #Local
-!set J_Nacho.tipoJugador := #Titular
-!set J_Nacho.nacionalidad := 'Español'
-
--- Jugador Juvenil (Titular) - Edad 14
-!create J_Alejandra : Jugador
-!set J_Alejandra.DNI := '345G'
-!set J_Alejandra.nombre := 'Alejandra Ortiz'
-!set J_Alejandra.edad := 15
-!set J_Alejandra.tipoDeporte := #Baloncesto
-!set J_Alejandra.tipoCategoria := #Juvenil
-!set J_Alejandra.tipoCompeticion := #Local
-!set J_Alejandra.tipoJugador := #Titular
-!set J_Alejandra.nacionalidad := 'Español'
-
--- Jugador que tiene la Edad equivocada para la Categoría
-!create J_FallaEdad : Jugador
-!set J_FallaEdad.DNI := '888H'
-!set J_FallaEdad.nombre := 'Aitor Tilla'
-!set J_FallaEdad.edad := 5 
-!set J_FallaEdad.tipoDeporte := #Futbol
-!set J_FallaEdad.tipoCategoria := #Infantil
-!set J_FallaEdad.tipoCompeticion := #Local
-!set J_FallaEdad.tipoJugador := #Suplente
-!set J_FallaEdad.nacionalidad := 'Español'
-
--- Entrenador con dos equipos en el MISMO Torneo
-!create EN_FallaDoble : Entrenador
-!set EN_FallaDoble.DNI := '999I'
-!set EN_FallaDoble.nombre := 'Sara Doble'
-!set EN_FallaDoble.edad := 40
-!set EN_FallaDoble.tipoDeporte := #Baloncesto
-!set EN_FallaDoble.tipoCategoria := #Juvenil
-!set EN_FallaDoble.tipoCompeticion := #Local
-
-
-
--- 1. J_Hugo (Titular 1/5)
-!create TE_Hugo_Malaga : TiempoEquipo
-!set TE_Hugo_Malaga.fechaInicio := '2024-01-01'
-!insert (J_Hugo, TE_Hugo_Malaga) into PersonalesEquipo
-!insert (TE_Hugo_Malaga, E_Malaga) into TiempoEnEquipo
-
--- 2. J_Alfonso (Titular 2/5)
-!create TE_Alfonso_Malaga : TiempoEquipo
-!set TE_Alfonso_Malaga.fechaInicio := '2024-01-02'
-!insert (J_Alfonso, TE_Alfonso_Malaga) into PersonalesEquipo
-!insert (TE_Alfonso_Malaga, E_Malaga) into TiempoEnEquipo
-
--- 3. J_Fernando (Titular 3/5)
-!create TE_Fernando_Malaga : TiempoEquipo
-!set TE_Fernando_Malaga.fechaInicio := '2024-01-03'
-!insert (J_Fernando, TE_Fernando_Malaga) into PersonalesEquipo
-!insert (TE_Fernando_Malaga, E_Malaga) into TiempoEnEquipo
-
--- 4. J_Alberto (Titular 4/5)
-!create TE_Alberto_Malaga : TiempoEquipo
-!set TE_Alberto_Malaga.fechaInicio := '2024-01-04'
-!insert (J_Alberto, TE_Alberto_Malaga) into PersonalesEquipo
-!insert (TE_Alberto_Malaga, E_Malaga) into TiempoEnEquipo
-
--- 5. J_Nacho (Titular 5/5)
-!create TE_Nacho_Malaga : TiempoEquipo
-!set TE_Nacho_Malaga.fechaInicio := '2024-01-05'
-!insert (J_Nacho, TE_Nacho_Malaga) into PersonalesEquipo
-!insert (TE_Nacho_Malaga, E_Malaga) into TiempoEnEquipo
-
--- 6. J_Alejandra (Titular 6/5) - ¡ESTE DEBERÍA PROVOCAR EL FALLO DE MAX TITULARES!
-!create TE_Alejandra_Malaga : TiempoEquipo
-!set TE_Alejandra_Malaga.fechaInicio := '2024-01-06'
-!insert (J_Alejandra, TE_Alejandra_Malaga) into PersonalesEquipo
-!insert (TE_Alejandra_Malaga, E_Malaga) into TiempoEnEquipo
-
-
-
--- Entrenador Sara Doble se une a E_Malaga (Equipo 1 del Torneo)
-!create TE_Sara_Malaga : TiempoEquipo
-!set TE_Sara_Malaga.fechaInicio := '2024-01-01'
-!insert (EN_FallaDoble, TE_Sara_Malaga) into PersonalesEquipo
-!insert (TE_Sara_Malaga, E_Malaga) into TiempoEnEquipo
-
--- Entrenador Sara Doble se une a E_Rincon (Equipo 2 del MISMO Torneo T_LocalBaloncestoJuvenil) - ¡FALLO ESPERADO!
-!create TE_Sara_Rincon : TiempoEquipo
-!set TE_Sara_Rincon.fechaInicio := '2024-02-01'
-!insert (EN_FallaDoble, TE_Sara_Rincon) into PersonalesEquipo
-!insert (TE_Sara_Rincon, E_Rincon) into TiempoEnEquipo
+-- 8. PRUEBA DE SEDE INCORRECTA (Torneo Local)
+-- !create eSevilla : Equipo
+-- !set eSevilla.nombre := 'Sevilla Basket'
+-- !set eSevilla.deporte := #Baloncesto
+-- !set eSevilla.categoria := #Juvenil
+-- !set eSevilla.competicion := #Local
+-- !set eSevilla.pais := 'Espana'
+-- !set eSevilla.provincia := 'Sevilla' -- Torneo es en Malaga
+-- !insert (eSevilla, tBasket) into equipoTorneo
+-- check -- ¡Debe fallar por ProvinciaSedeConsistente!
