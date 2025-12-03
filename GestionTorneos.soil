@@ -163,20 +163,20 @@ check
 -- !create teSexto : TiempoEquipo
 -- !insert (jSexto, teSexto) into PersonalesEquipo
 -- !insert (teSexto, eUnicaja) into TiempoEnEquipo
--- check -- ¡Debe fallar!
+-- check -- Debe fallar
 
 -- 2. PRUEBA DE ENTRENADOR EN MISMO TORNEO
 -- !create teSaraRincon : TiempoEquipo
 -- !insert (entSara, teSaraRincon) into PersonalesEquipo
 -- !insert (teSaraRincon, eRincon) into TiempoEnEquipo
--- check -- ¡Debe fallar! (Sara ya entrena a Unicaja en el mismo torneo)
+-- check -- Debe fallar, Sara ya entrena a Unicaja en el mismo torneo
 
 -- 3. PRUEBA DE EDAD INCORRECTA
 -- !create jBebe : Jugador
 -- !set jBebe.edad := 5 -- Muy joven para Juvenil
 -- !set jBebe.tipoCategoria := #Juvenil
 -- !set jBebe.DNI := '000B'
--- check -- ¡Debe fallar!
+-- check -- Debe fallar
 
 -- 4. PRUEBA DE SOLAPAMIENTO DE PARTIDOS (Mismo Equipo)
 -- Intentamos crear otro partido para Unicaja que coincida en hora con pFinal (18:00 - 20:00)
@@ -190,9 +190,9 @@ check
 -- !set pSolapado.lugar := 'Otro Pabellon'
 -- !set pSolapado.resultado := 'PENDIENTE'
 -- !insert (pSolapado, tBasket) into partidoTorneo
--- !insert (pSolapado, eUnicaja) into ParticipacionPartidoLocal -- ¡Unicaja ya juega a esa hora!
+-- !insert (pSolapado, eUnicaja) into ParticipacionPartidoLocal -- Unicaja ya juega a esa hora
 -- !insert (pSolapado, eRincon) into ParticipacionPartidoVisitante
--- check -- ¡Debe fallar por NoPartidosSimultaneos!
+-- check -- Debe fallar por NoPartidosSimultaneos
 
 -- 5. PRUEBA DE SOLAPAMIENTO DE ÁRBITRO
 -- El árbitro Luis ya pita de 18:00 a 20:00. Intentamos asignarle otro.
@@ -207,18 +207,18 @@ check
 -- !set pArbitroDoble.resultado := 'PENDIENTE'
 -- !insert (pArbitroDoble, tBasket) into partidoTorneo
 -- !insert (arbLuis, pArbitroDoble) into arbitroPartido
--- check -- ¡Debe fallar por NoSolapamientoArbitro!
+-- check -- Debe fallar por NoSolapamientoArbitro
 
 -- 6. PRUEBA DE INCOHERENCIA DE DEPORTE (Equipo Futbol en Torneo Basket)
 -- !create eFutbolIntruso : Equipo
 -- !set eFutbolIntruso.nombre := 'Malaga FC'
--- !set eFutbolIntruso.deporte := #Futbol -- ES FUTBOL
+-- !set eFutbolIntruso.deporte := #Futbol -- Es futbol
 -- !set eFutbolIntruso.categoria := #Juvenil
 -- !set eFutbolIntruso.competicion := #Local
 -- !set eFutbolIntruso.pais := 'Espana'
 -- !set eFutbolIntruso.provincia := 'Malaga'
--- !insert (eFutbolIntruso, tBasket) into equipoTorneo -- tBasket es de Baloncesto
--- check -- ¡Debe fallar por CoherenciaInscripcion!
+-- !insert (eFutbolIntruso, tBasket) into equipoTorneo -- tBasket es de baloncesto
+-- check -- Debe fallar por CoherenciaInscripcion
 
 -- 7. PRUEBA DE PARTIDO CONTRA SÍ MISMO
 -- !create pSuicida : Partido
@@ -232,8 +232,8 @@ check
 -- !set pSuicida.resultado := 'PENDIENTE'
 -- !insert (pSuicida, tBasket) into partidoTorneo
 -- !insert (pSuicida, eUnicaja) into ParticipacionPartidoLocal
--- !insert (pSuicida, eUnicaja) into ParticipacionPartidoVisitante -- ¡Unicaja vs Unicaja!
--- check -- ¡Debe fallar por NoJuegaContraSiMismo!
+-- !insert (pSuicida, eUnicaja) into ParticipacionPartidoVisitante -- Unicaja vs Unicaja
+-- check -- Debe fallar por NoJuegaContraSiMismo
 
 -- 8. PRUEBA DE SEDE INCORRECTA (Torneo Local)
 -- !create eSevilla : Equipo
@@ -244,4 +244,4 @@ check
 -- !set eSevilla.pais := 'Espana'
 -- !set eSevilla.provincia := 'Sevilla' -- Torneo es en Malaga
 -- !insert (eSevilla, tBasket) into equipoTorneo
--- check -- ¡Debe fallar por ProvinciaSedeConsistente!
+-- check -- Debe fallar por ProvinciaSedeConsistente
