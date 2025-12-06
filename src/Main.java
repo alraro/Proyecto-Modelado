@@ -244,7 +244,7 @@ public class Main {
             partidoNBA.finalizarPartido("120-118");
 
             System.out.println("Partido NBA creado: Lakers vs Celtics");
-            System.out.println("   Duración: 48 minutos | Titulares Lakers: LeBron, Davis");
+            System.out.println("    Duración: 48 minutos | Titulares Lakers: LeBron, Davis");
             System.out.println("\n--- CLASIFICACIÓN NBA ---");
             nba.mostrarClasificacion();
 
@@ -288,7 +288,7 @@ public class Main {
             partidoTenis.finalizarPartido("2-1");
 
             System.out.println("Partido Copa Davis creado: España vs Francia");
-            System.out.println("   Titulares España: Alcaraz | Suplentes: Nadal");
+            System.out.println("    Titulares España: Alcaraz | Suplentes: Nadal");
             System.out.println("\n--- CLASIFICACIÓN COPA DAVIS ---");
             copaDavis.mostrarClasificacion();
 
@@ -332,7 +332,7 @@ public class Main {
             partidoRugby.finalizarPartido("24-17");
 
             System.out.println("Partido Six Nations creado: Inglaterra vs Francia");
-            System.out.println("   Duración: 80 minutos | Estadio: Twickenham");
+            System.out.println("    Duración: 80 minutos | Estadio: Twickenham");
             System.out.println("\n--- CLASIFICACIÓN SIX NATIONS ---");
             sixNations.mostrarClasificacion();
 
@@ -384,12 +384,12 @@ public class Main {
         try {
             codigo.run();
             // Si llegamos aquí, es malo: el código debería haber explotado
-            System.out.println(" FALLO (El código inseguro se ejecutó sin problemas)");
+            System.out.println("FALLO (El código inseguro se ejecutó sin problemas)");
         } catch (AssertionError e) {
             // Si llegamos aquí, es bueno: el sistema de seguridad funcionó
-            System.out.println(" ÉXITO (El sistema detectó el error: " + e.getMessage() + ")");
+            System.out.println("ÉXITO (El sistema detectó el error: " + e.getMessage() + ")");
         } catch (Exception e) {
-            System.out.println(" ERROR INESPERADO: " + e.getClass().getSimpleName());
+            System.out.println("ERROR INESPERADO: " + e.getClass().getSimpleName());
         }
     }
 }
