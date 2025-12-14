@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Torneos</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: 'var(--background)',
+                        foreground: 'var(--foreground)',
+                        card: 'var(--card)',
+                        'card-foreground': 'var(--card-foreground)',
+                        primary: 'var(--primary)',
+                        'primary-foreground': 'var(--primary-foreground)',
+                        muted: 'var(--muted)',
+                        'muted-foreground': 'var(--muted-foreground)',
+                        border: 'var(--border)',
+                        accent: 'var(--accent)',
+                        'accent-foreground': 'var(--accent-foreground)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --background: 248 250 252;
+            --foreground: 15 23 42;
+            --card: 255 255 255;
+            --card-foreground: 15 23 42;
+            --primary: 16 185 129;
+            --primary-foreground: 255 255 255;
+            --muted: 241 245 249;
+            --muted-foreground: 100 116 139;
+            --border: 226 232 240;
+            --accent: 5 150 105;
+            --accent-foreground: 255 255 255;
+            --radius: 0.5rem;
+        }
+
+        .dark {
+            --background: 15 23 42;
+            --foreground: 248 250 252;
+            --card: 30 41 59;
+            --card-foreground: 248 250 252;
+            --primary: 16 185 129;
+            --primary-foreground: 15 23 42;
+            --muted: 51 65 85;
+            --muted-foreground: 148 163 184;
+            --border: 51 65 85;
+            --accent: 5 150 105;
+            --accent-foreground: 248 250 252;
+        }
+
+        .high-contrast {
+            --background: 255 255 255;
+            --foreground: 0 0 0;
+            --card: 255 255 255;
+            --card-foreground: 0 0 0;
+            --primary: 0 100 0;
+            --primary-foreground: 255 255 255;
+            --muted: 240 240 240;
+            --muted-foreground: 0 0 0;
+            --border: 0 0 0;
+            --accent: 0 0 200;
+            --accent-foreground: 255 255 255;
+        }
+
+        .text-small { font-size: 0.875rem; }
+        .text-medium { font-size: 1rem; }
+        .text-large { font-size: 1.125rem; }
+
+        body {
+            background: rgb(var(--background));
+            color: rgb(var(--foreground));
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+    </style>
+</head>
+<body class="text-medium">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Iconos SVG simples
+        const Icons = {
+            LayoutDashboard: () => (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="7" height="7" rx="1"/>
+                    <rect x="14" y="3" width="7" height="7" rx="1"/>
+                    <rect x="14" y="14" width="7" height="7" rx="1"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1"/>
+                </svg>
+            ),
+            Trophy: () => (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                </svg>
+            ),
+            Users: () => (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+            ),
+            UserCheck: () => (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            ),
+            Settings: () => (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+            ),
+            ChevronRight: () => (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+            ),
+            Plus: () => (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+            ),
+            X: () => (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            ),
+            Edit: () => (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+            ),
+            ArrowLeft: () => (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            )
+        };
+
+        function Dashboard() {
+            const [activeSection, setActiveSection] = useState('dashboard');
+            const [theme, setTheme] = useState('light');
+            const [fontSize, setFontSize] = useState('medium');
+            const [highContrast, setHighContrast] = useState(false);
+
+            useEffect(() => {
+                const savedTheme = localStorage.getItem('theme') || 'light';
+                const savedFontSize = localStorage.getItem('fontSize') || 'medium';
+                const savedHighContrast = localStorage.getItem('highContrast') === 'true';
+                
+                setTheme(savedTheme);
+                setFontSize(savedFontSize);
+                setHighContrast(savedHighContrast);
+                
+                document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+                document.documentElement.classList.toggle('high-contrast', savedHighContrast);
+                document.body.className = `text-${savedFontSize}`;
+            }, []);
+
+            const handleThemeChange = (newTheme) => {
+                setTheme(newTheme);
+                localStorage.setItem('theme', newTheme);
+                document.documentElement.classList.toggle('dark', newTheme === 'dark');
+            };
+
+            const handleFontSizeChange = (newSize) => {
+                setFontSize(newSize);
+                localStorage.setItem('fontSize', newSize);
+                document.body.className = `text-${newSize}`;
+            };
+
+            const handleHighContrastChange = (enabled) => {
+                setHighContrast(enabled);
+                localStorage.setItem('highContrast', enabled);
+                document.documentElement.classList.toggle('high-contrast', enabled);
+            };
+
+            return (
+                <div className="flex h-screen">
+                    <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} />
+                    <main className="flex-1 overflow-auto">
+                        {activeSection === 'dashboard' && <PanelControl />}
+                        {activeSection === 'torneos' && <GestionTorneos />}
+                        {activeSection === 'equipos' && <DetalleEquipo />}
+                        {activeSection === 'personal' && <Personal />}
+                        {activeSection === 'config' && (
+                            <SettingsPanel
+                                theme={theme}
+                                fontSize={fontSize}
+                                highContrast={highContrast}
+                                onThemeChange={handleThemeChange}
+                                onFontSizeChange={handleFontSizeChange}
+                                onHighContrastChange={handleHighContrastChange}
+                            />
+                        )}
+                    </main>
+                </div>
+            );
+        }
+
+        function Sidebar({ activeSection, setActiveSection }) {
+            const menuItems = [
+                { id: 'dashboard', label: 'Panel de Control', icon: Icons.LayoutDashboard },
+                { id: 'torneos', label: 'Torneos', icon: Icons.Trophy },
+                { id: 'equipos', label: 'Equipos y Plantillas', icon: Icons.Users },
+                { id: 'personal', label: 'Personal y Árbitros', icon: Icons.UserCheck },
+                { id: 'config', label: 'Configuración', icon: Icons.Settings },
+            ];
+
+            return (
+                <aside className="w-64 border-r border-[rgb(var(--border))] bg-[rgb(var(--card))]">
+                    <div className="p-6 border-b border-[rgb(var(--border))]">
+                        <h1 className="text-xl font-bold text-[rgb(var(--foreground))]">Gestión de Torneos</h1>
+                    </div>
+                    <nav className="p-4 space-y-2">
+                        {menuItems.map((item) => (
+                            <button
+                                key={item.id}
+                                onClick={() => setActiveSection(item.id)}
+                                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                                    activeSection === item.id
+                                        ? 'bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))]'
+                                        : 'text-[rgb(var(--muted-foreground))] hover:bg-[rgb(var(--muted))]'
+                                }`}
+                            >
+                                <item.icon />
+                                <span className="font-medium">{item.label}</span>
+                            </button>
+                        ))}
+                    </nav>
+                </aside>
+            );
+        }
+
+        function PanelControl() {
+            return (
+                <div className="p-8">
+                    <h2 className="text-3xl font-bold mb-6 text-[rgb(var(--foreground))]">Panel de Control</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <StatCard title="Torneos Activos" value="3" />
+                        <StatCard title="Equipos Registrados" value="24" />
+                        <StatCard title="Partidos Programados" value="48" />
+                    </div>
+                </div>
+            );
+        }
+
+        function StatCard({ title, value }) {
+            return (
+                <div className="bg-[rgb(var(--card))] border border-[rgb(var(--border))] rounded-lg p-6">
+                    <h3 className="text-sm font-medium text-[rgb(var(--muted-foreground))] mb-2">{title}</h3>
+                    <p className="text-3xl font-bold text-[rgb(var(--foreground))]">{value}</p>
+                </div>
+            );
+        }
+
+        function GestionTorneos() {
+            const [torneos] = useState([
+                { id: 1, nombre: 'Liga Primavera 2024', deporte: 'Fútbol', equipos: 8, estado: 'Activo' },
+                { id: 2, nombre: 'Copa Nacional', deporte: 'Baloncesto', equipos: 12, estado: 'Activo' },
+                { id: 3, nombre: 'Torneo Verano', deporte: 'Voleibol', equipos: 6, estado: 'Próximamente' },
+            ]);
+
+            return (
+                <div className="p-8">
+                    <div className="flex justify-between items-center mb-6">
+                        <h2 className="text-3xl font-bold text-[rgb(var(--foreground))]">Gestión de Torneos</h2>
+                        <button className="flex items-center gap-2 px-4 py-2 bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))] rounded-lg hover:opacity-90">
+                            <Icons.Plus />
+                            Crear Torneo
+                        </button>
+                    </div>
+                    <div className="bg-[rgb(var(--card))] border border-[rgb(var(--border))] rounded-lg overflow-hidden">
+                        <table className="w-full">
+                            <thead className="bg-[rgb(var(--muted))]">
+                                <tr>
+                                    <th className="px-6 py-3 text-left text-sm font-semibold text-[rgb(var(--foreground))]">Nombre</th>
+                                    <th className="px-6 py-3 text-left text-sm font-semibold text-[rgb(var(--foreground))]">Deporte</th>
+                                    <th className="px-6 py-3 text-left text-sm font-semibold text-[rgb(var(--foreground))]">Equipos</th>
+                                    <th className="px-6 py-3 text-left text-sm font-semibold text-[rgb(var(--foreground))]">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {torneos.map((torneo) => (
+                                    <tr key={torneo.id} className="border-t border-[rgb(var(--border))] hover:bg-[rgb(var(--muted))] cursor-pointer">
+                                        <td className="px-6 py-4 text-[rgb(var(--foreground))]">{torneo.nombre}</td>
+                                        <td className="px-6 py-4 text-[rgb(var(--muted-foreground))]">{torneo.deporte}</td>
+                                        <td className="px-6 py-4 text-[rgb(var(--muted-foreground))]">{torneo.equipos}</td>
+                                        <td className="px-6 py-4">
+                                            <span className={`px-3 py-1 rounded-full text-sm ${
+                                                torneo.estado === 'Activo' 
+                                                    ? 'bg-green-100 text-green-800' 
+                                                    : 'bg-yellow-100 text-yellow-800'
+                                            }`}>
+                                                {torneo.estado}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            );
+        }
+
+        function DetalleEquipo() {
+            const [equipos] = useState([
+                { id: 1, nombre: 'Tigres FC', categoria: 'Sub-17', torneo: 'Liga Primavera 2024', jugadores: 18 },
+                { id: 2, nombre: 'Águilas United', categoria: 'Senior', torneo: 'Copa Nacional', jugadores: 15 },
+                { id: 3, nombre: 'Leones del Norte', categoria: 'Sub-20', torneo: 'Liga Primavera 2024', jugadores: 20 },
+            ]);
+
+            return (
+                <div className="p-8">
+                    <h2 className="text-3xl font-bold mb-6 text-[rgb(var(--foreground))]">Equipos y Plantillas</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {equipos.map((equipo) => (
+                            <div key={equipo.id} className="bg-[rgb(var(--card))] border border-[rgb(var(--border))] rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer">
+                                <h3 className="text-xl font-bold mb-2 text-[rgb(var(--foreground))]">{equipo.nombre}</h3>
+                                <p className="text-[rgb(var(--muted-foreground))] mb-1">Categoría: {equipo.categoria}</p>
+                                <p className="text-[rgb(var(--muted-foreground))] mb-3">Torneo: {equipo.torneo}</p>
+                                <div className="flex items-center justify-between pt-3 border-t border-[rgb(var(--border))]">
+                                    <span className="text-sm text-[rgb(var(--muted-foreground))]">{equipo.jugadores} jugadores</span>
+                                    <Icons.ChevronRight />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        function Personal() {
+            const [activeTab, setActiveTab] = useState('arbitros');
+
+            return (
+                <div className="p-8">
+                    <h2 className="text-3xl font-bold mb-6 text-[rgb(var(--foreground))]">Personal y Árbitros</h2>
+                    <div className="flex gap-4 mb-6">
+                        <button
+                            onClick={() => setActiveTab('arbitros')}
+                            className={`px-4 py-2 rounded-lg ${
+                                activeTab === 'arbitros'
+                                    ? 'bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))]'
+                                    : 'bg-[rgb(var(--muted))] text-[rgb(var(--muted-foreground))]'
+                            }`}
+                        >
+                            Árbitros
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('entrenadores')}
+                            className={`px-4 py-2 rounded-lg ${
+                                activeTab === 'entrenadores'
+                                    ? 'bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))]'
+                                    : 'bg-[rgb(var(--muted))] text-[rgb(var(--muted-foreground))]'
+                            }`}
+                        >
+                            Entrenadores
+                        </button>
+                    </div>
+                    <div className="bg-[rgb(var(--card))] border border-[rgb(var(--border))] rounded-lg p-6">
+                        <p className="text-[rgb(var(--muted-foreground))]">Contenido de {activeTab}</p>
+                    </div>
+                </div>
+            );
+        }
+
+        function SettingsPanel({ theme, fontSize, highContrast, onThemeChange, onFontSizeChange, onHighContrastChange }) {
+            return (
+                <div className="p-8">
+                    <h2 className="text-3xl font-bold mb-6 text-[rgb(var(--foreground))]">Configuración</h2>
+                    <div className="space-y-6 max-w-2xl">
+                        <div className="bg-[rgb(var(--card))] border border-[rgb(var(--border))] rounded-lg p-6">
+                            <h3 className="text-lg font-semibold mb-4 text-[rgb(var(--foreground))]">Tema</h3>
+                            <div className="flex gap-4">
+                                <button
+                                    onClick={() => onThemeChange('light')}
+                                    className={`px-4 py-2 rounded-lg ${
+                                        theme === 'light'
+                                            ? 'bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))]'
+                                            : 'bg-[rgb(var(--muted))] text-[rgb(var(--muted-foreground))]'
+                                    }`}
+                                >
+                                    Claro
+                                </button>
+                                <button
+                                    onClick={() => onThemeChange('dark')}
+                                    className={`px-4 py-2 rounded-lg ${
+                                        theme === 'dark'
+                                            ? 'bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))]'
+                                            : 'bg-[rgb(var(--muted))] text-[rgb(var(--muted-foreground))]'
+                                    }`}
+                                >
+                                    Oscuro
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="bg-[rgb(var(--card))] border border-[rgb(var(--border))] rounded-lg p-6">
+                            <h3 className="text-lg font-semibold mb-4 text-[rgb(var(--foreground))]">Tamaño de Fuente</h3>
+                            <div className="flex gap-4">
+                                <button
+                                    onClick={() => onFontSizeChange('small')}
+                                    className={`px-4 py-2 rounded-lg ${
+                                        fontSize === 'small'
+                                            ? 'bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))]'
+                                            : 'bg-[rgb(var(--muted))] text-[rgb(var(--muted-foreground))]'
+                                    }`}
+                                >
+                                    Pequeño
+                                </button>
+                                <button
+                                    onClick={() => onFontSizeChange('medium')}
+                                    className={`px-4 py-2 rounded-lg ${
+                                        fontSize === 'medium'
+                                            ? 'bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))]'
+                                            : 'bg-[rgb(var(--muted))] text-[rgb(var(--muted-foreground))]'
+                                    }`}
+                                >
+                                    Mediano
+                                </button>
+                                <button
+                                    onClick={() => onFontSizeChange('large')}
+                                    className={`px-4 py-2 rounded-lg ${
+                                        fontSize === 'large'
+                                            ? 'bg-[rgb(var(--primary))] text-[rgb(var(--primary-foreground))]'
+                                            : 'bg-[rgb(var(--muted))] text-[rgb(var(--muted-foreground))]'
+                                    }`}
+                                >
+                                    Grande
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="bg-[rgb(var(--card))] border border-[rgb(var(--border))] rounded-lg p-6">
+                            <h3 className="text-lg font-semibold mb-4 text-[rgb(var(--foreground))]">Alto Contraste</h3>
+                            <label className="flex items-center gap-3 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    checked={highContrast}
+                                    onChange={(e) => onHighContrastChange(e.target.checked)}
+                                    className="w-5 h-5"
+                                />
+                                <span className="text-[rgb(var(--muted-foreground))]">Activar modo de alto contraste</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<Dashboard />, document.getElementById('root'));
+    </script>
+</body>
+</html>
