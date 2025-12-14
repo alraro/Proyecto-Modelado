@@ -1,0 +1,418 @@
+model GestionTorneos
+
+--- Enumerations ---
+enum TipoDeporte {Futbol, Baloncesto, Volleyball, Rugby, Tenis, Padel}
+enum TipoJugador {Suplente, Titular}
+enum TipoCategoria {Infantil, Juvenil, Senior, Veterano}
+enum TipoCompeticion {Local, Nacional, Internacional}
+--- End Enumerations ---
+
+--- Classes ---
+abstract class Persona
+  attributes
+    nombre: String
+    edad: Integer
+    DNI: String
+end
+
+class PersonalEquipo < Persona
+  attributes
+    tipoDeporte: TipoDeporte
+    tipoCategoria: TipoCategoria
+    tipoCompeticion: TipoCompeticion
+end
+
+class Jugador < PersonalEquipo
+  attributes
+    tipoJugador: TipoJugador
+    nacionalidad: String
+end
+
+class Entrenador < PersonalEquipo
+  attributes
+end
+
+class Arbitro < Persona
+  attributes
+    deporte: TipoDeporte
+    categoria: TipoCategoria
+    competicion: TipoCompeticion
+end
+
+class Narrador < Persona
+  attributes
+    deporte: TipoDeporte
+    categoria: TipoCategoria
+    competicion: TipoCompeticion  
+end 
+
+class Torneo
+  attributes
+    nombre: String
+    deporte: TipoDeporte
+    temporada: Integer
+    categoria: TipoCategoria
+    competicion: TipoCompeticion
+    maxIntegrantesEquipo: Integer
+    ganador: String
+    pais_sede: String
+    provincia_sede: String
+    maxEquipos: Integer
+end
+
+class Partido 
+  attributes
+    tipoCategoria: TipoCategoria
+    tipoCompeticion: TipoCompeticion
+    tipoDeporte: TipoDeporte
+    lugar: String
+    fecha: String
+    horaInicio: String
+    horaFin: String
+    resultado: String
+end
+
+class Equipo 
+  attributes
+    nombre: String
+    deporte: TipoDeporte
+    categoria: TipoCategoria
+    competicion: TipoCompeticion
+    pais: String
+    provincia: String
+    maxTitulares: Integer
+    maxSuplentes: Integer
+end
+
+class TiempoEquipo
+  attributes
+    fechaInicio: String
+    fechaFin: String
+end
+--- End Classes ---
+
+--- Associations ---
+association partidoTorneo between
+  Partido[1..*] role partidos
+  Torneo[1..*] role torneos
+end
+
+association arbitroTorneo between
+  Arbitro[1..*] role arbitros
+  Torneo[0..*] role torneos
+end
+
+association narradorTorneo between
+  Narrador[1..*] role narradores
+  Torneo[0..*] role torneos
+end
+
+association arbitroPartido between
+  Arbitro[1..*] role arbitros
+  Partido[0..*] role partidos
+end
+
+association narradorPartido between
+  Narrador[1..*] role narradores
+  Partido[0..*] role partidos
+end
+
+association equipoTorneo between
+  Equipo[1..*] role equipos
+  Torneo[0..*] role torneos
+end
+
+aggregation PersonalesEquipo between
+  PersonalEquipo[1] role personasEquipo
+  TiempoEquipo[0..*] role tiemposEquipo
+end
+
+association TiempoEnEquipo between
+  TiempoEquipo[*] role tiemposEquipo
+  Equipo[1] role equipos
+end
+--- End Associations ---
+
+--- Association Classes ---
+associationclass ParticipacionPartidoLocal between
+  Partido[0..*] role partidosLocal
+  Equipo[1] role equipoLocal
+  attributes
+    puntuacion: Integer
+end  
+
+associationclass ParticipacionPartidoVisitante between
+  Partido[0..*] role partidosVisitante
+  Equipo[1] role equipoVisitante
+  attributes
+    puntuacion: Integer
+end
+--- End Association Classes ---
+
+--- Invariants ---
+constraints
+
+context Torneo
+  -- No puede haber más integrantes por equipo que el número máximo
+  inv MaxIntegrantesEquipo: 
+    self.equipos -> forAll(e |
+      e.tiemposEquipo
+        -> select(te | (te.fechaFin.oclIsUndefined() or te.fechaFin = '') and te.personasEquipo.oclIsKindOf(Jugador))
+        -> size() <= self.maxIntegrantesEquipo
+    )
+
+  -- El torneo no admite más equipos que el máximo permitido
+  inv MaxEquipos:
+    self.equipos->size() <= self.maxEquipos
+
+  -- En un torneo nacional, el país sede debe coincidir con el país de los equipos
+  inv PaisSedeConsistente:
+    self.competicion = #Nacional implies 
+    self.equipos->forAll(e | e.pais = self.pais_sede)
+
+  -- En un torneo local, la provincia del equipo debe coincidir con la provincia sede
+  inv ProvinciaSedeConsistente:
+    self.competicion = #Local implies 
+    self.equipos->forAll(e | e.provincia = self.provincia_sede)
+
+  -- Los tipos del equipo tiene que coincidir con los tipos del torneo
+  inv CoherenciaInscripcion:
+    self.equipos->forAll(e | 
+        e.competicion = self.competicion and
+        e.deporte = self.deporte and
+        e.categoria = self.categoria
+    )
+
+  -- No pueden haber 2 equipos de la misma nacionalidad en un mismo torneo
+  inv UnEquipoPorNacionalidad:
+    self.competicion = #Nacional implies 
+    self.equipos->forAll(e1, e2 | e1 <> e2 implies e1.pais <> e2.pais)
+
+  -- El ganador debe ser un equipo participante del torneo
+  inv GanadorEsParticipante:
+    not self.ganador.oclIsUndefined() and 
+    self.ganador.size() > 0 
+    implies 
+      self.equipos->exists(e | e.nombre = self.ganador)
+
+context Partido
+  -- Los equipos participantes deben pertenecer al torneo del partido --
+  inv EquiposPertenecenAlTorneo:
+    self.torneos->forAll(t | 
+       t.equipos->includes(self.participacionPartidoLocal.equipoLocal) and 
+       t.equipos->includes(self.participacionPartidoVisitante.equipoVisitante)
+    )
+
+  -- El deporte, categoría y competición del partido deben coincidir con los del torneo --
+  inv ConsistenciaConTorneo:
+    self.torneos -> forAll(t | 
+      self.tipoDeporte = t.deporte and
+      self.tipoCategoria = t.categoria and
+      self.tipoCompeticion = t.competicion
+    )
+
+  -- No puede haber solapamiento de partidos en fecha, hora y lugar --
+  inv NoSolapamientoPartidos:
+    Partido.allInstances()->forAll(p2 |
+        (p2 <> self and p2.fecha = self.fecha and p2.lugar = self.lugar)
+        implies
+        not (
+            self.horaInicio < p2.horaFin and 
+            self.horaFin > p2.horaInicio
+        )
+    )
+
+  -- Un partido no puede tener equipos locales y nacionales a la vez --
+  inv NoLocalVSNacional:
+    self.participacionPartidoLocal.equipoLocal.competicion = self.participacionPartidoVisitante.equipoVisitante.competicion
+
+  -- Validamos que no sea el mismo equipo --
+  inv UnLocalYVisitanteDiferentes:
+    self.participacionPartidoLocal.equipoLocal <> self.participacionPartidoVisitante.equipoVisitante
+
+  -- El resultado no puede estar vacío una vez finalizado el partido --
+  inv ResultadoNoVacio:
+    not self.resultado.oclIsUndefined() and self.resultado.size() > 0
+
+
+context Equipo
+  -- El equipo no debe superar el máximo de titulares --
+  inv MaxTitulares:
+    self.tiemposEquipo
+      ->select(te | (te.fechaFin.oclIsUndefined() or te.fechaFin = '') and te.personasEquipo.oclIsKindOf(Jugador))
+      ->collect(te | te.personasEquipo.oclAsType(Jugador))
+      ->select(j | j.tipoJugador = #Titular)
+      ->size() <= self.maxTitulares
+
+  -- El equipo no debe superar el máximo de suplentes --
+  inv MaxSuplentes:
+    self.tiemposEquipo
+      ->select(te | (te.fechaFin.oclIsUndefined() or te.fechaFin = '') and te.personasEquipo.oclIsKindOf(Jugador))
+      ->collect(te | te.personasEquipo.oclAsType(Jugador))
+      ->select(j | j.tipoJugador = #Suplente)
+      ->size() <= self.maxSuplentes  
+
+  -- El número de jugadores en el equipo no puede superar el máximo permitido por torneo --
+  inv MaxJugadoresPorTorneo:
+    self.torneos->forAll(t |
+      self.tiemposEquipo
+        ->select(te | (te.fechaFin.oclIsUndefined() or te.fechaFin = '') and te.personasEquipo.oclIsKindOf(Jugador))
+        ->size() <= t.maxIntegrantesEquipo
+    )
+
+  -- Un equipo no puede participar en más de un torneo por temporada --
+  inv TorneoUnicoPorTemporada:
+    self.torneos->isUnique(t | t.temporada)
+
+  -- La competición del equipo debe coincidir con la de los torneos en los que participa --
+  inv ConsistenciaCompeticionConTorneo:
+    self.torneos->forAll(t | t.competicion = self.competicion)
+
+  -- Un equipo no puede jugar dos partidos a la misma hora y fecha --  
+  inv NoPartidosSimultaneos:
+    self.participacionPartidoLocal.partidosLocal->union(self.participacionPartidoVisitante.partidosVisitante)
+      ->forAll(p1, p2 | 
+          (p1 <> p2 and p1.fecha = p2.fecha) 
+          implies 
+          not (
+             p1.horaInicio < p2.horaFin and
+             p1.horaFin > p2.horaInicio
+          )
+      )
+
+
+context Jugador
+  -- Edad deberá ser coherente con la categoría del jugador --
+  inv EdadCoherenteConCategoria:
+    if self.tipoCategoria = #Infantil then
+      self.edad >= 6 and self.edad <= 12
+    else if self.tipoCategoria = #Juvenil then
+      self.edad >= 13 and self.edad <= 17
+    else if self.tipoCategoria = #Senior then
+      self.edad >= 18 and self.edad <= 40
+    else if self.tipoCategoria = #Veterano then
+      self.edad > 40
+    else
+      true
+    endif endif endif endif
+
+  -- Deporte del jugador debe coincidir con el de los equipos en los que participa --
+  inv DeporteConsistenteConEquipos:
+    self.tiemposEquipo
+      ->select(te | te.fechaFin.oclIsUndefined() or te.fechaFin = '')
+      ->forAll(te | te.equipos.deporte = self.tipoDeporte)
+
+  -- Solo puede haber un equipo nacional por jugador --
+  inv EquipoNacionalUnico:
+    self.tiemposEquipo
+      ->select(te | te.fechaFin.oclIsUndefined() or te.fechaFin = '')
+      ->collect(te | te.equipos)
+      ->select(e | e.competicion = #Nacional)
+      ->size() <= 1
+
+  -- Los equipos locales en los que participa un jugador no pueden coincidir en temporada --
+  inv TemporadaUnicaEquiposLocales:
+    let misEquiposLocales = self.tiemposEquipo
+      ->select(te | te.fechaFin.oclIsUndefined() or te.fechaFin = '')
+      ->collect(te | te.equipos)
+      ->select(e | e.competicion = #Local)
+    in
+    misEquiposLocales->forAll(e1, e2 |
+        e1 = e2 or
+        e1.torneos->forAll(t1 |
+           e2.torneos->forAll(t2 | t1.temporada <> t2.temporada)
+        )
+    )
+
+  -- Un jugador no puede cambiar de categoría si pertenece a un equipo de dichar categoría --
+  inv NoCambiaCategoriaSiPerteneceEquipo:
+    self.tiemposEquipo
+      ->select(te | te.fechaFin.oclIsUndefined() or te.fechaFin = '')
+      ->forAll(te | te.equipos.categoria = self.tipoCategoria)
+
+
+context Arbitro
+  -- Un árbitro no puede arbitrar dos partidos a la misma hora o fecha
+  inv NoSolapamientoArbitro:
+    self.partidos->forAll(p1, p2 |
+      (p1 <> p2 and p1.fecha = p2.fecha)
+      implies
+      not (
+        p1.horaInicio < p2.horaFin and 
+        p1.horaFin > p2.horaInicio
+      )
+    )
+
+  -- Un árbitro solo puede arbitrar partidos de su deporte
+  inv DeporteConsistenteConPartidos:
+    self.partidos -> forAll(p | 
+      p.tipoDeporte = self.deporte)  
+
+  -- Un árbitro solo puede arbitrar partidos de su categoría
+  inv ArbitraSoloSuCategoria:
+    self.partidos-> forAll(p | 
+      p.tipoCategoria = self.categoria)
+
+  -- Un árbitro tiene que tener una categoría para poder ser contratado
+  inv CategoriaNoVacia:
+    not self.categoria.oclIsUndefined()
+
+
+context Entrenador
+  -- Un entrenador no puede entrenar a varios equipos que pertenezcan al mismo torneo
+  inv UnicoEquipoPorTorneo:
+    self.tiemposEquipo
+      ->select(te | te.fechaFin.oclIsUndefined() or te.fechaFin = '')
+      ->collect(te | te.equipos)
+      ->forAll(e1, e2 | 
+        e1 <> e2 implies 
+        e1.torneos->intersection(e2.torneos)->isEmpty()
+      )
+
+  -- Un entrenador solo puede entrenar equipos de su deporte
+  inv DeporteConsistenteConEquipos:
+    self.tiemposEquipo
+       ->select(te | te.fechaFin.oclIsUndefined() or te.fechaFin = '')
+       ->forAll(te | te.equipos.deporte = self.tipoDeporte)
+
+  -- Un entrenador puede entrenar varios equipos en distintas categorías y competiciones
+  inv VariedadCategoriasYCompeticiones:
+    self.tiemposEquipo
+      ->select(te | te.fechaFin.oclIsUndefined() or te.fechaFin = '')
+      ->collect(te | te.equipos)
+      ->forAll(e1, e2 | 
+        e1 <> e2 implies 
+        (e1.categoria <> e2.categoria or e1.competicion <> e2.competicion)
+      )
+
+
+context Narrador
+  -- Un narrador solo puede narrar partidos de su deporte
+  inv DeporteConsistenteConPartidos:
+    self.partidos -> forAll(p | p.tipoDeporte = self.deporte)  
+
+  -- Un narrador solo puede narrar un torneo por temporada
+  inv TorneoUnicoPorTemporada:
+    self.torneos->isUnique(t | t.temporada)
+
+  -- Un narrador no puede narrar dos partidos simultáneos
+  inv NarracionUnicaPorFechaHora:
+    self.partidos->forAll(p1, p2 |
+      (p1 <> p2 and p1.fecha = p2.fecha) 
+      implies
+      not (
+         p1.horaInicio < p2.horaFin and 
+         p1.horaFin > p2.horaInicio
+      )
+    )
+
+
+context Persona
+  -- El DNI de cada persona debe ser único --
+  inv DNIUnico:
+    Persona.allInstances()->isUnique(p | p.DNI)
+
+  -- El DNI no puede estar vacío --
+  inv DNINoVacio:
+    not self.DNI.oclIsUndefined() and self.DNI.size() > 0
+--- End Invariants ---    
