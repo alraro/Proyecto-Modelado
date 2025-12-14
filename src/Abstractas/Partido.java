@@ -84,8 +84,8 @@ public abstract class Partido {
         }
 
         // RESTRICCIÓN: Debe no superarse el número máximo de titulares y suplentes, el cual, es independiente del equipo
-        assert titulares <= getEquipoLocal().getMaxTitulares() : "Debe haber" + getEquipoLocal().getMaxTitulares() + " jugadores titulares como máximo";
-        assert suplentes <= getEquipoLocal().getMaxSuplentes() : "Debe haber" + getEquipoLocal().getMaxTitulares() + " jugadores suplente como máximo";
+        assert titulares <= equipo.getMaxTitulares() : "Debe haber " + equipo.getMaxTitulares() + " jugadores titulares como máximo";
+        assert suplentes <= equipo.getMaxSuplentes() : "Debe haber " + equipo.getMaxSuplentes() + " jugadores suplente como máximo";
 
         return true;
     }
@@ -116,6 +116,10 @@ public abstract class Partido {
         assert this.torneo.getNarradores().contains(narrador)
         : "El narrador " + narrador.getNombre() + " no ha sido contratado para el torneo " + torneo.getNombre();
 
+        // Intentamos añadir el partido a la agenda del narrador, añadirPartido ya tiene el resto de asserts
+        narrador.anadirPartido(this);
+
+        // Si todo es correcto, lo añadimos a la lista de narradores del partido
         this.narradores.add(narrador);
     }
 
@@ -157,7 +161,7 @@ public abstract class Partido {
         setResultado(resultado);
     }
 
-
+    // Getters
     public Torneo getTorneo() {
         return torneo;
     }
