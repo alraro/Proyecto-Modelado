@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal y Árbitros - Sistema de Gestión de Torneos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="sidebar-title">Sistema de Gestión</h1>
+                <p class="sidebar-subtitle">Torneos Deportivos</p>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span>Panel de Control</span>
+                </a>
+                <a href="torneos.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                        <path d="M4 22h16"></path>
+                        <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                        <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                    </svg>
+                    <span>Torneos</span>
+                </a>
+                <a href="equipos.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>Equipos y Plantillas</span>
+                </a>
+                <a href="personal.html" class="nav-item active">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        <circle cx="19" cy="11" r="2"></circle>
+                    </svg>
+                    <span>Personal y Árbitros</span>
+                </a>
+                <a href="configuracion.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    <span>Configuración</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">Personal y Árbitros</h1>
+                        <p class="page-description">Gestiona árbitros, entrenadores y narradores</p>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Personal del Sistema</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="tabs">
+                            <div class="tabs-list">
+                                <button class="tab-trigger active" onclick="switchPersonalTab('arbitros')">Árbitros</button>
+                                <button class="tab-trigger" onclick="switchPersonalTab('entrenadores')">Entrenadores</button>
+                                <button class="tab-trigger" onclick="switchPersonalTab('narradores')">Narradores</button>
+                            </div>
+
+                            <!-- Árbitros Tab -->
+                            <div id="arbitros-tab" class="tab-content active">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Categoría Habilitada</th>
+                                            <th>Deporte</th>
+                                            <th>Disponibilidad</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="font-medium">Carlos Pérez</td>
+                                            <td><span class="badge badge-outline">Primera División</span></td>
+                                            <td>Baloncesto</td>
+                                            <td>
+                                                <div class="availability-toggle">
+                                                    <label class="switch">
+                                                        <input type="checkbox" checked>
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                    <span class="availability-label">Disponible</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-medium">Juan García</td>
+                                            <td><span class="badge badge-outline">Segunda División</span></td>
+                                            <td>Fútbol</td>
+                                            <td>
+                                                <div class="availability-toggle">
+                                                    <label class="switch">
+                                                        <input type="checkbox" checked>
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                    <span class="availability-label">Disponible</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-medium">Miguel Sánchez</td>
+                                            <td><span class="badge badge-outline">Primera División</span></td>
+                                            <td>Baloncesto</td>
+                                            <td>
+                                                <div class="availability-toggle">
+                                                    <label class="switch">
+                                                        <input type="checkbox">
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                    <span class="availability-label">No disponible</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-medium">Luis Fernández</td>
+                                            <td><span class="badge badge-outline">Primera División</span></td>
+                                            <td>Fútbol</td>
+                                            <td>
+                                                <div class="availability-toggle">
+                                                    <label class="switch">
+                                                        <input type="checkbox" checked>
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                    <span class="availability-label">Disponible</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-medium">Antonio Martínez</td>
+                                            <td><span class="badge badge-outline">Primera División</span></td>
+                                            <td>Volleyball</td>
+                                            <td>
+                                                <div class="availability-toggle">
+                                                    <label class="switch">
+                                                        <input type="checkbox" checked>
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                    <span class="availability-label">Disponible</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Entrenadores Tab -->
+                            <div id="entrenadores-tab" class="tab-content">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Categoría Habilitada</th>
+                                            <th>Deporte</th>
+                                            <th>Disponibilidad</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="font-medium">Pablo Laso</td>
+                                            <td><span class="badge badge-outline">Nivel ACB</span></td>
+                                            <td>Baloncesto</td>
+                                            <td>
+                                                <div class="availability-toggle">
+                                                    <label class="switch">
+                                                        <input type="checkbox" checked>
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                    <span class="availability-label">Disponible</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-medium">Diego Simeone</td>
+                                            <td><span class="badge badge-outline">UEFA Pro</span></td>
+                                            <td>Fútbol</td>
+                                            <td>
+                                                <div class="availability-toggle">
+                                                    <label class="switch">
+                                                        <input type="checkbox" checked>
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                    <span class="availability-label">Disponible</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-medium">Sarunas Jasikevicius</td>
+                                            <td><span class="badge badge-outline">Nivel ACB</span></td>
+                                            <td>Baloncesto</td>
+                                            <td>
+                                                <div class="availability-toggle">
+                                                    <label class="switch">
+                                                        <input type="checkbox" checked>
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                    <span class="availability-label">Disponible</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-medium">Carlo Ancelotti</td>
+                                            <td><span class="badge badge-outline">UEFA Pro</span></td>
+                                            <td>Fútbol</td>
+                                            <td>
+                                                <div class="availability-toggle">
+                                                    <label class="switch">
+                                                        <input type="checkbox">
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                    <span class="availability-label">No disponible</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Narradores Tab -->
+                            <div id="narradores-tab" class="tab-content">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Categoría Habilitada</th>
+                                            <th>Deporte</th>
+                                            <th>Disponibilidad</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="font-medium">Andrés Montes</td>
+                                            <td><span class="badge badge-outline">Profesional</span></td>
+                                            <td>Baloncesto</td>
+                                            <td>
+                                                <div class="availability-toggle">
+                                                    <label class="switch">
+                                                        <input type="checkbox" checked>
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                    <span class="availability-label">Disponible</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-medium">Carlos Martínez</td>
+                                            <td><span class="badge badge-outline">Profesional</span></td>
+                                            <td>Fútbol</td>
+                                            <td>
+                                                <div class="availability-toggle">
+                                                    <label class="switch">
+                                                        <input type="checkbox">
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                    <span class="availability-label">No disponible</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-medium">Antonio Alcántara</td>
+                                            <td><span class="badge badge-outline">Profesional</span></td>
+                                            <td>Baloncesto</td>
+                                            <td>
+                                                <div class="availability-toggle">
+                                                    <label class="switch">
+                                                        <input type="checkbox" checked>
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                    <span class="availability-label">Disponible</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-medium">Manolo Lama</td>
+                                            <td><span class="badge badge-outline">Profesional</span></td>
+                                            <td>Fútbol</td>
+                                            <td>
+                                                <div class="availability-toggle">
+                                                    <label class="switch">
+                                                        <input type="checkbox" checked>
+                                                        <span class="slider"></span>
+                                                    </label>
+                                                    <span class="availability-label">Disponible</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

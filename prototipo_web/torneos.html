@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Torneos - Sistema de Gestión de Torneos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="sidebar-title">Sistema de Gestión</h1>
+                <p class="sidebar-subtitle">Torneos Deportivos</p>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span>Panel de Control</span>
+                </a>
+                <a href="torneos.html" class="nav-item active">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                        <path d="M4 22h16"></path>
+                        <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                        <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                    </svg>
+                    <span>Torneos</span>
+                </a>
+                <a href="equipos.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>Equipos y Plantillas</span>
+                </a>
+                <a href="personal.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        <circle cx="19" cy="11" r="2"></circle>
+                    </svg>
+                    <span>Personal y Árbitros</span>
+                </a>
+                <a href="configuracion.html" class="nav-item">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    <span>Configuración</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">Gestión de Torneos</h1>
+                        <p class="page-description">Administra todos los torneos deportivos</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="alert('Funcionalidad para crear torneo')">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Nuevo Torneo
+                    </button>
+                </div>
+
+                <!-- Torneos Grid -->
+                <div class="tournaments-grid">
+                    <a href="detalle-torneo.html" class="tournament-card">
+                        <div class="card-header">
+                            <div>
+                                <h3 class="tournament-title">Liga Endesa 2024</h3>
+                                <div class="tournament-badges">
+                                    <span class="badge badge-primary">Baloncesto</span>
+                                    <span class="badge badge-outline">Senior</span>
+                                </div>
+                            </div>
+                            <div class="tournament-icon">🏀</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="tournament-info">
+                                <div class="info-item">
+                                    <span class="info-label">Equipos:</span>
+                                    <span class="info-value">4/4</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Progreso:</span>
+                                    <span class="info-value">50%</span>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 50%"></div>
+                            </div>
+                            <span class="badge badge-success">Activo</span>
+                        </div>
+                    </a>
+
+                    <div class="tournament-card">
+                        <div class="card-header">
+                            <div>
+                                <h3 class="tournament-title">Copa del Rey 2024</h3>
+                                <div class="tournament-badges">
+                                    <span class="badge badge-primary">Fútbol</span>
+                                    <span class="badge badge-outline">Senior</span>
+                                </div>
+                            </div>
+                            <div class="tournament-icon">⚽</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="tournament-info">
+                                <div class="info-item">
+                                    <span class="info-label">Equipos:</span>
+                                    <span class="info-value">8/8</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Progreso:</span>
+                                    <span class="info-value">75%</span>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%"></div>
+                            </div>
+                            <span class="badge badge-success">Activo</span>
+                        </div>
+                    </div>
+
+                    <div class="tournament-card">
+                        <div class="card-header">
+                            <div>
+                                <h3 class="tournament-title">Superliga de Voleibol</h3>
+                                <div class="tournament-badges">
+                                    <span class="badge badge-primary">Voleibol</span>
+                                    <span class="badge badge-outline">Senior</span>
+                                </div>
+                            </div>
+                            <div class="tournament-icon">🏐</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="tournament-info">
+                                <div class="info-item">
+                                    <span class="info-label">Equipos:</span>
+                                    <span class="info-value">6/8</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Progreso:</span>
+                                    <span class="info-value">25%</span>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 25%"></div>
+                            </div>
+                            <span class="badge badge-warning">En preparación</span>
+                        </div>
+                    </div>
+
+                    <div class="tournament-card">
+                        <div class="card-header">
+                            <div>
+                                <h3 class="tournament-title">Liga de Rugby</h3>
+                                <div class="tournament-badges">
+                                    <span class="badge badge-primary">Rugby</span>
+                                    <span class="badge badge-outline">Senior</span>
+                                </div>
+                            </div>
+                            <div class="tournament-icon">🏉</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="tournament-info">
+                                <div class="info-item">
+                                    <span class="info-label">Equipos:</span>
+                                    <span class="info-value">10/10</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Progreso:</span>
+                                    <span class="info-value">60%</span>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%"></div>
+                            </div>
+                            <span class="badge badge-success">Activo</span>
+                        </div>
+                    </div>
+
+                    <div class="tournament-card">
+                        <div class="card-header">
+                            <div>
+                                <h3 class="tournament-title">Torneo ATP Málaga</h3>
+                                <div class="tournament-badges">
+                                    <span class="badge badge-primary">Tenis</span>
+                                    <span class="badge badge-outline">Internacional</span>
+                                </div>
+                            </div>
+                            <div class="tournament-icon">🎾</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="tournament-info">
+                                <div class="info-item">
+                                    <span class="info-label">Participantes:</span>
+                                    <span class="info-value">32/32</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Progreso:</span>
+                                    <span class="info-value">40%</span>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 40%"></div>
+                            </div>
+                            <span class="badge badge-success">Activo</span>
+                        </div>
+                    </div>
+
+                    <div class="tournament-card">
+                        <div class="card-header">
+                            <div>
+                                <h3 class="tournament-title">Liga Asobal</h3>
+                                <div class="tournament-badges">
+                                    <span class="badge badge-primary">Balonmano</span>
+                                    <span class="badge badge-outline">Nacional</span>
+                                </div>
+                            </div>
+                            <div class="tournament-icon">🤾</div>
+                        </div>
+                        <div class="card-content">
+                            <div class="tournament-info">
+                                <div class="info-item">
+                                    <span class="info-label">Equipos:</span>
+                                    <span class="info-value">4/6</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Progreso:</span>
+                                    <span class="info-value">15%</span>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 15%"></div>
+                            </div>
+                            <span class="badge badge-warning">En preparación</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
