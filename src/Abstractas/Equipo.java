@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Equipo {
-    // Atributos de estado
     private String nombre;
     private TipoDeporte tipoDeporte;
     private Categoria categoria;
@@ -15,7 +14,6 @@ public abstract class Equipo {
     private int maxTitulares; // REQUISITO: Límite de integrantes
     private int maxSuplentes;  // REQUISITO: Límite de integrantes
 
-    // Relaciones
     private Entrenador entrenador;
     private List<Jugador> jugadores;
     private List<Torneo> torneosParticipados;
@@ -88,9 +86,7 @@ public abstract class Equipo {
         // Si ya es nuestro entrenador, no hacemos nada
         if (this.entrenador == nuevoEntrenador) return;
 
-        // IMPORTANTE: Llamamos al método del Entrenador.
-        // Allí es donde él verificará si ya entrena a otro equipo en nuestros torneos actuales.
-        // Si hay conflicto, saltará su assert y esta operación se cancelará.
+        // Intentamos que el entrenador nos asigne
         nuevoEntrenador.asignarEquipo(this);
 
         // Gestión del cambio: Si ya teníamos uno, lo liberamos
@@ -102,9 +98,7 @@ public abstract class Equipo {
         this.entrenador = nuevoEntrenador;
     }
 
-    // ---------------------------------------------------------
-    // GESTIÓN DE TORNEOS (Protected -> Solo llamado por clase Torneo)
-    // ---------------------------------------------------------
+    // PROTECTED: Solo accesible por clases hijas y del mismo paquete (Torneo)
     protected void inscribirEnTorneo(Torneo nuevoTorneo) {
         // RESTRICCIÓN: El torneo no puede ser nulo
         assert nuevoTorneo != null : "No puedes inscribirte a un torneo nulo";
@@ -130,10 +124,8 @@ public abstract class Equipo {
         this.torneosParticipados.add(nuevoTorneo);
     }
 
-    // ---------------------------------------------------------
-    // GETTERS
-    // ---------------------------------------------------------
-    public String getNombre() { return nombre; }
+    // Getters
+    public String getNombre() {return nombre; }
     public TipoDeporte getTipoDeporte() { return tipoDeporte; }
     public Categoria getCategoria() { return categoria; }
     public TipoCompeticion getTipoCompeticion() { return tipoCompeticion; }
@@ -143,13 +135,9 @@ public abstract class Equipo {
     public Entrenador getEntrenador() { return entrenador; }
     public int getMaxTitulares() {return maxTitulares;}
     public int getMaxSuplentes() {return maxSuplentes;}
-
-    // Devolvemos copias defensivas o listas no modificables si queremos proteger la encapsulación,
-    // pero para este nivel académico devolver la lista suele ser aceptable.
     public List<Jugador> getJugadores() { return jugadores; }
     public List<Torneo> getTorneos() { return torneosParticipados; }
 
-    // Método para comparar dos equipos por su nombre, tipoeDeporte, Categoria y TipoCompeticion
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -159,5 +147,14 @@ public abstract class Equipo {
                 this.tipoDeporte == otro.tipoDeporte &&
                 this.categoria == otro.categoria &&
                 this.tipoCompeticion == otro.tipoCompeticion;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = nombre.hashCode();
+        result = 31 * result + tipoDeporte.hashCode();
+        result = 31 * result + categoria.hashCode();
+        result = 31 * result + tipoCompeticion.hashCode();
+        return result;
     }
 }

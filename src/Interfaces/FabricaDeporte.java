@@ -9,7 +9,7 @@ import java.time.LocalTime;
 
 /**
  * Abstract Factory: Declara la interfaz para crear las familias de objetos
- * relacionados (Abstractas.Equipo y Árbitro) sin especificar sus clases concretas.
+ * relacionados sin especificar sus clases concretas.
  */
 public interface FabricaDeporte {
 

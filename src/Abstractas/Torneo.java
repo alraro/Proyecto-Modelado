@@ -21,11 +21,9 @@ public abstract class Torneo {
     private List<Narrador> narradores;
     private Equipo ganador;
     private int duracionPartidos; // en minutos
+        private int maxEquipos;
     protected Strategy puntuacionStrategy;
-
-    // REQUISITO: "No puede haber más equipos que el número máximo de equipos."
-    private int maxEquipos;
-
+    
     public Torneo(String nombre, Pais paisSede, String provinciaSede, String temporada,
                   TipoDeporte tipoDeporte, Categoria categoria, TipoCompeticion competicion, int duracionPartidos, int maxEquipos) {
 
@@ -37,8 +35,6 @@ public abstract class Torneo {
         assert categoria != null : "La categoría es obligatoria";
         assert competicion != null : "El tipo de competición es obligatorio";
         assert duracionPartidos > 0 : "La duración de los partidos debe ser positiva";
-
-        // Validación del nuevo atributo
         assert maxEquipos > 1 : "Un torneo debe tener al menos 2 equipos de cupo";
 
         this.nombre = nombre;
@@ -102,30 +98,35 @@ public abstract class Torneo {
 
     public void contratarArbitro(Arbitro arbitro) {
         assert arbitro != null : "Arbitro nulo";
+
+        // RESTRICCIÓN: No repetidos
         assert !arbitros.contains(arbitro) : "El árbitro ya está contratado";
 
+        // RESTRICCIÓN: Mismo deporte
         assert arbitro.getTipoDeporte() == this.tipoDeporte
                 : "Un arbitro de " + arbitro.getTipoDeporte() + " no puede arbitrar un torneo de " + this.tipoDeporte;
 
+        // RESTRICCIÓN: Cualificación para la categoría
         assert arbitro.getCategoriasPermitidas().contains(this.categoria)
                 : "El árbitro no está cualificado para la categoría " + this.categoria;
 
         this.arbitros.add(arbitro);
-
-        // Notificamos al árbitro (si fuera necesario en tu modelo, aunque Arbitro gestiona Partidos, no Torneos directamente)
     }
 
     public void contratarNarrador(Narrador narrador) {
         assert narrador != null : "Narrador nulo";
+
+        // RESTRICCIÓN: No repetidos
         assert !narradores.contains(narrador) : "El narrador ya está contratado";
 
+        // RESTRICCIÓN: Mismo deporte
         assert narrador.getTipoDeporte() == this.tipoDeporte
                 : "Deporte incorrecto para el narrador";
 
-        // IMPORTANTE: Vinculación bidireccional para que el narrador sepa que trabaja aquí
-        // (Esto es necesario para que luego Narrador.anadirPartido funcione, ya que comprueba 'torneosAsignados')
+        // Intentamos que el narrador se asigne al torneo
         narrador.asignarTorneo(this);
 
+        // Si todo es correcto, lo añadimos a la lista de narradores del torneo
         this.narradores.add(narrador);
     }
 
@@ -153,7 +154,10 @@ public abstract class Torneo {
     }
 
     public void finalizarTorneo(Equipo ganador) {
+        // RESTRICCIÓN: Debe haber partidos jugados
         assert !partidos.isEmpty() : "No se puede finalizar un torneo sin partidos jugados";
+
+        // RESTRICCIÓN: El ganador debe estar entre los inscritos
         assert equiposInscritos.contains(ganador) : "El ganador no estaba inscrito en el torneo";
 
         this.ganador = ganador;
